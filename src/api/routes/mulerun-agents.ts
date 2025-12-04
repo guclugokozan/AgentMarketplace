@@ -12,6 +12,9 @@ import { getJobsStorage } from '../../storage/jobs.js';
 import { v4 as uuid } from 'uuid';
 import OpenAI from 'openai';
 import * as replicateService from '../../services/replicate.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -20,6 +23,47 @@ const openai = new OpenAI({
 
 const logger = createLogger({ level: 'info' });
 const router = Router();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+/**
+ * Normalize media inputs coming from the frontend.
+ * The store UI currently sends base64 data URLs; Replicate requires HTTP URLs.
+ * This helper converts any data URLs to files under public/uploads and returns an accessible URL.
+ */
+async function normalizeMediaInputs(input: Record<string, any>, req: Request): Promise<Record<string, any>> {
+  const uploadsDir = path.join(__dirname, '../../public/uploads');
+  await fs.promises.mkdir(uploadsDir, { recursive: true });
+  const baseUrl = (process.env.PUBLIC_BASE_URL || `${req.protocol}://${req.get('host')}`).replace(/\/$/, '');
+
+  const normalized: Record<string, any> = { ...input };
+
+  for (const [key, value] of Object.entries(input)) {
+    if (typeof value === 'string' && isDataUrl(value)) {
+      normalized[key] = await persistDataUrl(value, uploadsDir, baseUrl);
+    }
+  }
+
+  return normalized;
+}
+
+function isDataUrl(value: string): boolean {
+  return value.startsWith('data:') && value.includes('base64,');
+}
+
+async function persistDataUrl(dataUrl: string, uploadsDir: string, baseUrl: string): Promise<string> {
+  const match = dataUrl.match(/^data:([^;]+);base64,(.+)$/);
+  if (!match) return dataUrl;
+
+  const mimeType = match[1];
+  const base64Data = match[2];
+  const extension = mimeType.split('/')[1] || 'bin';
+  const filename = `${uuid()}.${extension}`;
+  const filePath = path.join(uploadsDir, filename);
+
+  await fs.promises.writeFile(filePath, Buffer.from(base64Data, 'base64'));
+  return `${baseUrl}/uploads/${filename}`;
+}
 
 // =============================================================================
 // BACKGROUND JOB PROCESSING
@@ -302,6 +346,9 @@ router.post('/:id/run', async (req: Request, res: Response, next: NextFunction) 
       return;
     }
 
+    // Normalize any data URLs to publicly accessible URLs so Replicate/OpenAI can fetch them
+    const normalizedInput = await normalizeMediaInputs(input, req);
+
     // For async agents, create a job and start processing in background
     if (agent.metadata.async) {
       const jobsStorage = getJobsStorage();
@@ -309,7 +356,7 @@ router.post('/:id/run', async (req: Request, res: Response, next: NextFunction) 
         agentId: agent.metadata.id,
         tenantId,
         userId,
-        input,
+        input: normalizedInput,
         webhookUrl,
         estimatedDurationMs: agent.metadata.estimatedDuration.max * 1000,
       });
@@ -334,23 +381,23 @@ router.post('/:id/run', async (req: Request, res: Response, next: NextFunction) 
     }
 
     // For sync agents, run directly with real AI
-    logger.info('mulerun_agent_sync_run', {
-      agentId: agent.metadata.id,
-      tenantId,
-    });
-
-    try {
-      const result = await executeAgentWithAI(agent.metadata.id, input);
-      res.json({
+      logger.info('mulerun_agent_sync_run', {
         agentId: agent.metadata.id,
-        status: 'completed',
-        output: result,
-        input,
+        tenantId,
       });
-    } catch (aiError: any) {
-      logger.error('agent_execution_error', { agentId: agent.metadata.id, error: aiError.message });
-      // Return 400 for input validation errors, 500 for processing errors
-      const isValidationError = aiError.message.includes('required') ||
+
+      try {
+        const result = await executeAgentWithAI(agent.metadata.id, normalizedInput);
+        res.json({
+          agentId: agent.metadata.id,
+          status: 'completed',
+          output: result,
+          input: normalizedInput,
+        });
+      } catch (aiError: any) {
+        logger.error('agent_execution_error', { agentId: agent.metadata.id, error: aiError.message });
+        // Return 400 for input validation errors, 500 for processing errors
+        const isValidationError = aiError.message.includes('required') ||
                                 aiError.message.includes('Required') ||
                                 aiError.message.includes('Provide') ||
                                 aiError.message.includes('Both') ||
@@ -401,7 +448,7 @@ async function executeAgentWithAI(agentId: string, input: Record<string, any>): 
     };
   }
 
-  // Background Replacement - Removes bg + generates new background
+  // Background Replacement - Removes bg + generates new background + composites
   if (agentId === 'background-replacer') {
     const imageUrl = input.image || input.imageUrl || input.url;
     const newBackground = input.newBackground || input.background || input.prompt || 'professional office background';
@@ -412,15 +459,16 @@ async function executeAgentWithAI(agentId: string, input: Record<string, any>): 
     if (!result.success) {
       throw new Error(result.error || 'Background replacement failed');
     }
+    // Output array: [compositedImage, subjectWithTransparentBg, generatedBackground]
     const outputs = result.output as string[];
     return {
       success: true,
       originalImage: imageUrl,
-      subjectWithTransparentBg: outputs[0],
-      generatedBackground: outputs[1],
+      resultImage: outputs[0], // The fully composited image
+      subjectWithTransparentBg: outputs[1],
+      generatedBackground: outputs[2],
       processingTime: result.processingTime,
       model: result.model,
-      instructions: 'Composite the subject onto the new background using an image editor or API',
     };
   }
 
@@ -450,23 +498,52 @@ async function executeAgentWithAI(agentId: string, input: Record<string, any>): 
   // Image Generation - Uses SDXL
   if (agentId === 'image-generator') {
     const prompt = input.prompt || input.text || input.description;
+    const style = input.style || '';
     const negativePrompt = input.negativePrompt || input.negative || '';
-    const width = input.width || 1024;
-    const height = input.height || 1024;
-    const numOutputs = input.numOutputs || input.count || 1;
+
+    // Parse aspect ratio to width/height if provided
+    let width = input.width || 1024;
+    let height = input.height || 1024;
+    const ratio = input.ratio || input.aspectRatio;
+    if (ratio) {
+      const ratioMap: Record<string, { w: number; h: number }> = {
+        '1:1': { w: 1024, h: 1024 },
+        '16:9': { w: 1344, h: 768 },
+        '9:16': { w: 768, h: 1344 },
+        '4:3': { w: 1152, h: 896 },
+        '3:4': { w: 896, h: 1152 },
+        '3:2': { w: 1216, h: 832 },
+        '2:3': { w: 832, h: 1216 },
+      };
+      const parsed = ratioMap[ratio];
+      if (parsed) {
+        width = parsed.w;
+        height = parsed.h;
+      }
+    }
+
+    // Accept multiple field names for number of outputs
+    const numOutputs = Number(input.numOutputs || input.count || input.num_images || input.numImages || 1);
+
     if (!prompt) {
       throw new Error('Prompt is required. Provide "prompt", "text", or "description" field.');
     }
-    const result = await replicateService.generateImage(prompt, negativePrompt, width, height, numOutputs);
+
+    // Enhance prompt with style if provided
+    const enhancedPrompt = style ? `${prompt}, ${style} style` : prompt;
+
+    const result = await replicateService.generateImage(enhancedPrompt, negativePrompt, width, height, numOutputs);
     if (!result.success) {
       throw new Error(result.error || 'Image generation failed');
     }
     return {
       success: true,
-      prompt,
+      prompt: enhancedPrompt,
+      style,
       images: result.output,
       width,
       height,
+      numOutputs,
       processingTime: result.processingTime,
       model: result.model,
     };
@@ -771,7 +848,13 @@ async function executeAgentWithAI(agentId: string, input: Record<string, any>): 
   // Music Generator
   if (agentId === 'music-generator') {
     const prompt = input.prompt || input.description || input.style;
-    const duration = input.duration || input.durationSeconds || 8;
+    // Handle string durations like "short", "medium", "long" and convert to seconds
+    let duration = input.duration || input.durationSeconds || 8;
+    if (typeof duration === 'string') {
+      const durationMap: Record<string, number> = { short: 8, medium: 15, long: 30, verylong: 60 };
+      duration = durationMap[duration.toLowerCase()] || parseInt(duration, 10) || 8;
+    }
+    duration = Math.max(5, Math.min(300, Number(duration) || 8)); // Clamp between 5-300 seconds
     if (!prompt) {
       throw new Error('Music prompt is required. Provide "prompt", "description", or "style" field.');
     }
