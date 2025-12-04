@@ -255,11 +255,11 @@ export async function generateImage(
         width,
         height,
         num_outputs: numOutputs,
-        scheduler: 'K_EULER',
-        num_inference_steps: 35,
-        guidance_scale: 8.5,
+        scheduler: 'DPMSolverMultistep', // Better for prompt adherence
+        num_inference_steps: 40,         // Increased from 35 for quality
+        guidance_scale: 12,              // Increased from 8.5 for stricter prompt following
         refine: 'expert_ensemble_refiner',
-        high_noise_frac: 0.8,
+        high_noise_frac: 0.75,           // Slightly lower for more detail
       },
     });
 
