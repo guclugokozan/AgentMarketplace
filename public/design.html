@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design System - AI Agent Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            ios: {
+              blue: '#007AFF',
+              green: '#34C759',
+              indigo: '#5856D6',
+              orange: '#FF9500',
+              pink: '#FF2D55',
+              purple: '#AF52DE',
+              red: '#FF3B30',
+              teal: '#5AC8FA',
+              yellow: '#FFCC00',
+            }
+          },
+          borderRadius: {
+            'ios': '10px',
+            'ios-lg': '14px',
+            'ios-xl': '20px',
+            'ios-2xl': '24px',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 0 0% 3.9%;
+      --card: 0 0% 100%;
+      --card-foreground: 0 0% 3.9%;
+      --primary: 221.2 83.2% 53.3%;
+      --primary-foreground: 210 40% 98%;
+      --secondary: 210 40% 96.1%;
+      --secondary-foreground: 222.2 47.4% 11.2%;
+      --muted: 210 40% 96.1%;
+      --muted-foreground: 215.4 16.3% 46.9%;
+      --border: 214.3 31.8% 91.4%;
+      --ring: 221.2 83.2% 53.3%;
+    }
+    .dark {
+      --background: 0 0% 3.9%;
+      --foreground: 0 0% 98%;
+      --card: 0 0% 7%;
+      --card-foreground: 0 0% 98%;
+      --primary: 217.2 91.2% 59.8%;
+      --primary-foreground: 222.2 47.4% 11.2%;
+      --secondary: 217.2 32.6% 17.5%;
+      --secondary-foreground: 210 40% 98%;
+      --muted: 217.2 32.6% 17.5%;
+      --muted-foreground: 215 20.2% 65.1%;
+      --border: 217.2 32.6% 17.5%;
+      --ring: 224.3 76.3% 48%;
+    }
+    body { background: hsl(var(--background)); color: hsl(var(--foreground)); }
+    .card { background: hsl(var(--card)); }
+    .border-border { border-color: hsl(var(--border)); }
+    .text-muted-foreground { color: hsl(var(--muted-foreground)); }
+    .bg-muted { background: hsl(var(--muted)); }
+    .bg-primary { background: hsl(var(--primary)); }
+    .text-primary { color: hsl(var(--primary)); }
+    .text-primary-foreground { color: hsl(var(--primary-foreground)); }
+    .bg-secondary { background: hsl(var(--secondary)); }
+    .text-secondary-foreground { color: hsl(var(--secondary-foreground)); }
+    .ring-ring { --tw-ring-color: hsl(var(--ring)); }
+
+    .code-block {
+      background: hsl(var(--muted));
+      border-radius: 8px;
+      padding: 16px;
+      font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 w-full bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-border">
+    <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="/store.html" class="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-width="2" stroke-linecap="round" d="M15 19l-7-7 7-7"/>
+          </svg>
+          Back
+        </a>
+        <div class="w-px h-6 bg-border"></div>
+        <h1 class="text-xl font-bold">Design System</h1>
+      </div>
+      <button onclick="toggleTheme()" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-muted transition-colors">
+        <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-width="2" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="5" stroke-width="2"/>
+          <path stroke-width="2" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="sticky top-[73px] z-40 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-border">
+    <div class="container mx-auto px-6">
+      <div class="flex gap-6 overflow-x-auto py-3 text-sm">
+        <a href="#colors" class="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">Colors</a>
+        <a href="#typography" class="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">Typography</a>
+        <a href="#buttons" class="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">Buttons</a>
+        <a href="#cards" class="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">Cards</a>
+        <a href="#inputs" class="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">Inputs</a>
+        <a href="#badges" class="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">Badges</a>
+        <a href="#icons" class="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">Icons</a>
+        <a href="#spacing" class="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">Spacing</a>
+        <a href="#animations" class="text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap">Animations</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mx-auto px-6 py-12 max-w-5xl">
+    <!-- Intro -->
+    <section class="mb-16">
+      <h2 class="text-4xl font-bold mb-4">AI Agent Store Design System</h2>
+      <p class="text-lg text-muted-foreground max-w-2xl">
+        A comprehensive design system inspired by Apple's iOS App Store and shadcn/ui. Built with Tailwind CSS for consistency and scalability.
+      </p>
+    </section>
+
+    <!-- Colors -->
+    <section id="colors" class="mb-16 scroll-mt-32">
+      <h3 class="text-2xl font-bold mb-6">Colors</h3>
+
+      <h4 class="text-lg font-semibold mb-4">iOS System Colors</h4>
+      <div class="grid grid-cols-3 sm:grid-cols-5 gap-4 mb-8">
+        <div class="space-y-2">
+          <div class="h-16 rounded-ios-lg bg-ios-blue"></div>
+          <p class="text-xs font-medium">Blue</p>
+          <p class="text-xs text-muted-foreground">#007AFF</p>
+        </div>
+        <div class="space-y-2">
+          <div class="h-16 rounded-ios-lg bg-ios-green"></div>
+          <p class="text-xs font-medium">Green</p>
+          <p class="text-xs text-muted-foreground">#34C759</p>
+        </div>
+        <div class="space-y-2">
+          <div class="h-16 rounded-ios-lg bg-ios-indigo"></div>
+          <p class="text-xs font-medium">Indigo</p>
+          <p class="text-xs text-muted-foreground">#5856D6</p>
+        </div>
+        <div class="space-y-2">
+          <div class="h-16 rounded-ios-lg bg-ios-orange"></div>
+          <p class="text-xs font-medium">Orange</p>
+          <p class="text-xs text-muted-foreground">#FF9500</p>
+        </div>
+        <div class="space-y-2">
+          <div class="h-16 rounded-ios-lg bg-ios-pink"></div>
+          <p class="text-xs font-medium">Pink</p>
+          <p class="text-xs text-muted-foreground">#FF2D55</p>
+        </div>
+        <div class="space-y-2">
+          <div class="h-16 rounded-ios-lg bg-ios-purple"></div>
+          <p class="text-xs font-medium">Purple</p>
+          <p class="text-xs text-muted-foreground">#AF52DE</p>
+        </div>
+        <div class="space-y-2">
+          <div class="h-16 rounded-ios-lg bg-ios-red"></div>
+          <p class="text-xs font-medium">Red</p>
+          <p class="text-xs text-muted-foreground">#FF3B30</p>
+        </div>
+        <div class="space-y-2">
+          <div class="h-16 rounded-ios-lg bg-ios-teal"></div>
+          <p class="text-xs font-medium">Teal</p>
+          <p class="text-xs text-muted-foreground">#5AC8FA</p>
+        </div>
+        <div class="space-y-2">
+          <div class="h-16 rounded-ios-lg bg-ios-yellow"></div>
+          <p class="text-xs font-medium">Yellow</p>
+          <p class="text-xs text-muted-foreground">#FFCC00</p>
+        </div>
+      </div>
+
+      <h4 class="text-lg font-semibold mb-4">Semantic Colors</h4>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="space-y-2">
+          <div class="h-16 rounded-ios-lg bg-primary"></div>
+          <p class="text-xs font-medium">Primary</p>
+          <p class="text-xs text-muted-foreground">hsl(221 83% 53%)</p>
+        </div>
+        <div class="space-y-2">
+          <div class="h-16 rounded-ios-lg bg-secondary"></div>
+          <p class="text-xs font-medium">Secondary</p>
+          <p class="text-xs text-muted-foreground">hsl(210 40% 96%)</p>
+        </div>
+        <div class="space-y-2">
+          <div class="h-16 rounded-ios-lg bg-muted"></div>
+          <p class="text-xs font-medium">Muted</p>
+          <p class="text-xs text-muted-foreground">hsl(210 40% 96%)</p>
+        </div>
+        <div class="space-y-2">
+          <div class="h-16 rounded-ios-lg border-2 border-border"></div>
+          <p class="text-xs font-medium">Border</p>
+          <p class="text-xs text-muted-foreground">hsl(214 32% 91%)</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography -->
+    <section id="typography" class="mb-16 scroll-mt-32">
+      <h3 class="text-2xl font-bold mb-6">Typography</h3>
+      <p class="text-muted-foreground mb-6">Using Inter font family with SF Pro Display fallback for iOS-native feel.</p>
+
+      <div class="space-y-6 card rounded-ios-2xl border border-border p-6">
+        <div class="flex items-baseline justify-between pb-4 border-b border-border">
+          <span class="text-5xl font-bold">Large Title</span>
+          <span class="text-xs text-muted-foreground">34px / Bold</span>
+        </div>
+        <div class="flex items-baseline justify-between pb-4 border-b border-border">
+          <span class="text-3xl font-bold">Title 1</span>
+          <span class="text-xs text-muted-foreground">28px / Bold</span>
+        </div>
+        <div class="flex items-baseline justify-between pb-4 border-b border-border">
+          <span class="text-2xl font-bold">Title 2</span>
+          <span class="text-xs text-muted-foreground">22px / Bold</span>
+        </div>
+        <div class="flex items-baseline justify-between pb-4 border-b border-border">
+          <span class="text-xl font-semibold">Title 3</span>
+          <span class="text-xs text-muted-foreground">20px / Semibold</span>
+        </div>
+        <div class="flex items-baseline justify-between pb-4 border-b border-border">
+          <span class="text-base font-semibold">Headline</span>
+          <span class="text-xs text-muted-foreground">17px / Semibold</span>
+        </div>
+        <div class="flex items-baseline justify-between pb-4 border-b border-border">
+          <span class="text-base">Body</span>
+          <span class="text-xs text-muted-foreground">17px / Regular</span>
+        </div>
+        <div class="flex items-baseline justify-between pb-4 border-b border-border">
+          <span class="text-sm">Subheadline</span>
+          <span class="text-xs text-muted-foreground">15px / Regular</span>
+        </div>
+        <div class="flex items-baseline justify-between pb-4 border-b border-border">
+          <span class="text-xs">Caption</span>
+          <span class="text-xs text-muted-foreground">12px / Regular</span>
+        </div>
+        <div class="flex items-baseline justify-between">
+          <span class="text-[11px]">Caption 2</span>
+          <span class="text-xs text-muted-foreground">11px / Regular</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Buttons -->
+    <section id="buttons" class="mb-16 scroll-mt-32">
+      <h3 class="text-2xl font-bold mb-6">Buttons</h3>
+
+      <div class="card rounded-ios-2xl border border-border p-6 space-y-8">
+        <div>
+          <h4 class="text-sm font-semibold mb-4 text-muted-foreground">Primary Buttons</h4>
+          <div class="flex flex-wrap gap-3">
+            <button class="px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-all active:scale-95">
+              Get
+            </button>
+            <button class="px-6 py-2.5 rounded-full bg-ios-blue text-white font-semibold text-sm hover:opacity-90 transition-all active:scale-95">
+              Download
+            </button>
+            <button class="px-6 py-2.5 rounded-full bg-ios-green text-white font-semibold text-sm hover:opacity-90 transition-all active:scale-95">
+              Free
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold mb-4 text-muted-foreground">Secondary Buttons</h4>
+          <div class="flex flex-wrap gap-3">
+            <button class="px-6 py-2.5 rounded-full bg-secondary text-secondary-foreground font-semibold text-sm hover:bg-secondary/80 transition-all active:scale-95">
+              Open
+            </button>
+            <button class="px-6 py-2.5 rounded-full bg-muted text-muted-foreground font-semibold text-sm hover:bg-muted/80 transition-all active:scale-95">
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold mb-4 text-muted-foreground">Outline Buttons</h4>
+          <div class="flex flex-wrap gap-3">
+            <button class="px-6 py-2.5 rounded-full border-2 border-primary text-primary font-semibold text-sm hover:bg-primary/10 transition-all active:scale-95">
+              See All
+            </button>
+            <button class="px-6 py-2.5 rounded-full border border-border text-foreground font-semibold text-sm hover:bg-muted transition-all active:scale-95">
+              More
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold mb-4 text-muted-foreground">Icon Buttons</h4>
+          <div class="flex flex-wrap gap-3">
+            <button class="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-all active:scale-95">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+            </button>
+            <button class="w-10 h-10 rounded-full bg-ios-blue/10 text-ios-blue flex items-center justify-center hover:bg-ios-blue/20 transition-all active:scale-95">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+            </button>
+            <button class="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-all active:scale-95">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold mb-4 text-muted-foreground">Sizes</h4>
+          <div class="flex flex-wrap items-center gap-3">
+            <button class="px-3 py-1 rounded-full bg-primary text-primary-foreground font-medium text-xs">Small</button>
+            <button class="px-4 py-1.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm">Medium</button>
+            <button class="px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-base">Large</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cards -->
+    <section id="cards" class="mb-16 scroll-mt-32">
+      <h3 class="text-2xl font-bold mb-6">Cards</h3>
+
+      <div class="grid gap-6">
+        <!-- App Card -->
+        <div class="card rounded-ios-2xl border border-border overflow-hidden">
+          <div class="p-4 border-b border-border">
+            <h4 class="text-sm font-semibold text-muted-foreground mb-2">App List Card</h4>
+          </div>
+          <div class="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors cursor-pointer">
+            <img src="https://assets-01.mulerun.com/agent/311be0d7-cd68-4fa7-99bc-232e535ebb39/v2025.09.02-07.37.32/showcase-1.png" class="w-16 h-16 rounded-[22.37%] object-cover shadow-sm" alt="Icon">
+            <div class="flex-1 min-w-0">
+              <h3 class="font-semibold text-sm">Image Generator</h3>
+              <p class="text-xs text-muted-foreground truncate">Create stunning AI images</p>
+              <div class="flex items-center gap-2 mt-1">
+                <div class="flex items-center gap-0.5">
+                  <svg class="w-3 h-3 text-ios-orange" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <span class="text-xs">4.9</span>
+                </div>
+                <span class="text-xs text-muted-foreground">AI Art</span>
+              </div>
+            </div>
+            <button class="px-4 py-1.5 rounded-full bg-secondary text-ios-blue text-xs font-semibold">Get</button>
+          </div>
+        </div>
+
+        <!-- Featured Card -->
+        <div class="card rounded-ios-2xl border border-border overflow-hidden">
+          <div class="p-4 border-b border-border">
+            <h4 class="text-sm font-semibold text-muted-foreground mb-2">Featured Card</h4>
+          </div>
+          <div class="p-4">
+            <div class="rounded-ios-xl overflow-hidden cursor-pointer group">
+              <div class="relative aspect-[2/1] bg-gradient-to-br from-purple-600 to-blue-600">
+                <div class="absolute inset-0 flex flex-col justify-end p-6">
+                  <span class="text-xs text-white/70 uppercase tracking-wider font-medium mb-1">Featured</span>
+                  <h3 class="text-2xl font-bold text-white mb-1">Video Generator</h3>
+                  <p class="text-sm text-white/80">Create stunning AI videos</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid Card -->
+        <div class="card rounded-ios-2xl border border-border overflow-hidden">
+          <div class="p-4 border-b border-border">
+            <h4 class="text-sm font-semibold text-muted-foreground mb-2">Grid Card</h4>
+          </div>
+          <div class="p-4">
+            <div class="w-64 rounded-ios-xl border border-border overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
+              <div class="aspect-[4/3] bg-muted">
+                <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/54e2dc15-d602-40aa-9b09-0983f7a4f8b3/虚拟试衣.png" class="w-full h-full object-cover" alt="">
+              </div>
+              <div class="p-4">
+                <div class="flex items-start justify-between gap-2 mb-2">
+                  <div>
+                    <h3 class="font-semibold text-sm">Virtual Try-On</h3>
+                    <p class="text-xs text-muted-foreground">E-Commerce</p>
+                  </div>
+                  <span class="px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-600 text-xs font-medium">Pro</span>
+                </div>
+                <p class="text-xs text-muted-foreground line-clamp-2 mb-3">Transform clothing into model shots</p>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-1">
+                    <svg class="w-3.5 h-3.5 text-ios-orange" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                    <span class="text-xs font-medium">4.8</span>
+                  </div>
+                  <button class="px-3 py-1.5 rounded-full bg-secondary text-ios-blue text-xs font-semibold">Get</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Inputs -->
+    <section id="inputs" class="mb-16 scroll-mt-32">
+      <h3 class="text-2xl font-bold mb-6">Inputs</h3>
+
+      <div class="card rounded-ios-2xl border border-border p-6 space-y-6">
+        <div>
+          <h4 class="text-sm font-semibold mb-4 text-muted-foreground">Search Field</h4>
+          <div class="relative max-w-md">
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="M21 21l-4.35-4.35" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <input type="text" placeholder="Search agents..." class="w-full h-10 pl-10 pr-4 rounded-full bg-muted border-0 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring">
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold mb-4 text-muted-foreground">Text Input</h4>
+          <input type="text" placeholder="Enter your name" class="w-full max-w-md h-12 px-4 rounded-ios-lg border border-border bg-transparent text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring">
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold mb-4 text-muted-foreground">Textarea</h4>
+          <textarea placeholder="Enter description..." rows="3" class="w-full max-w-md px-4 py-3 rounded-ios-lg border border-border bg-transparent text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Badges -->
+    <section id="badges" class="mb-16 scroll-mt-32">
+      <h3 class="text-2xl font-bold mb-6">Badges</h3>
+
+      <div class="card rounded-ios-2xl border border-border p-6 space-y-6">
+        <div>
+          <h4 class="text-sm font-semibold mb-4 text-muted-foreground">Tier Badges</h4>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2.5 py-1 rounded-full bg-green-500/10 text-green-600 dark:text-green-400 text-xs font-medium">Free</span>
+            <span class="px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-medium">Starter</span>
+            <span class="px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 text-xs font-medium">Pro</span>
+            <span class="px-2.5 py-1 rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400 text-xs font-medium">Enterprise</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold mb-4 text-muted-foreground">Status Badges</h4>
+          <div class="flex flex-wrap gap-2">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-ios-green/10 text-ios-green text-xs font-medium">
+              <span class="w-1.5 h-1.5 rounded-full bg-ios-green"></span>
+              Online
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-ios-orange/10 text-ios-orange text-xs font-medium">
+              <span class="w-1.5 h-1.5 rounded-full bg-ios-orange"></span>
+              Processing
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-ios-red/10 text-ios-red text-xs font-medium">
+              <span class="w-1.5 h-1.5 rounded-full bg-ios-red"></span>
+              Offline
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold mb-4 text-muted-foreground">Feature Badges</h4>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-2.5 py-1 rounded-full bg-ios-orange text-white text-xs font-medium">Popular</span>
+            <span class="px-2.5 py-1 rounded-full bg-ios-blue text-white text-xs font-medium">New</span>
+            <span class="px-2.5 py-1 rounded-full bg-ios-purple text-white text-xs font-medium">Featured</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Icons -->
+    <section id="icons" class="mb-16 scroll-mt-32">
+      <h3 class="text-2xl font-bold mb-6">Icons</h3>
+
+      <div class="card rounded-ios-2xl border border-border p-6">
+        <div class="grid grid-cols-4 sm:grid-cols-8 gap-4">
+          <div class="flex flex-col items-center gap-2 p-3 rounded-ios-lg hover:bg-muted transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="M21 21l-4.35-4.35"/>
+            </svg>
+            <span class="text-[10px] text-muted-foreground">Search</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded-ios-lg hover:bg-muted transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+              <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <span class="text-[10px] text-muted-foreground">Home</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded-ios-lg hover:bg-muted transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+              <rect x="3" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+              <rect x="14" y="14" width="7" height="7" rx="1"/>
+            </svg>
+            <span class="text-[10px] text-muted-foreground">Grid</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded-ios-lg hover:bg-muted transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+              <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+            </svg>
+            <span class="text-[10px] text-muted-foreground">Heart</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded-ios-lg hover:bg-muted transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+              <path d="M12 4v16m8-8H4"/>
+            </svg>
+            <span class="text-[10px] text-muted-foreground">Plus</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded-ios-lg hover:bg-muted transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+              <path d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+            <span class="text-[10px] text-muted-foreground">Close</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded-ios-lg hover:bg-muted transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+              <path d="M5 13l4 4L19 7"/>
+            </svg>
+            <span class="text-[10px] text-muted-foreground">Check</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded-ios-lg hover:bg-muted transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+              <path d="M9 5l7 7-7 7"/>
+            </svg>
+            <span class="text-[10px] text-muted-foreground">Chevron</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spacing -->
+    <section id="spacing" class="mb-16 scroll-mt-32">
+      <h3 class="text-2xl font-bold mb-6">Spacing Scale</h3>
+
+      <div class="card rounded-ios-2xl border border-border p-6">
+        <div class="space-y-4">
+          <div class="flex items-center gap-4">
+            <div class="w-1 h-4 bg-ios-blue rounded"></div>
+            <span class="text-sm font-mono w-16">4px</span>
+            <span class="text-sm text-muted-foreground">space-1</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-2 h-4 bg-ios-blue rounded"></div>
+            <span class="text-sm font-mono w-16">8px</span>
+            <span class="text-sm text-muted-foreground">space-2</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-3 h-4 bg-ios-blue rounded"></div>
+            <span class="text-sm font-mono w-16">12px</span>
+            <span class="text-sm text-muted-foreground">space-3</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-4 h-4 bg-ios-blue rounded"></div>
+            <span class="text-sm font-mono w-16">16px</span>
+            <span class="text-sm text-muted-foreground">space-4</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-5 h-4 bg-ios-blue rounded"></div>
+            <span class="text-sm font-mono w-16">20px</span>
+            <span class="text-sm text-muted-foreground">space-5</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-6 h-4 bg-ios-blue rounded"></div>
+            <span class="text-sm font-mono w-16">24px</span>
+            <span class="text-sm text-muted-foreground">space-6</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-8 h-4 bg-ios-blue rounded"></div>
+            <span class="text-sm font-mono w-16">32px</span>
+            <span class="text-sm text-muted-foreground">space-8</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Animations -->
+    <section id="animations" class="mb-16 scroll-mt-32">
+      <h3 class="text-2xl font-bold mb-6">Animations</h3>
+
+      <div class="card rounded-ios-2xl border border-border p-6 space-y-8">
+        <div>
+          <h4 class="text-sm font-semibold mb-4 text-muted-foreground">Hover Effects</h4>
+          <div class="flex flex-wrap gap-4">
+            <div class="w-32 h-32 rounded-ios-xl bg-muted flex items-center justify-center hover:scale-105 transition-transform duration-300 cursor-pointer">
+              <span class="text-sm text-muted-foreground">Scale</span>
+            </div>
+            <div class="w-32 h-32 rounded-ios-xl bg-muted flex items-center justify-center hover:-translate-y-2 transition-transform duration-300 cursor-pointer">
+              <span class="text-sm text-muted-foreground">Lift</span>
+            </div>
+            <div class="w-32 h-32 rounded-ios-xl bg-muted flex items-center justify-center hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+              <span class="text-sm text-muted-foreground">Shadow</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold mb-4 text-muted-foreground">Press Effects</h4>
+          <div class="flex flex-wrap gap-4">
+            <button class="px-6 py-3 rounded-ios-lg bg-ios-blue text-white font-semibold active:scale-95 transition-transform">
+              Press Me
+            </button>
+            <button class="px-6 py-3 rounded-ios-lg bg-muted font-semibold active:bg-muted/70 transition-colors">
+              Press Me
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-semibold mb-4 text-muted-foreground">Loading States</h4>
+          <div class="flex flex-wrap gap-4 items-center">
+            <div class="w-6 h-6 border-2 border-ios-blue border-t-transparent rounded-full animate-spin"></div>
+            <div class="flex gap-1">
+              <div class="w-2 h-2 bg-ios-blue rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+              <div class="w-2 h-2 bg-ios-blue rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+              <div class="w-2 h-2 bg-ios-blue rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+            </div>
+            <div class="w-32 h-4 rounded-full bg-muted overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-muted via-muted-foreground/10 to-muted animate-pulse" style="animation: shimmer 2s infinite; background-size: 200% 100%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-border py-8">
+    <div class="container mx-auto px-6 text-center text-sm text-muted-foreground">
+      <p>AI Agent Store Design System</p>
+      <p class="mt-1">Inspired by Apple iOS App Store & shadcn/ui</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+</body>
+</html>

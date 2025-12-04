@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Agent Marketplace - Transform Images, Videos & Content with AI</title>
+  <meta name="description" content="Professional AI agents for virtual try-on, face swap, background removal, image generation and more. Studio-quality results at a fraction of the cost.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #818cf8;
+      --secondary: #ec4899;
+      --accent: #06b6d4;
+      --dark: #0f172a;
+      --dark-light: #1e293b;
+      --gray: #64748b;
+      --light: #f1f5f9;
+      --white: #ffffff;
+      --gradient: linear-gradient(135deg, #6366f1 0%, #ec4899 50%, #06b6d4 100%);
+      --gradient-dark: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--dark);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .logo svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    .nav-cta {
+      background: var(--gradient);
+      color: var(--white) !important;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 70%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+      animation: pulse 15s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(5deg); }
+    }
+
+    .hero-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content h1 {
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-content h1 span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-content p {
+      font-size: 1.25rem;
+      color: var(--gray);
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat {
+      text-align: left;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-showcase {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      transform: perspective(1000px) rotateY(-5deg);
+    }
+
+    .showcase-card {
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--dark-light);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.5s;
+    }
+
+    .showcase-card:hover {
+      transform: scale(1.05);
+      border-color: var(--primary);
+    }
+
+    .showcase-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .showcase-card:nth-child(2) {
+      transform: translateY(2rem);
+    }
+
+    .showcase-card:nth-child(4) {
+      transform: translateY(2rem);
+    }
+
+    /* Features Section */
+    .features {
+      padding: 6rem 2rem;
+      background: var(--dark-light);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 4rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      background: rgba(99, 102, 241, 0.2);
+      color: var(--primary-light);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .section-header h2 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: var(--gray);
+      font-size: 1.125rem;
+    }
+
+    .features-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--dark);
+      border-radius: 24px;
+      padding: 2rem;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .feature-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-5px);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-card p {
+      color: var(--gray);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-top: 1rem;
+    }
+
+    /* Agent Showcase */
+    .agents {
+      padding: 6rem 2rem;
+    }
+
+    .agents-tabs {
+      max-width: 1400px;
+      margin: 0 auto 3rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50px;
+      color: var(--gray);
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .tab-btn:hover, .tab-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--white);
+    }
+
+    .agents-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .agent-card {
+      background: var(--dark-light);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .agent-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .agent-image {
+      width: 100%;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .agent-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .agent-card:hover .agent-image img {
+      transform: scale(1.1);
+    }
+
+    .agent-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: var(--gradient);
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .agent-content {
+      padding: 1.5rem;
+    }
+
+    .agent-category {
+      color: var(--primary-light);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .agent-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .agent-card p {
+      color: var(--gray);
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .agent-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .agent-price {
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .agent-runs {
+      color: var(--gray);
+      font-size: 0.8rem;
+    }
+
+    /* Showcase Gallery */
+    .gallery {
+      padding: 6rem 2rem;
+      background: var(--dark-light);
+    }
+
+    .gallery-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(3, 200px);
+      gap: 1rem;
+    }
+
+    .gallery-item {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-item.large {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .gallery-overlay span {
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    /* How It Works */
+    .how-it-works {
+      padding: 6rem 2rem;
+    }
+
+    .steps {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: var(--gradient);
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 80px;
+      height: 80px;
+      background: var(--gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .step p {
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+
+    /* Pricing */
+    .pricing {
+      padding: 6rem 2rem;
+      background: var(--dark-light);
+    }
+
+    .pricing-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .price-card {
+      background: var(--dark);
+      border-radius: 24px;
+      padding: 2.5rem;
+      border: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .price-card.featured {
+      border-color: var(--primary);
+      transform: scale(1.05);
+    }
+
+    .price-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gradient);
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .price-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .price-card .price {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 1rem 0;
+    }
+
+    .price-card .price span {
+      font-size: 1rem;
+      color: var(--gray);
+      font-weight: 400;
+    }
+
+    .price-features {
+      list-style: none;
+      margin: 2rem 0;
+    }
+
+    .price-features li {
+      padding: 0.75rem 0;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .price-features li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .price-card .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* CTA Section */
+    .cta {
+      padding: 6rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--gradient);
+      opacity: 0.1;
+    }
+
+    .cta-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta h2 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .cta p {
+      font-size: 1.25rem;
+      color: var(--gray);
+      margin-bottom: 2rem;
+    }
+
+    /* Footer */
+    footer {
+      padding: 4rem 2rem 2rem;
+      background: var(--dark);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .footer-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand p {
+      color: var(--gray);
+      margin: 1rem 0;
+    }
+
+    .footer-links h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links a {
+      display: block;
+      color: var(--gray);
+      text-decoration: none;
+      padding: 0.5rem 0;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+    }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-content h1 {
+        font-size: 3rem;
+      }
+
+      .hero-stats {
+        justify-content: center;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .hero-visual {
+        display: none;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .agents-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .price-card.featured {
+        transform: none;
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .agents-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .steps::before {
+        display: none;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+      }
+
+      .gallery-item.large {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* Mobile Menu */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="/" class="logo">
+        <svg viewBox="0 0 32 32" fill="none">
+          <defs>
+            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6366f1"/>
+              <stop offset="50%" stop-color="#ec4899"/>
+              <stop offset="100%" stop-color="#06b6d4"/>
+            </linearGradient>
+          </defs>
+          <path d="M16 2L4 8v16l12 6 12-6V8L16 2zm0 4l8 4-8 4-8-4 8-4zm-8 8l8 4v8l-8-4v-8zm16 0v8l-8 4v-8l8-4z" fill="url(#logoGrad)"/>
+        </svg>
+        AI Agents
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#agents">Agents</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#pricing">Pricing</a>
+        <a href="/test-all-agents.html" class="nav-cta">Try Now</a>
+      </div>
+      <button class="mobile-menu-btn">☰</button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1>Transform Your <span>Creative Vision</span> with AI Agents</h1>
+        <p>Professional AI-powered tools for virtual try-on, face swap, background removal, image generation and more. Get studio-quality results in seconds.</p>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-value">33+</div>
+            <div class="stat-label">AI Agents</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">1.2M+</div>
+            <div class="stat-label">Completed Runs</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">99.9%</div>
+            <div class="stat-label">Uptime</div>
+          </div>
+        </div>
+
+        <div class="hero-buttons">
+          <a href="/test-all-agents.html" class="btn btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            Start Creating
+          </a>
+          <a href="#agents" class="btn btn-secondary">Explore Agents</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-showcase">
+          <div class="showcase-card floating">
+            <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/54e2dc15-d602-40aa-9b09-0983f7a4f8b3/虚拟试衣.png" alt="Virtual Try-On" loading="lazy">
+          </div>
+          <div class="showcase-card floating" style="animation-delay: 1s;">
+            <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/3b3049b7-bc21-46a8-b445-f2e339e3e65a/换脸.png" alt="Face Swap" loading="lazy">
+          </div>
+          <div class="showcase-card floating" style="animation-delay: 2s;">
+            <img src="https://assets-01.mulerun.com/agent/10aa0000-d27e-49f0-9ee9-0ad7d99f57b3/v1.0.3/showcase-1.webp" alt="AI Backgrounds" loading="lazy">
+          </div>
+          <div class="showcase-card floating" style="animation-delay: 3s;">
+            <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/09d4e979-5eb0-4e27-b865-c3856d6cccd0/模特换肤.png" alt="Model Swap" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" id="features">
+    <div class="section-header">
+      <span class="section-tag">Powerful Features</span>
+      <h2>Everything You Need to Create</h2>
+      <p>From fashion e-commerce to content creation, our AI agents handle the heavy lifting so you can focus on what matters.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">👗</div>
+        <h3>Virtual Try-On</h3>
+        <p>Transform flat-lay clothing into photorealistic model shots. Eliminate expensive photoshoots while maintaining studio quality.</p>
+        <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/71b89f38-5a95-496a-bdbd-2e1c30bdb993/cover-1_(10).png" alt="Virtual Try-On Demo" class="feature-image" loading="lazy">
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎭</div>
+        <h3>Face Swap</h3>
+        <p>Advanced facial detection enables photorealistic output with precise alignment across still images and videos.</p>
+        <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/129840a5-8f47-4006-b9ba-ca4b0615ca62/cover_(16).png" alt="Face Swap Demo" class="feature-image" loading="lazy">
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3>AI Model Swap</h3>
+        <p>Create localized product images from 40+ countries. Dramatically reduce cross-border shooting costs.</p>
+        <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/c36c0f2f-c914-45a7-9b66-55db2c3e64fe/cover-1_(9).png" alt="Model Swap Demo" class="feature-image" loading="lazy">
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🖼️</div>
+        <h3>AI Backgrounds</h3>
+        <p>Isolate products and generate tailored backgrounds. Automate scene generation to boost e-commerce conversion.</p>
+        <img src="https://assets-01.mulerun.com/agent/10aa0000-d27e-49f0-9ee9-0ad7d99f57b3/v1.0.3/showcase-2.webp" alt="Background Generation Demo" class="feature-image" loading="lazy">
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">✨</div>
+        <h3>Photo Restoration</h3>
+        <p>Automatically restore old, damaged, or faded photographs. Colorize black and white photos, repair scratches and cracks.</p>
+        <img src="https://assets-01.mulerun.com/agent/c55ea644-5e6f-45ca-bcb7-30135f3e984c/v1.0.1/showcase-1.webp" alt="Restoration Demo" class="feature-image" loading="lazy">
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3>Image Generation</h3>
+        <p>Create stunning visuals from text descriptions using state-of-the-art diffusion models like SDXL.</p>
+        <img src="https://assets-01.mulerun.com/agent/311be0d7-cd68-4fa7-99bc-232e535ebb39/v2025.09.02-07.37.32/showcase-1.png" alt="Image Generation Demo" class="feature-image" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- Agents Section -->
+  <section class="agents" id="agents">
+    <div class="section-header">
+      <span class="section-tag">Agent Marketplace</span>
+      <h2>33+ Ready-to-Use AI Agents</h2>
+      <p>Professional-grade AI agents for every creative and business need. Start with a click, no coding required.</p>
+    </div>
+
+    <div class="agents-tabs">
+      <button class="tab-btn active" data-category="all">All Agents</button>
+      <button class="tab-btn" data-category="image">Image Processing</button>
+      <button class="tab-btn" data-category="video">Video & Audio</button>
+      <button class="tab-btn" data-category="content">Content Generation</button>
+      <button class="tab-btn" data-category="business">Business Tools</button>
+    </div>
+
+    <div class="agents-grid">
+      <a href="/test-all-agents.html#virtual-try-on" class="agent-card" data-category="image">
+        <div class="agent-image">
+          <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/54e2dc15-d602-40aa-9b09-0983f7a4f8b3/虚拟试衣.png" alt="Virtual Try-On" loading="lazy">
+          <span class="agent-badge">Popular</span>
+        </div>
+        <div class="agent-content">
+          <div class="agent-category">Image Processing</div>
+          <h3>Virtual Try-On</h3>
+          <p>Transform clothing images into photorealistic model shots instantly.</p>
+          <div class="agent-footer">
+            <span class="agent-price">$0.50/run</span>
+            <span class="agent-runs">50k+ runs</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/test-all-agents.html#face-swap" class="agent-card" data-category="image">
+        <div class="agent-image">
+          <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/a72088b2-0505-4924-bf9b-6c9e1c49db8b/cover-2_(3).png" alt="Face Swap" loading="lazy">
+          <span class="agent-badge">Pro</span>
+        </div>
+        <div class="agent-content">
+          <div class="agent-category">Image Processing</div>
+          <h3>Face Swap</h3>
+          <p>Realistic face swaps with precise alignment and natural blending.</p>
+          <div class="agent-footer">
+            <span class="agent-price">$0.40/run</span>
+            <span class="agent-runs">35k+ runs</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/test-all-agents.html#ai-model-swap" class="agent-card" data-category="image">
+        <div class="agent-image">
+          <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/8e282302-b729-45c7-be39-7c48b3161a96/cover_(11).png" alt="AI Model Swap" loading="lazy">
+        </div>
+        <div class="agent-content">
+          <div class="agent-category">Image Processing</div>
+          <h3>AI Model Swap</h3>
+          <p>Localize product images with models from 40+ countries.</p>
+          <div class="agent-footer">
+            <span class="agent-price">$0.60/run</span>
+            <span class="agent-runs">28k+ runs</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/test-all-agents.html#background-remover" class="agent-card" data-category="image">
+        <div class="agent-image">
+          <img src="https://assets-01.mulerun.com/agent/10aa0000-d27e-49f0-9ee9-0ad7d99f57b3/v1.0.3/showcase-1.webp" alt="Background Remover" loading="lazy">
+        </div>
+        <div class="agent-content">
+          <div class="agent-category">Image Processing</div>
+          <h3>Background Remover</h3>
+          <p>Instantly remove backgrounds with precision edge detection.</p>
+          <div class="agent-footer">
+            <span class="agent-price">$0.10/run</span>
+            <span class="agent-runs">120k+ runs</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/test-all-agents.html#image-generator" class="agent-card" data-category="image">
+        <div class="agent-image">
+          <img src="https://assets-01.mulerun.com/agent/311be0d7-cd68-4fa7-99bc-232e535ebb39/v2025.09.02-07.37.32/showcase-2.webp" alt="Image Generator" loading="lazy">
+          <span class="agent-badge">SDXL</span>
+        </div>
+        <div class="agent-content">
+          <div class="agent-category">Image Processing</div>
+          <h3>Image Generator</h3>
+          <p>Create stunning images from text using SDXL diffusion models.</p>
+          <div class="agent-footer">
+            <span class="agent-price">$0.30/run</span>
+            <span class="agent-runs">85k+ runs</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/test-all-agents.html#image-upscaler" class="agent-card" data-category="image">
+        <div class="agent-image">
+          <img src="https://assets-01.mulerun.com/agent/c55ea644-5e6f-45ca-bcb7-30135f3e984c/v1.0.1/showcase-2.webp" alt="Image Upscaler" loading="lazy">
+        </div>
+        <div class="agent-content">
+          <div class="agent-category">Image Processing</div>
+          <h3>Image Upscaler</h3>
+          <p>Enhance images up to 4x resolution with AI super-resolution.</p>
+          <div class="agent-footer">
+            <span class="agent-price">$0.20/run</span>
+            <span class="agent-runs">62k+ runs</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/test-all-agents.html#chibi-sticker-maker" class="agent-card" data-category="image">
+        <div class="agent-image">
+          <img src="https://assets-01.mulerun.com/agent/82428895-e64f-4339-ba9f-1ac174b2bb4a/v1.0.1/showcase-1.png" alt="Chibi Sticker Maker" loading="lazy">
+          <span class="agent-badge">Fun</span>
+        </div>
+        <div class="agent-content">
+          <div class="agent-category">Creative</div>
+          <h3>Chibi Sticker Maker</h3>
+          <p>Turn your photo into a complete cute sticker pack instantly.</p>
+          <div class="agent-footer">
+            <span class="agent-price">$0.50/run</span>
+            <span class="agent-runs">18k+ runs</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/test-all-agents.html#product-description-writer" class="agent-card" data-category="content">
+        <div class="agent-image">
+          <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251110/c3e5fd64-938e-4bd1-b389-71d113b3ed28/mulerun3.png" alt="Product Description Writer" loading="lazy">
+        </div>
+        <div class="agent-content">
+          <div class="agent-category">Content Generation</div>
+          <h3>Product Description Writer</h3>
+          <p>Generate compelling e-commerce product descriptions with SEO optimization.</p>
+          <div class="agent-footer">
+            <span class="agent-price">$0.05/run</span>
+            <span class="agent-runs">95k+ runs</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div style="text-align: center; margin-top: 3rem;">
+      <a href="/test-all-agents.html" class="btn btn-primary">View All 33 Agents</a>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section class="gallery" id="gallery">
+    <div class="section-header">
+      <span class="section-tag">Showcase</span>
+      <h2>Created with Our AI Agents</h2>
+      <p>See what's possible with our powerful AI tools. Real results from real users.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item large">
+        <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/cbadc961-804c-4059-a140-fff3fddc70d7/cover_(12).png" alt="Fashion showcase" loading="lazy">
+        <div class="gallery-overlay"><span>Virtual Try-On</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://assets-01.mulerun.com/agent/82428895-e64f-4339-ba9f-1ac174b2bb4a/v1.0.1/showcase-2.webp" alt="Sticker pack" loading="lazy">
+        <div class="gallery-overlay"><span>Chibi Stickers</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://assets-01.mulerun.com/agent/c55ea644-5e6f-45ca-bcb7-30135f3e984c/v1.0.1/showcase-3.webp" alt="Restored photo" loading="lazy">
+        <div class="gallery-overlay"><span>Photo Restoration</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251110/b9d40528-104f-4146-a83b-9997afafb338/mulerun2.png" alt="Product photography" loading="lazy">
+        <div class="gallery-overlay"><span>Product Studio</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20250919/e337c7b0-0780-4c1b-aaf0-34195ff2c802/Me_And_My_Mini-Me.webp" alt="Creative portrait" loading="lazy">
+        <div class="gallery-overlay"><span>Mini-Me Creator</span></div>
+      </div>
+      <div class="gallery-item large">
+        <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/3b3049b7-bc21-46a8-b445-f2e339e3e65a/换脸.png" alt="Face swap result" loading="lazy">
+        <div class="gallery-overlay"><span>Face Swap</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://assets-01.mulerun.com/agent/10aa0000-d27e-49f0-9ee9-0ad7d99f57b3/v1.0.3/showcase-2.webp" alt="Background generation" loading="lazy">
+        <div class="gallery-overlay"><span>AI Backgrounds</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/09d4e979-5eb0-4e27-b865-c3856d6cccd0/模特换肤.png" alt="Model swap" loading="lazy">
+        <div class="gallery-overlay"><span>Model Swap</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works">
+    <div class="section-header">
+      <span class="section-tag">Simple Process</span>
+      <h2>How It Works</h2>
+      <p>Get professional results in just four simple steps. No technical expertise required.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Choose Agent</h3>
+        <p>Select from 33+ specialized AI agents for your specific task.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Upload Content</h3>
+        <p>Upload your images, videos, or provide text prompts.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>AI Processing</h3>
+        <p>Our AI agents process your content using state-of-the-art models.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <h3>Download Results</h3>
+        <p>Get your professional-quality results in seconds.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing" id="pricing">
+    <div class="section-header">
+      <span class="section-tag">Pricing</span>
+      <h2>Simple, Transparent Pricing</h2>
+      <p>Pay only for what you use. No subscriptions, no hidden fees.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <h3>Starter</h3>
+        <p style="color: var(--gray);">Perfect for trying out</p>
+        <div class="price">Free<span></span></div>
+        <ul class="price-features">
+          <li>300 free credits on signup</li>
+          <li>Access to all 33 agents</li>
+          <li>Standard processing</li>
+          <li>Community support</li>
+          <li>Web interface access</li>
+        </ul>
+        <a href="/test-all-agents.html" class="btn btn-secondary">Get Started</a>
+      </div>
+
+      <div class="price-card featured">
+        <h3>Pro</h3>
+        <p style="color: var(--gray);">For professionals</p>
+        <div class="price">$29<span>/month</span></div>
+        <ul class="price-features">
+          <li>5,000 credits/month</li>
+          <li>Priority processing</li>
+          <li>API access</li>
+          <li>Webhook support</li>
+          <li>Priority support</li>
+          <li>Batch processing</li>
+        </ul>
+        <a href="/test-all-agents.html" class="btn btn-primary">Start Free Trial</a>
+      </div>
+
+      <div class="price-card">
+        <h3>Enterprise</h3>
+        <p style="color: var(--gray);">For large teams</p>
+        <div class="price">Custom<span></span></div>
+        <ul class="price-features">
+          <li>Unlimited credits</li>
+          <li>Dedicated infrastructure</li>
+          <li>Custom model training</li>
+          <li>SLA guarantee</li>
+          <li>Dedicated support</li>
+          <li>On-premise option</li>
+        </ul>
+        <a href="#" class="btn btn-secondary">Contact Sales</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="cta-content">
+      <h2>Ready to Transform Your Creative Workflow?</h2>
+      <p>Join thousands of creators and businesses using our AI agents to produce professional content at scale.</p>
+      <div class="hero-buttons" style="justify-content: center;">
+        <a href="/test-all-agents.html" class="btn btn-primary">
+          Start Creating Now
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <svg viewBox="0 0 32 32" fill="none" width="32" height="32">
+            <defs>
+              <linearGradient id="footerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#6366f1"/>
+                <stop offset="50%" stop-color="#ec4899"/>
+                <stop offset="100%" stop-color="#06b6d4"/>
+              </linearGradient>
+            </defs>
+            <path d="M16 2L4 8v16l12 6 12-6V8L16 2zm0 4l8 4-8 4-8-4 8-4zm-8 8l8 4v8l-8-4v-8zm16 0v8l-8 4v-8l8-4z" fill="url(#footerGrad)"/>
+          </svg>
+          AI Agents
+        </a>
+        <p>Professional AI agents for creative and business workflows. Transform your content with state-of-the-art AI models.</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="#agents">Agents</a>
+        <a href="#pricing">Pricing</a>
+        <a href="/api-docs">API Docs</a>
+      </div>
+
+      <div class="footer-links">
+        <h4>Resources</h4>
+        <a href="/test-all-agents.html">Try Agents</a>
+        <a href="/agent-tester.html">Quick Tester</a>
+        <a href="#">Tutorials</a>
+        <a href="#">Blog</a>
+      </div>
+
+      <div class="footer-links">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Careers</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 AI Agent Marketplace. All rights reserved.</span>
+      <span>Powered by Replicate & OpenAI</span>
+    </div>
+  </footer>
+
+  <script>
+    // Tab filtering
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const category = btn.dataset.category;
+        document.querySelectorAll('.agent-card').forEach(card => {
+          if (category === 'all' || card.dataset.category === category) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Navbar background on scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('.nav');
+      if (window.scrollY > 100) {
+        nav.style.background = 'rgba(15, 23, 42, 0.95)';
+      } else {
+        nav.style.background = 'rgba(15, 23, 42, 0.8)';
+      }
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.feature-card, .agent-card, .step, .price-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

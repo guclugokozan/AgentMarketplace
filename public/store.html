@@ -1,0 +1,3055 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>AI Agent Store</title>
+  <meta name="description" content="Discover amazing AI agents for image, video, and content creation.">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            // iOS System Colors
+            ios: {
+              blue: '#007AFF',
+              green: '#34C759',
+              indigo: '#5856D6',
+              orange: '#FF9500',
+              pink: '#FF2D55',
+              purple: '#AF52DE',
+              red: '#FF3B30',
+              teal: '#5AC8FA',
+              yellow: '#FFCC00',
+              gray: {
+                DEFAULT: '#8E8E93',
+                2: '#AEAEB2',
+                3: '#C7C7CC',
+                4: '#D1D1D6',
+                5: '#E5E5EA',
+                6: '#F2F2F7',
+              }
+            },
+            // shadcn/ui inspired
+            background: 'hsl(var(--background))',
+            foreground: 'hsl(var(--foreground))',
+            card: 'hsl(var(--card))',
+            'card-foreground': 'hsl(var(--card-foreground))',
+            popover: 'hsl(var(--popover))',
+            'popover-foreground': 'hsl(var(--popover-foreground))',
+            primary: 'hsl(var(--primary))',
+            'primary-foreground': 'hsl(var(--primary-foreground))',
+            secondary: 'hsl(var(--secondary))',
+            'secondary-foreground': 'hsl(var(--secondary-foreground))',
+            muted: 'hsl(var(--muted))',
+            'muted-foreground': 'hsl(var(--muted-foreground))',
+            accent: 'hsl(var(--accent))',
+            'accent-foreground': 'hsl(var(--accent-foreground))',
+            destructive: 'hsl(var(--destructive))',
+            border: 'hsl(var(--border))',
+            input: 'hsl(var(--input))',
+            ring: 'hsl(var(--ring))',
+          },
+          borderRadius: {
+            'ios': '10px',
+            'ios-lg': '14px',
+            'ios-xl': '20px',
+            'ios-2xl': '24px',
+            'ios-3xl': '32px',
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-out',
+            'fade-up': 'fadeUp 0.5s ease-out',
+            'scale-in': 'scaleIn 0.3s ease-out',
+            'slide-up': 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+            'slide-down': 'slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+            'shimmer': 'shimmer 2s infinite',
+            'pulse-soft': 'pulseSoft 2s infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            fadeUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            scaleIn: {
+              '0%': { opacity: '0', transform: 'scale(0.95)' },
+              '100%': { opacity: '1', transform: 'scale(1)' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(100%)' },
+              '100%': { transform: 'translateY(0)' },
+            },
+            slideDown: {
+              '0%': { transform: 'translateY(0)' },
+              '100%': { transform: 'translateY(100%)' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' },
+            },
+            pulseSoft: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.7' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    /* CSS Variables for theming */
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 0 0% 3.9%;
+      --card: 0 0% 100%;
+      --card-foreground: 0 0% 3.9%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 0 0% 3.9%;
+      --primary: 221.2 83.2% 53.3%;
+      --primary-foreground: 210 40% 98%;
+      --secondary: 210 40% 96.1%;
+      --secondary-foreground: 222.2 47.4% 11.2%;
+      --muted: 210 40% 96.1%;
+      --muted-foreground: 215.4 16.3% 46.9%;
+      --accent: 210 40% 96.1%;
+      --accent-foreground: 222.2 47.4% 11.2%;
+      --destructive: 0 84.2% 60.2%;
+      --border: 214.3 31.8% 91.4%;
+      --input: 214.3 31.8% 91.4%;
+      --ring: 221.2 83.2% 53.3%;
+    }
+
+    .dark {
+      --background: 0 0% 3.9%;
+      --foreground: 0 0% 98%;
+      --card: 0 0% 7%;
+      --card-foreground: 0 0% 98%;
+      --popover: 0 0% 7%;
+      --popover-foreground: 0 0% 98%;
+      --primary: 217.2 91.2% 59.8%;
+      --primary-foreground: 222.2 47.4% 11.2%;
+      --secondary: 217.2 32.6% 17.5%;
+      --secondary-foreground: 210 40% 98%;
+      --muted: 217.2 32.6% 17.5%;
+      --muted-foreground: 215 20.2% 65.1%;
+      --accent: 217.2 32.6% 17.5%;
+      --accent-foreground: 210 40% 98%;
+      --destructive: 0 62.8% 30.6%;
+      --border: 217.2 32.6% 17.5%;
+      --input: 217.2 32.6% 17.5%;
+      --ring: 224.3 76.3% 48%;
+    }
+
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: hsl(var(--muted-foreground) / 0.3);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: hsl(var(--muted-foreground) / 0.5);
+    }
+
+    /* Hide scrollbar for horizontal scroll */
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Glassmorphism */
+    .glass {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+    }
+
+    .dark .glass {
+      background: rgba(28, 28, 30, 0.72);
+    }
+
+    /* Card hover effects */
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    .card-hover:active {
+      transform: scale(0.98);
+    }
+
+    /* Button press effect */
+    .btn-press {
+      transition: all 0.15s ease;
+    }
+
+    .btn-press:active {
+      transform: scale(0.95);
+    }
+
+    /* Image zoom on hover */
+    .img-zoom {
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .img-zoom:hover {
+      transform: scale(1.05);
+    }
+
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #007AFF 0%, #5856D6 50%, #AF52DE 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Skeleton loading */
+    .skeleton {
+      background: linear-gradient(90deg, hsl(var(--muted)) 25%, hsl(var(--muted-foreground) / 0.1) 50%, hsl(var(--muted)) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+
+    /* iOS-style app icon */
+    .app-icon {
+      border-radius: 22.37%;
+      box-shadow: 0 0 0 0.5px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    /* Smooth page transitions */
+    .page-enter {
+      animation: fadeUp 0.4s ease-out;
+    }
+
+    /* Detail modal */
+    .modal-backdrop {
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-content {
+      transition: all 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    /* Stagger animation for lists - using @keyframes directly */
+    @keyframes staggerFadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .stagger-item {
+      animation: staggerFadeUp 0.4s ease-out forwards;
+    }
+
+    .stagger-item:nth-child(1) { animation-delay: 0ms; }
+    .stagger-item:nth-child(2) { animation-delay: 50ms; }
+    .stagger-item:nth-child(3) { animation-delay: 100ms; }
+    .stagger-item:nth-child(4) { animation-delay: 150ms; }
+    .stagger-item:nth-child(5) { animation-delay: 200ms; }
+    .stagger-item:nth-child(6) { animation-delay: 250ms; }
+    .stagger-item:nth-child(7) { animation-delay: 300ms; }
+    .stagger-item:nth-child(8) { animation-delay: 350ms; }
+
+    /* Safe area for mobile */
+    .safe-top {
+      padding-top: env(safe-area-inset-top, 0px);
+    }
+
+    .safe-bottom {
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+  </style>
+</head>
+<body class="bg-background text-foreground min-h-screen antialiased">
+  <!-- Header / Navigation -->
+  <header id="header" class="sticky top-0 z-50 w-full glass border-b border-border/40 safe-top transition-all duration-300">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-ios-blue to-ios-purple flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <span class="font-bold text-lg hidden sm:block">AI Store</span>
+        </div>
+
+        <!-- Search -->
+        <div class="flex-1 max-w-md mx-4">
+          <div class="relative">
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="M21 21l-4.35-4.35" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search agents..."
+              class="w-full h-10 pl-10 pr-4 rounded-full bg-secondary/80 border-0 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+            >
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-2">
+          <button onclick="toggleTheme()" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-secondary transition-colors btn-press">
+            <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-width="2" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="5" stroke-width="2"/>
+              <path stroke-width="2" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+          </button>
+          <a href="/design.html" class="hidden sm:flex h-10 px-4 items-center justify-center rounded-full bg-secondary hover:bg-secondary/80 text-sm font-medium transition-colors btn-press">
+            Design System
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+    <!-- Today Tab Content -->
+    <div id="todayTab" class="tab-content">
+      <!-- Date Header -->
+      <div class="pt-6 pb-2">
+        <p class="text-sm font-semibold text-muted-foreground uppercase tracking-wide" id="dateDisplay"></p>
+        <h1 class="text-3xl md:text-4xl font-bold mt-1">Today</h1>
+      </div>
+
+      <!-- Featured Card (App Store Style) -->
+      <section class="py-4">
+        <div class="relative overflow-hidden rounded-ios-2xl bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600 cursor-pointer group" onclick="openDetail('video-generator')">
+          <div class="absolute inset-0 opacity-30">
+            <img src="https://cdn.higgsfield.ai/card/ae2180fa-cbab-47a1-b52e-bf07432f34f5.webp" class="w-full h-full object-cover" alt="">
+          </div>
+          <div class="relative p-6 md:p-8">
+            <span class="text-xs font-semibold text-white/70 uppercase tracking-wider">Featured Agent</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-white mt-2 mb-2">Video Generator</h2>
+            <p class="text-white/80 text-sm md:text-base max-w-md mb-4">Create stunning AI videos with Runway Gen-3 Alpha</p>
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.higgsfield.ai/card/ae2180fa-cbab-47a1-b52e-bf07432f34f5.webp" class="w-12 h-12 rounded-ios object-cover app-icon" alt="">
+              <div class="flex-1">
+                <p class="text-white font-semibold text-sm">Video Generator</p>
+                <p class="text-white/60 text-xs">Higgsfield AI</p>
+              </div>
+              <button class="px-5 py-2 rounded-full bg-white/20 backdrop-blur-sm text-white text-sm font-semibold hover:bg-white/30 transition-colors btn-press">
+                Get
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <!-- Quick Categories -->
+    <section class="py-4">
+      <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
+        <button onclick="filterCategory('all')" class="category-btn active flex-shrink-0 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium transition-all btn-press" data-category="all">
+          All Agents
+        </button>
+        <button onclick="filterCategory('image')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground text-sm font-medium transition-all btn-press" data-category="image">
+          Image
+        </button>
+        <button onclick="filterCategory('video')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground text-sm font-medium transition-all btn-press" data-category="video">
+          Video
+        </button>
+        <button onclick="filterCategory('audio')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground text-sm font-medium transition-all btn-press" data-category="audio">
+          Audio
+        </button>
+        <button onclick="filterCategory('creative')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground text-sm font-medium transition-all btn-press" data-category="creative">
+          Creative
+        </button>
+        <button onclick="filterCategory('ecommerce')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground text-sm font-medium transition-all btn-press" data-category="ecommerce">
+          E-Commerce
+        </button>
+        <button onclick="filterCategory('productivity')" class="category-btn flex-shrink-0 px-4 py-2 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground text-sm font-medium transition-all btn-press" data-category="productivity">
+          Productivity
+        </button>
+      </div>
+    </section>
+
+    <!-- Popular Agents -->
+    <section class="py-6" id="popularSection">
+      <div class="flex items-center justify-between mb-4">
+        <h2 id="popularTitle" class="text-xl md:text-2xl font-bold">Popular Right Now</h2>
+        <button onclick="document.getElementById('allAgents').scrollIntoView({behavior: 'smooth'})" class="text-sm font-medium text-primary hover:text-primary/80 transition-colors">See All</button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="popularAgents">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- Showcase Gallery - MuleRun/Higgsfield Style -->
+    <section class="py-6">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl md:text-2xl font-bold">See It In Action</h2>
+        <span class="text-sm text-muted-foreground">AI Generated Content</span>
+      </div>
+
+      <!-- Featured Video Card (Large) -->
+      <div class="mb-4">
+        <div class="relative rounded-ios-2xl overflow-hidden bg-black group cursor-pointer">
+          <video class="w-full aspect-video object-cover pointer-events-none" autoplay muted loop playsinline>
+            <source src="https://static.higgsfield.ai/70e490b9-26b7-4572-8d9c-2ac8dcc9adc0.mp4" type="video/mp4">
+          </video>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+          <!-- Clickable Overlay -->
+          <div class="absolute inset-0 z-10" onclick="openDetail('video-generator')"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-4 z-20 pointer-events-none">
+            <div class="flex items-center gap-3">
+              <img src="https://cdn.higgsfield.ai/card/ae2180fa-cbab-47a1-b52e-bf07432f34f5.webp" class="w-10 h-10 rounded-ios object-cover" alt="Video Generator">
+              <div class="flex-1">
+                <h3 class="text-white font-semibold text-sm">Video Generator</h3>
+                <p class="text-white/70 text-xs">AI-powered video creation with Runway Gen-3</p>
+              </div>
+              <div class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Horizontal Scroll Gallery -->
+      <div class="flex gap-3 overflow-x-auto hide-scrollbar pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
+        <!-- Video Card 1 - Talking Avatar -->
+        <div class="flex-shrink-0 w-72 group cursor-pointer">
+          <div class="relative rounded-ios-xl overflow-hidden bg-black mb-2">
+            <video class="w-full aspect-[4/5] object-cover pointer-events-none" autoplay muted loop playsinline>
+              <source src="https://cdn.higgsfield.ai/kling_motion/8c4795a8-e7ef-4272-8fb3-9d349192a013.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 z-10" onclick="openDetail('talking-avatar')"></div>
+            <div class="absolute top-2 left-2 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm z-20 pointer-events-none">
+              <span class="text-white text-xs font-medium">Talking Avatar</span>
+            </div>
+            <div class="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <p class="text-sm font-medium truncate" onclick="openDetail('talking-avatar')">AI Avatar Speaking</p>
+          <p class="text-xs text-muted-foreground">Talking Avatar • Higgsfield AI</p>
+        </div>
+
+        <!-- Video Card 2 - Image Animator -->
+        <div class="flex-shrink-0 w-72 group cursor-pointer">
+          <div class="relative rounded-ios-xl overflow-hidden bg-black mb-2">
+            <video class="w-full aspect-[4/5] object-cover pointer-events-none" autoplay muted loop playsinline>
+              <source src="https://cdn.higgsfield.ai/wan2_2_motion/22b6f9ca-5469-4086-8956-a2deb4944307.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 z-10" onclick="openDetail('image-animator')"></div>
+            <div class="absolute top-2 left-2 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm z-20 pointer-events-none">
+              <span class="text-white text-xs font-medium">Image Animation</span>
+            </div>
+            <div class="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <p class="text-sm font-medium truncate" onclick="openDetail('image-animator')">Photo to Motion</p>
+          <p class="text-xs text-muted-foreground">Image Animator • Higgsfield AI</p>
+        </div>
+
+        <!-- Image Card 1 - AI Art Portrait -->
+        <div class="flex-shrink-0 w-72 group cursor-pointer" onclick="openDetail('image-generator')">
+          <div class="relative rounded-ios-xl overflow-hidden bg-muted mb-2">
+            <img src="https://dqv0cqkoy5oj7.cloudfront.net/user_2vtxM3DRcDcQIjpmiCpUDF2wcAT/453bc1ba-2cf6-4897-9268-a4403f35e18e_min.webp" class="w-full aspect-[4/5] object-cover" alt="AI Generated">
+            <div class="absolute top-2 left-2 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm">
+              <span class="text-white text-xs font-medium">AI Art</span>
+            </div>
+          </div>
+          <p class="text-sm font-medium truncate">Fashion Portrait</p>
+          <p class="text-xs text-muted-foreground">Image Generator • Higgsfield AI</p>
+        </div>
+
+        <!-- Video Card 3 - Video Generator -->
+        <div class="flex-shrink-0 w-72 group cursor-pointer">
+          <div class="relative rounded-ios-xl overflow-hidden bg-black mb-2">
+            <video class="w-full aspect-[4/5] object-cover pointer-events-none" autoplay muted loop playsinline>
+              <source src="https://cdn.higgsfield.ai/kling_motion/413e9bed-2fb7-4f61-b69f-e8c7466bfcf6.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 z-10" onclick="openDetail('video-generator')"></div>
+            <div class="absolute top-2 left-2 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm z-20 pointer-events-none">
+              <span class="text-white text-xs font-medium">AI Video</span>
+            </div>
+            <div class="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <p class="text-sm font-medium truncate" onclick="openDetail('video-generator')">Water Splash Effect</p>
+          <p class="text-xs text-muted-foreground">Video Generator • Higgsfield AI</p>
+        </div>
+
+        <!-- Image Card 2 - Creative Portrait -->
+        <div class="flex-shrink-0 w-72 group cursor-pointer" onclick="openDetail('image-generator')">
+          <div class="relative rounded-ios-xl overflow-hidden bg-muted mb-2">
+            <img src="https://d8j0ntlcm91z4.cloudfront.net/content_user_id/83034e1a-1d32-4053-a1bc-bbcb7a9491c8.jpeg" class="w-full aspect-[4/5] object-cover" alt="AI Generated">
+            <div class="absolute top-2 left-2 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm">
+              <span class="text-white text-xs font-medium">AI Art</span>
+            </div>
+          </div>
+          <p class="text-sm font-medium truncate">Dreamy Portrait</p>
+          <p class="text-xs text-muted-foreground">Image Generator • Higgsfield AI</p>
+        </div>
+
+        <!-- Image Card 3 - Virtual Try-On -->
+        <div class="flex-shrink-0 w-72 group cursor-pointer" onclick="openDetail('virtual-try-on')">
+          <div class="relative rounded-ios-xl overflow-hidden bg-muted mb-2">
+            <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/71b89f38-5a95-496a-bdbd-2e1c30bdb993/cover-1_(10).png" class="w-full aspect-[4/5] object-cover" alt="Virtual Try-On">
+            <div class="absolute top-2 left-2 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm">
+              <span class="text-white text-xs font-medium">Virtual Try-On</span>
+            </div>
+          </div>
+          <p class="text-sm font-medium truncate">Model Outfit Fitting</p>
+          <p class="text-xs text-muted-foreground">Virtual Try-On • MuleRun</p>
+        </div>
+
+        <!-- Video Card 4 - Flying Effect -->
+        <div class="flex-shrink-0 w-72 group cursor-pointer">
+          <div class="relative rounded-ios-xl overflow-hidden bg-black mb-2">
+            <video class="w-full aspect-[4/5] object-cover pointer-events-none" autoplay muted loop playsinline>
+              <source src="https://cdn.higgsfield.ai/kling_motion/dbe2fcf5-9605-41ea-96ed-b5b655bbbeb0.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 z-10" onclick="openDetail('video-generator')"></div>
+            <div class="absolute top-2 left-2 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm z-20 pointer-events-none">
+              <span class="text-white text-xs font-medium">AI Video</span>
+            </div>
+            <div class="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-none">
+              <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <p class="text-sm font-medium truncate" onclick="openDetail('video-generator')">Cinematic Flying Shot</p>
+          <p class="text-xs text-muted-foreground">Video Generator • Higgsfield AI</p>
+        </div>
+
+        <!-- Image Card 4 - Face Swap -->
+        <div class="flex-shrink-0 w-72 group cursor-pointer" onclick="openDetail('face-swap')">
+          <div class="relative rounded-ios-xl overflow-hidden bg-muted mb-2">
+            <img src="https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/a72088b2-0505-4924-bf9b-6c9e1c49db8b/cover-2_(3).png" class="w-full aspect-[4/5] object-cover" alt="Face Swap">
+            <div class="absolute top-2 left-2 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm">
+              <span class="text-white text-xs font-medium">Face Swap</span>
+            </div>
+          </div>
+          <p class="text-sm font-medium truncate">AI Face Replacement</p>
+          <p class="text-xs text-muted-foreground">Face Swap • MuleRun</p>
+        </div>
+
+        <!-- Image Card 5 - Chibi Sticker -->
+        <div class="flex-shrink-0 w-72 group cursor-pointer" onclick="openDetail('chibi-sticker-maker')">
+          <div class="relative rounded-ios-xl overflow-hidden bg-muted mb-2">
+            <img src="https://assets-01.mulerun.com/agent/82428895-e64f-4339-ba9f-1ac174b2bb4a/v1.0.1/showcase-2.webp" class="w-full aspect-[4/5] object-cover" alt="Chibi Sticker">
+            <div class="absolute top-2 left-2 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm">
+              <span class="text-white text-xs font-medium">Sticker Maker</span>
+            </div>
+          </div>
+          <p class="text-sm font-medium truncate">Cute Chibi Stickers</p>
+          <p class="text-xs text-muted-foreground">Chibi Sticker Maker • MuleRun</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- All Agents Grid -->
+    <section class="py-6">
+      <div class="flex items-center justify-between mb-4">
+        <h2 id="allAgentsTitle" class="text-xl md:text-2xl font-bold">All Agents</h2>
+        <span class="text-sm text-muted-foreground" id="agentCount">17 agents</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="allAgents">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+    </div><!-- End Today Tab -->
+
+    <!-- Agents Tab Content -->
+    <div id="agentsTab" class="tab-content hidden">
+      <div class="pt-6 pb-4">
+        <h1 class="text-3xl md:text-4xl font-bold">Agents</h1>
+      </div>
+
+      <!-- Categories List -->
+      <section class="py-4">
+        <div class="bg-card rounded-ios-xl border border-border/50 overflow-hidden divide-y divide-border/50">
+          <a href="#" onclick="filterCategory('image'); showTab('today'); return false;" class="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors">
+            <div class="w-10 h-10 rounded-ios flex items-center justify-center text-xl" style="background: linear-gradient(135deg, #FF6B6B, #FF8E53);">
+              <span>&#128247;</span>
+            </div>
+            <span class="flex-1 font-medium">Image Processing</span>
+            <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#" onclick="filterCategory('video'); showTab('today'); return false;" class="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors">
+            <div class="w-10 h-10 rounded-ios flex items-center justify-center text-xl" style="background: linear-gradient(135deg, #4ECDC4, #45B7AA);">
+              <span>&#127909;</span>
+            </div>
+            <span class="flex-1 font-medium">Video Creation</span>
+            <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#" onclick="filterCategory('audio'); showTab('today'); return false;" class="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors">
+            <div class="w-10 h-10 rounded-ios flex items-center justify-center text-xl" style="background: linear-gradient(135deg, #A18CD1, #FBC2EB);">
+              <span>&#127911;</span>
+            </div>
+            <span class="flex-1 font-medium">Audio & Music</span>
+            <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#" onclick="filterCategory('ecommerce'); showTab('today'); return false;" class="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors">
+            <div class="w-10 h-10 rounded-ios flex items-center justify-center text-xl" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+              <span>&#128722;</span>
+            </div>
+            <span class="flex-1 font-medium">E-Commerce</span>
+            <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#" onclick="filterCategory('creative'); showTab('today'); return false;" class="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors">
+            <div class="w-10 h-10 rounded-ios flex items-center justify-center text-xl" style="background: linear-gradient(135deg, #ee0979, #ff6a00);">
+              <span>&#127912;</span>
+            </div>
+            <span class="flex-1 font-medium">Creative</span>
+            <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#" onclick="filterCategory('productivity'); showTab('today'); return false;" class="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors">
+            <div class="w-10 h-10 rounded-ios flex items-center justify-center text-xl" style="background: linear-gradient(135deg, #11998e, #38ef7d);">
+              <span>&#128736;</span>
+            </div>
+            <span class="flex-1 font-medium">Productivity</span>
+            <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- Top Free -->
+      <section class="py-4">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold">Top Free</h2>
+          <button onclick="showTab('today'); filterCategory('all')" class="text-sm font-medium text-primary hover:text-primary/80 transition-colors">See All</button>
+        </div>
+        <div class="bg-card rounded-ios-xl border border-border/50 overflow-hidden divide-y divide-border/50" id="topFreeAgents">
+        </div>
+      </section>
+
+      <!-- Top Paid -->
+      <section class="py-4">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold">Top Paid</h2>
+          <button onclick="showTab('today'); filterCategory('all')" class="text-sm font-medium text-primary hover:text-primary/80 transition-colors">See All</button>
+        </div>
+        <div class="bg-card rounded-ios-xl border border-border/50 overflow-hidden divide-y divide-border/50" id="topPaidAgents">
+        </div>
+      </section>
+    </div><!-- End Agents Tab -->
+
+    <!-- Search Tab Content -->
+    <div id="searchTab" class="tab-content hidden">
+      <div class="pt-6 pb-4">
+        <h1 class="text-3xl md:text-4xl font-bold">Search</h1>
+      </div>
+
+      <!-- Search Input -->
+      <div class="relative mb-6">
+        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <input
+          type="text"
+          id="searchInputMain"
+          placeholder="Agents, Categories, Developers"
+          class="w-full h-12 pl-12 pr-4 rounded-ios-lg bg-muted border-0 text-base placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+        >
+      </div>
+
+      <!-- Discover -->
+      <section class="py-4">
+        <h2 class="text-xl font-bold mb-4">Discover</h2>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="searchFor('face swap')" class="px-4 py-2 rounded-full bg-muted hover:bg-muted/70 text-sm font-medium transition-colors btn-press">#face swap</button>
+          <button onclick="searchFor('video')" class="px-4 py-2 rounded-full bg-muted hover:bg-muted/70 text-sm font-medium transition-colors btn-press">#video</button>
+          <button onclick="searchFor('image generator')" class="px-4 py-2 rounded-full bg-muted hover:bg-muted/70 text-sm font-medium transition-colors btn-press">#image generator</button>
+          <button onclick="searchFor('background')" class="px-4 py-2 rounded-full bg-muted hover:bg-muted/70 text-sm font-medium transition-colors btn-press">#background</button>
+          <button onclick="searchFor('portrait')" class="px-4 py-2 rounded-full bg-muted hover:bg-muted/70 text-sm font-medium transition-colors btn-press">#portrait</button>
+          <button onclick="searchFor('music')" class="px-4 py-2 rounded-full bg-muted hover:bg-muted/70 text-sm font-medium transition-colors btn-press">#music</button>
+        </div>
+      </section>
+
+      <!-- Search Results -->
+      <section class="py-4">
+        <h2 class="text-xl font-bold mb-4" id="searchResultsTitle">Suggested</h2>
+        <div class="bg-card rounded-ios-xl border border-border/50 overflow-hidden divide-y divide-border/50" id="searchResults">
+        </div>
+      </section>
+    </div><!-- End Search Tab -->
+  </main>
+
+  <!-- Bottom Tab Bar (Mobile) -->
+  <nav class="fixed bottom-0 left-0 right-0 z-50 glass border-t border-border/40 safe-bottom md:hidden">
+    <div class="flex justify-around items-center h-16">
+      <button onclick="showTab('today')" class="tab-btn active flex flex-col items-center justify-center gap-0.5 px-4 py-2 text-primary" data-tab="today">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+        </svg>
+        <span class="text-[10px] font-medium">Today</span>
+      </button>
+      <button onclick="showTab('agents')" class="tab-btn flex flex-col items-center justify-center gap-0.5 px-4 py-2 text-muted-foreground hover:text-primary transition-colors" data-tab="agents">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        <span class="text-[10px] font-medium">Agents</span>
+      </button>
+      <button onclick="showTab('search')" class="tab-btn flex flex-col items-center justify-center gap-0.5 px-4 py-2 text-muted-foreground hover:text-primary transition-colors" data-tab="search">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <span class="text-[10px] font-medium">Search</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Agent Detail Page (Full Screen) -->
+  <div id="agentDetailPage" class="fixed inset-0 z-[100] bg-background transform translate-x-full transition-transform duration-300 ease-out overflow-hidden">
+    <!-- Header with back button -->
+    <header class="sticky top-0 z-10 glass border-b border-border/40 safe-top">
+      <div class="flex items-center h-14 px-4">
+        <button onclick="closeDetail()" class="flex items-center gap-2 text-primary font-medium">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path d="M15 19l-7-7 7-7"/>
+          </svg>
+          <span>Back</span>
+        </button>
+        <h1 id="detailPageTitle" class="flex-1 text-center font-semibold truncate mx-4">Agent</h1>
+        <div class="w-14"></div>
+      </div>
+    </header>
+
+    <!-- Scrollable Content -->
+    <div id="modalContent" class="overflow-y-auto h-[calc(100vh-56px)] pb-safe">
+      <!-- Dynamic content -->
+    </div>
+  </div>
+
+  <script>
+    // Agent Database
+    const agents = {
+      'virtual-try-on': {
+        id: 'virtual-try-on',
+        name: 'Virtual Try-On',
+        category: 'E-Commerce',
+        categoryKey: 'ecommerce',
+        description: 'Transform outfits on any person by uploading a full-body photo and a clothing reference image. The AI precisely replaces attire while preserving facial features, hairstyle, pose, and background. Perfect for e-commerce sellers to visualize products on different models.',
+        icon: 'https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/54e2dc15-d602-40aa-9b09-0983f7a4f8b3/虚拟试衣.png',
+        screenshots: [
+          'https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/71b89f38-5a95-496a-bdbd-2e1c30bdb993/cover-1_(10).png',
+          'https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/cbadc961-804c-4059-a140-fff3fddc70d7/cover_(12).png'
+        ],
+        rating: 4.8,
+        reviews: '15.2K',
+        tier: 'Pro',
+        price: '$0.50',
+        features: ['Person validation', 'Garment classification', 'Virtual fitting', 'Multiple garment types', 'Model selection', 'Gender & body filters'],
+        developer: 'MuleRun',
+        popular: true,
+        // MuleRun-specific configuration - Real fashion model photos
+        garmentTypes: ['tops', 'bottoms', 'dresses', 'outerwear', 'full-body'],
+        // Fashion model photos for the gallery (female models in neutral poses)
+        modelGallery: [
+          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=200&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=200&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=200&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=200&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=300&fit=crop',
+          'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=300&fit=crop'
+        ],
+        genderOptions: ['All Genders', 'Female', 'Male'],
+        bodyTypes: ['All body types', 'Slim', 'Athletic', 'Plus size'],
+        // Sample outfit images for reference
+        outfitSamples: [
+          'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=150&h=200&fit=crop',
+          'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=150&h=200&fit=crop',
+          'https://images.unsplash.com/photo-1558171813-4c088753af8f?w=150&h=200&fit=crop'
+        ]
+      },
+      'face-swap': {
+        id: 'face-swap',
+        name: 'Face Swap',
+        category: 'Creative',
+        categoryKey: 'creative',
+        description: 'Create realistic face swaps between images with natural blending and expression preservation. Advanced face detection identifies multiple faces and allows selective replacement with high-fidelity results.',
+        icon: 'https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/3b3049b7-bc21-46a8-b445-f2e339e3e65a/换脸.png',
+        screenshots: ['https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/a72088b2-0505-4924-bf9b-6c9e1c49db8b/cover-2_(3).png'],
+        rating: 4.7,
+        reviews: '12.8K',
+        tier: 'Pro',
+        price: '$0.40',
+        features: ['High quality swap', 'Face detection', 'Natural blending', 'Multiple faces', 'Expression preservation', 'Skin tone matching'],
+        developer: 'Higgsfield AI',
+        popular: true,
+        // Face swap specific options
+        swapModes: ['Single face', 'All faces', 'Select faces'],
+        enhancementOptions: ['Skin smoothing', 'Color correction', 'Edge blending']
+      },
+      'image-generator': {
+        id: 'image-generator',
+        name: 'Image Generator',
+        category: 'AI Art',
+        categoryKey: 'image',
+        description: 'Multi-provider AI image generation using DALL-E 3, Stability AI, and Flux models.',
+        icon: 'https://assets-01.mulerun.com/agent/311be0d7-cd68-4fa7-99bc-232e535ebb39/v2025.09.02-07.37.32/showcase-1.png',
+        screenshots: [
+          'https://assets-01.mulerun.com/agent/311be0d7-cd68-4fa7-99bc-232e535ebb39/v2025.09.02-07.37.32/showcase-2.webp',
+          'https://dqv0cqkoy5oj7.cloudfront.net/user_2vtxM3DRcDcQIjpmiCpUDF2wcAT/453bc1ba-2cf6-4897-9268-a4403f35e18e_min.webp'
+        ],
+        rating: 4.9,
+        reviews: '28.5K',
+        tier: 'Pro',
+        price: '$0.30',
+        features: ['DALL-E 3', 'Stability SDXL', 'Flux Models', 'Multiple Styles'],
+        developer: 'Higgsfield AI',
+        popular: true,
+        // Image generation specific options
+        models: [
+          { name: 'DALL-E 3', icon: '🎨' },
+          { name: 'Stability SDXL', icon: '🖼️' },
+          { name: 'Flux Pro', icon: '✨' },
+          { name: 'Midjourney Style', icon: '🌟' }
+        ],
+        aspectRatios: ['1:1', '16:9', '9:16', '4:3', '3:4'],
+        styles: ['Photorealistic', 'Anime', 'Digital Art', 'Oil Painting', 'Watercolor', 'Sketch', '3D Render', 'Cinematic'],
+        promptSuggestions: [
+          'A serene mountain landscape at sunset',
+          'Futuristic city with flying cars',
+          'Portrait of a warrior in golden armor',
+          'Enchanted forest with magical creatures'
+        ]
+      },
+      'background-remover': {
+        id: 'background-remover',
+        name: 'Background Remover',
+        category: 'Image',
+        categoryKey: 'image',
+        description: 'Remove backgrounds from images instantly using AI with high quality edges.',
+        icon: 'https://assets-01.mulerun.com/agent/10aa0000-d27e-49f0-9ee9-0ad7d99f57b3/v1.0.3/showcase-1.webp',
+        screenshots: ['https://assets-01.mulerun.com/agent/10aa0000-d27e-49f0-9ee9-0ad7d99f57b3/v1.0.3/showcase-2.webp'],
+        rating: 4.8,
+        reviews: '45.1K',
+        tier: 'Free',
+        price: 'Free',
+        features: ['Instant removal', 'High quality edges', 'Transparent PNG', 'Batch processing'],
+        developer: 'MuleRun',
+        popular: true
+      },
+      'video-generator': {
+        id: 'video-generator',
+        name: 'Video Generator',
+        category: 'Video',
+        categoryKey: 'video',
+        description: 'Make videos in one click with 250+ presets for camera control, framing, and high-quality VFX. Upload a start frame, choose a preset to control your image movement, then generate your final animated video with industry-leading models.',
+        icon: 'https://cdn.higgsfield.ai/card/ae2180fa-cbab-47a1-b52e-bf07432f34f5.webp',
+        videos: ['https://static.higgsfield.ai/70e490b9-26b7-4572-8d9c-2ac8dcc9adc0.mp4'],
+        rating: 4.9,
+        reviews: '8.3K',
+        tier: 'Enterprise',
+        price: '$2.00',
+        features: ['Text-to-Video', 'Image-to-Video', '250+ Presets', 'Camera Control', 'VFX Effects', '4K Output'],
+        developer: 'Higgsfield AI',
+        popular: true,
+        // Higgsfield-specific configuration
+        models: [
+          { name: 'Kling 2.5 Turbo', icon: '⚡' },
+          { name: 'Sora 2', icon: '🎬' },
+          { name: 'Higgsfield DOP', icon: '🎥' },
+          { name: 'Wan 2.5', icon: '🌊' },
+          { name: 'Minimax Hailuo', icon: '✨' }
+        ],
+        durations: ['5s', '10s', '15s', '30s'],
+        resolutions: ['720p', '1080p', '4K'],
+        presetCategories: ['General', 'Cinematic', 'Action', 'Slow Motion', 'Zoom', 'Pan', 'Tracking']
+      },
+      'lip-sync': {
+        id: 'lip-sync',
+        name: 'Lip Sync',
+        category: 'Video',
+        categoryKey: 'video',
+        description: 'Create talking clips and avatars with natural lip synchronization. Upload any portrait image or video and sync it to audio or text-to-speech for realistic talking head videos with emotion transfer.',
+        icon: 'https://cdn.higgsfield.ai/card/75702883-8d92-4737-94f0-975af4036cec.webp',
+        videos: ['https://cdn.higgsfield.ai/kling_motion/dbe2fcf5-9605-41ea-96ed-b5b655bbbeb0.mp4'],
+        rating: 4.6,
+        reviews: '5.2K',
+        tier: 'Pro',
+        price: '$1.00',
+        features: ['Audio Sync', 'Text-to-Speech', 'Emotion Transfer', 'Multi-language', 'Expression Control'],
+        developer: 'Higgsfield AI',
+        popular: true,
+        // Lip sync specific options
+        audioModes: ['Upload Audio', 'Text-to-Speech', 'Record'],
+        languages: ['English', 'Spanish', 'French', 'German', 'Chinese', 'Japanese', 'Korean'],
+        voiceStyles: ['Natural', 'Professional', 'Casual', 'Energetic']
+      },
+      'talking-avatar': {
+        id: 'talking-avatar',
+        name: 'Talking Avatar',
+        category: 'Video',
+        categoryKey: 'video',
+        description: 'Generate talking head videos from still images with natural speech and expression. Perfect for creating UGC content, virtual presenters, and personalized video messages with AI-powered lip sync.',
+        icon: 'https://cdn.higgsfield.ai/8ab53648-e4d3-41ad-900e-b38b6f33dbaf.webp',
+        screenshots: ['https://cdn.higgsfield.ai/8ab53648-e4d3-41ad-900e-b38b6f33dbaf.webp'],
+        rating: 4.7,
+        reviews: '6.8K',
+        tier: 'Pro',
+        price: '$1.50',
+        features: ['Image to Video', 'Text-to-Speech', 'Expression Control', 'Multiple Voices', 'UGC Creation'],
+        developer: 'Higgsfield AI',
+        // Avatar specific options
+        avatarStyles: ['Professional', 'Casual', 'Energetic', 'Calm'],
+        expressions: ['Neutral', 'Happy', 'Serious', 'Excited'],
+        backgrounds: ['Original', 'Blur', 'Solid Color', 'Custom Image']
+      },
+      'image-upscaler': {
+        id: 'image-upscaler',
+        name: 'Image Upscaler',
+        category: 'Image',
+        categoryKey: 'image',
+        description: 'Enhance resolution and quality using the Topaz upscaler. Upscale images up to 4x while preserving details, reducing noise, and enhancing faces automatically.',
+        icon: 'https://assets-01.mulerun.com/agent/c55ea644-5e6f-45ca-bcb7-30135f3e984c/v1.0.1/showcase-1.webp',
+        screenshots: ['https://assets-01.mulerun.com/agent/c55ea644-5e6f-45ca-bcb7-30135f3e984c/v1.0.1/showcase-2.webp'],
+        rating: 4.8,
+        reviews: '22.4K',
+        tier: 'Starter',
+        price: '$0.20',
+        features: ['4x Upscale', 'Noise Reduction', 'Face Enhancement', 'Detail Restoration', 'Topaz Quality'],
+        developer: 'MuleRun',
+        popular: true,
+        // Upscaler specific options
+        scaleOptions: ['2x', '4x', '8x'],
+        enhancementTypes: ['General', 'Photo', 'Anime', 'Art'],
+        noiseReduction: ['Off', 'Low', 'Medium', 'High']
+      },
+      'portrait-enhancer': {
+        id: 'portrait-enhancer',
+        name: 'Portrait Enhancer',
+        category: 'Image',
+        categoryKey: 'image',
+        description: 'Professional portrait enhancement and retouching with AI. Automatically smooth skin, enhance eyes, fix lighting, and remove blemishes while maintaining natural-looking results.',
+        icon: 'https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/71b89f38-5a95-496a-bdbd-2e1c30bdb993/cover-1_(10).png',
+        screenshots: ['https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/71b89f38-5a95-496a-bdbd-2e1c30bdb993/cover-1_(10).png'],
+        rating: 4.6,
+        reviews: '9.1K',
+        tier: 'Starter',
+        price: '$0.25',
+        features: ['Skin Smoothing', 'Eye Enhancement', 'Lighting Fix', 'Blemish Removal', 'Natural Results'],
+        developer: 'MuleRun',
+        // Enhancement specific options
+        enhancementLevel: ['Subtle', 'Moderate', 'Strong'],
+        features_toggle: ['Skin smoothing', 'Eye enhancement', 'Teeth whitening', 'Background blur']
+      },
+      'image-animator': {
+        id: 'image-animator',
+        name: 'Image Animator',
+        category: 'Video',
+        categoryKey: 'video',
+        description: 'Transform static images into captivating animated videos with AI motion synthesis. Add parallax effects, depth estimation, and seamless loops to bring your photos to life.',
+        icon: 'https://cdn.higgsfield.ai/card/ae2180fa-cbab-47a1-b52e-bf07432f34f5.webp',
+        videos: ['https://cdn.higgsfield.ai/wan2_2_motion/22b6f9ca-5469-4086-8956-a2deb4944307.mp4'],
+        rating: 4.7,
+        reviews: '4.2K',
+        tier: 'Pro',
+        price: '$0.80',
+        features: ['Motion Synthesis', 'Loop Creation', 'Depth Estimation', 'Parallax Effect', 'Camera Movement'],
+        developer: 'Higgsfield AI',
+        // Animation specific options
+        motionTypes: ['Gentle sway', 'Parallax', 'Zoom', 'Pan', 'Custom'],
+        loopOptions: ['Once', 'Loop', 'Boomerang'],
+        durationOptions: ['3s', '5s', '10s']
+      },
+      'video-upscaler': {
+        id: 'video-upscaler',
+        name: 'Video Upscaler',
+        category: 'Video',
+        categoryKey: 'video',
+        description: 'Enhance video quality and resolution up to 4K with AI. Includes frame interpolation for smoother motion, stabilization, and intelligent denoising.',
+        icon: 'https://cdn.higgsfield.ai/card/ae2180fa-cbab-47a1-b52e-bf07432f34f5.webp',
+        screenshots: ['https://cdn.higgsfield.ai/card/ae2180fa-cbab-47a1-b52e-bf07432f34f5.webp'],
+        rating: 4.6,
+        reviews: '3.8K',
+        tier: 'Pro',
+        price: '$1.50',
+        features: ['4K Upscale', 'Frame Interpolation', 'Stabilization', 'Denoising', '60fps Conversion'],
+        developer: 'Higgsfield AI',
+        // Video upscaler specific options
+        targetResolutions: ['720p', '1080p', '4K'],
+        frameRates: ['Original', '30fps', '60fps'],
+        stabilization: ['Off', 'Light', 'Standard', 'Strong']
+      },
+      'music-generator': {
+        id: 'music-generator',
+        name: 'Music Generator',
+        category: 'Audio',
+        categoryKey: 'audio',
+        description: 'Create original music and sound effects with AI. Generate background tracks, ambient sounds, and full compositions in various genres using MusicGen technology.',
+        icon: 'https://assets-01.mulerun.com/pages/landing/agents/agent-head-3.webp',
+        screenshots: ['https://assets-01.mulerun.com/pages/landing/agents/agent-head-3.webp'],
+        rating: 4.5,
+        reviews: '2.1K',
+        tier: 'Pro',
+        price: '$0.50',
+        features: ['MusicGen', 'Sound Effects', 'Ambient', 'Style Control', 'Multiple Genres'],
+        developer: 'Higgsfield AI',
+        // Music specific options
+        genres: ['Pop', 'Electronic', 'Classical', 'Jazz', 'Ambient', 'Cinematic', 'Rock'],
+        moods: ['Happy', 'Sad', 'Energetic', 'Calm', 'Dramatic', 'Mysterious'],
+        durations: ['15s', '30s', '60s', '2min', '3min']
+      },
+      'voice-cloner': {
+        id: 'voice-cloner',
+        name: 'Voice Cloner',
+        category: 'Audio',
+        categoryKey: 'audio',
+        description: 'Create realistic voice clones and text-to-speech with multiple voice presets. Support for 29+ languages with natural-sounding speech synthesis.',
+        icon: 'https://assets-01.mulerun.com/pages/landing/agents/agent-head-4.webp',
+        screenshots: ['https://assets-01.mulerun.com/pages/landing/agents/agent-head-4.webp'],
+        rating: 4.4,
+        reviews: '1.8K',
+        tier: 'Enterprise',
+        price: '$1.00',
+        features: ['Voice Synthesis', 'Multiple Presets', 'Natural Speech', '29+ Languages', 'Custom Voices'],
+        developer: 'Higgsfield AI',
+        // Voice specific options
+        voiceTypes: ['Male', 'Female', 'Child', 'Custom Clone'],
+        languages: ['English', 'Spanish', 'French', 'German', 'Italian', 'Portuguese', 'Chinese', 'Japanese', 'Korean'],
+        emotions: ['Neutral', 'Happy', 'Sad', 'Angry', 'Excited', 'Calm']
+      },
+      'ai-model-swap': {
+        id: 'ai-model-swap',
+        name: 'AI Model Swap',
+        category: 'E-Commerce',
+        categoryKey: 'ecommerce',
+        description: 'Replace fashion models in product photos while perfectly preserving garments, poses, and backgrounds. Ideal for e-commerce sellers needing diverse model representation.',
+        icon: 'https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/8e282302-b729-45c7-be39-7c48b3161a96/cover_(11).png',
+        screenshots: ['https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/09d4e979-5eb0-4e27-b865-c3856d6cccd0/模特换肤.png'],
+        rating: 4.7,
+        reviews: '5.6K',
+        tier: 'Pro',
+        price: '$0.60',
+        features: ['Model replacement', 'Garment preservation', 'Pose matching', 'Diverse models', 'Natural results'],
+        developer: 'MuleRun',
+        // Model swap specific options
+        modelDiversity: ['All ethnicities', 'All ages', 'All genders'],
+        bodyTypes: ['Slim', 'Athletic', 'Average', 'Plus size'],
+        poseMatching: ['Auto', 'Manual adjust']
+      },
+      'chibi-sticker-maker': {
+        id: 'chibi-sticker-maker',
+        name: 'Chibi Sticker Maker',
+        category: 'Creative',
+        categoryKey: 'creative',
+        description: 'Transform photos into adorable chibi-style stickers instantly. Create cute character stickers with multiple poses and expressions perfect for messaging apps.',
+        icon: 'https://assets-01.mulerun.com/agent/82428895-e64f-4339-ba9f-1ac174b2bb4a/v1.0.1/showcase-1.png',
+        screenshots: ['https://assets-01.mulerun.com/agent/82428895-e64f-4339-ba9f-1ac174b2bb4a/v1.0.1/showcase-2.webp'],
+        rating: 4.9,
+        reviews: '8.4K',
+        tier: 'Starter',
+        price: '$0.50',
+        features: ['Cute stickers', 'Multiple poses', 'Expression variants', 'Instant generation', 'Pack creation'],
+        developer: 'MuleRun',
+        popular: true,
+        // Sticker specific options
+        stickerStyles: ['Classic Chibi', 'Anime', 'Cartoon', 'Emoji style'],
+        packSizes: ['6 stickers', '12 stickers', '24 stickers'],
+        expressions: ['Happy', 'Sad', 'Angry', 'Surprised', 'Love', 'Cool', 'Sleepy', 'Confused']
+      },
+      'product-description-writer': {
+        id: 'product-description-writer',
+        name: 'Product Description Writer',
+        category: 'Productivity',
+        categoryKey: 'productivity',
+        description: 'Generate compelling, SEO-optimized product descriptions instantly. Supports multiple e-commerce platforms with tone customization and benefit highlighting.',
+        icon: 'https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251110/c3e5fd64-938e-4bd1-b389-71d113b3ed28/mulerun3.png',
+        screenshots: ['https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251110/c3e5fd64-938e-4bd1-b389-71d113b3ed28/mulerun3.png'],
+        rating: 4.8,
+        reviews: '18.2K',
+        tier: 'Free',
+        price: 'Free',
+        features: ['Platform optimization', 'SEO integration', 'Multiple variations', 'Benefit highlighting', 'Tone control'],
+        developer: 'MuleRun',
+        // Writer specific options
+        platforms: ['Amazon', 'Shopify', 'eBay', 'Etsy', 'WooCommerce', 'General'],
+        tones: ['Professional', 'Casual', 'Luxury', 'Fun', 'Technical'],
+        lengths: ['Short (50 words)', 'Medium (100 words)', 'Long (200 words)']
+      },
+      'style-transfer': {
+        id: 'style-transfer',
+        name: 'Style Transfer',
+        category: 'Creative',
+        categoryKey: 'creative',
+        description: 'Transform photos with 100+ artistic styles including Y2K, Fairycore, Gorpcore, Vintage, and more. Apply aesthetic presets for stunning visual transformations.',
+        icon: 'https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/129840a5-8f47-4006-b9ba-ca4b0615ca62/cover_(16).png',
+        screenshots: ['https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/129840a5-8f47-4006-b9ba-ca4b0615ca62/cover_(16).png'],
+        rating: 4.5,
+        reviews: '7.3K',
+        tier: 'Starter',
+        price: '$0.30',
+        features: ['100+ Styles', 'Aesthetic Presets', 'Intensity Control', 'Custom Styles', 'Batch Processing'],
+        developer: 'Higgsfield AI',
+        // Style transfer specific options
+        styleCategories: ['Classic Art', 'Modern', 'Aesthetic', 'Fantasy', 'Vintage'],
+        popularStyles: ['Y2K', 'Fairycore', 'Gorpcore', 'Quiet Luxury', 'Medieval', 'Cyberpunk'],
+        intensity: ['Subtle', 'Balanced', 'Strong', 'Maximum']
+      }
+    };
+
+    // Current filter
+    let currentCategory = 'all';
+
+    // Render functions
+    function renderAgentCard(agent, isPopular = false) {
+      const tierColors = {
+        'Free': 'bg-green-500/10 text-green-600 dark:text-green-400',
+        'Starter': 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
+        'Pro': 'bg-purple-500/10 text-purple-600 dark:text-purple-400',
+        'Enterprise': 'bg-orange-500/10 text-orange-600 dark:text-orange-400'
+      };
+
+      return `
+        <div class="group bg-card rounded-ios-2xl border border-border/50 overflow-hidden card-hover cursor-pointer stagger-item" onclick="openDetail('${agent.id}')">
+          <div class="relative aspect-[4/3] bg-muted overflow-hidden">
+            <img src="${agent.icon}" alt="${agent.name}" class="w-full h-full object-cover img-zoom">
+            ${agent.popular ? '<span class="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-ios-orange text-white text-xs font-medium">Popular</span>' : ''}
+          </div>
+          <div class="p-4">
+            <div class="flex items-start justify-between gap-2 mb-2">
+              <div class="flex-1 min-w-0">
+                <h3 class="font-semibold text-sm truncate">${agent.name}</h3>
+                <p class="text-xs text-muted-foreground">${agent.category}</p>
+              </div>
+              <span class="px-2 py-0.5 rounded-full text-xs font-medium ${tierColors[agent.tier]}">${agent.tier}</span>
+            </div>
+            <p class="text-xs text-muted-foreground line-clamp-2 mb-3">${agent.description}</p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1">
+                <svg class="w-3.5 h-3.5 text-ios-orange" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="text-xs font-medium">${agent.rating}</span>
+                <span class="text-xs text-muted-foreground">(${agent.reviews})</span>
+              </div>
+              <button class="px-3 py-1.5 rounded-full ${agent.price === 'Free' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'} text-xs font-semibold btn-press">
+                ${agent.price === 'Free' ? 'Free' : 'Get'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderAgentRow(agent) {
+      return `
+        <div class="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors cursor-pointer stagger-item" onclick="openDetail('${agent.id}')">
+          <img src="${agent.icon}" alt="${agent.name}" class="w-16 h-16 rounded-ios-lg object-cover app-icon flex-shrink-0">
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold text-sm truncate">${agent.name}</h3>
+            <p class="text-xs text-muted-foreground truncate">${agent.description}</p>
+            <div class="flex items-center gap-2 mt-1">
+              <div class="flex items-center gap-0.5">
+                <svg class="w-3 h-3 text-ios-orange" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span class="text-xs">${agent.rating}</span>
+              </div>
+              <span class="text-xs text-muted-foreground">${agent.category}</span>
+            </div>
+          </div>
+          <button class="px-4 py-1.5 rounded-full ${agent.price === 'Free' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'} text-xs font-semibold btn-press flex-shrink-0">
+            ${agent.price === 'Free' ? 'Free' : 'Get'}
+          </button>
+        </div>
+      `;
+    }
+
+    // Category display names
+    const categoryNames = {
+      'all': 'All',
+      'image': 'Image',
+      'video': 'Video',
+      'audio': 'Audio',
+      'creative': 'Creative',
+      'ecommerce': 'E-Commerce',
+      'productivity': 'Productivity'
+    };
+
+    // Populate agents
+    function populateAgents() {
+      // Filter popular agents by category too
+      const popular = currentCategory === 'all'
+        ? Object.values(agents).filter(a => a.popular)
+        : Object.values(agents).filter(a => a.popular && a.categoryKey === currentCategory);
+
+      // Update Popular section title
+      const categoryName = categoryNames[currentCategory] || 'All';
+      document.getElementById('popularTitle').textContent = currentCategory === 'all'
+        ? 'Popular Right Now'
+        : `Popular ${categoryName} Agents`;
+
+      // Update Popular section - show message if no popular agents in category
+      const popularContainer = document.getElementById('popularAgents');
+      if (popular.length > 0) {
+        popularContainer.innerHTML = popular.map(a => renderAgentCard(a, true)).join('');
+      } else {
+        popularContainer.innerHTML = `<p class="text-muted-foreground text-sm col-span-full text-center py-8">No popular agents in this category</p>`;
+      }
+
+      // Filter all agents by category
+      const filtered = currentCategory === 'all'
+        ? Object.values(agents)
+        : Object.values(agents).filter(a => a.categoryKey === currentCategory);
+
+      // Update All Agents section title
+      document.getElementById('allAgentsTitle').textContent = currentCategory === 'all'
+        ? 'All Agents'
+        : `${categoryName} Agents`;
+
+      document.getElementById('allAgents').innerHTML = filtered.map(a => renderAgentRow(a)).join('');
+      document.getElementById('agentCount').textContent = `${filtered.length} agents`;
+    }
+
+    // Filter by category
+    function filterCategory(category) {
+      currentCategory = category;
+
+      // Update button states
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        if (btn.dataset.category === category) {
+          btn.classList.add('bg-primary', 'text-primary-foreground');
+          btn.classList.remove('bg-secondary', 'text-secondary-foreground');
+        } else {
+          btn.classList.remove('bg-primary', 'text-primary-foreground');
+          btn.classList.add('bg-secondary', 'text-secondary-foreground');
+        }
+      });
+
+      populateAgents();
+    }
+
+    // Search from header
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      if (query.length === 0) {
+        populateAgents();
+        return;
+      }
+
+      // Reset category to all when searching
+      currentCategory = 'all';
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        if (btn.dataset.category === 'all') {
+          btn.classList.add('bg-primary', 'text-primary-foreground');
+          btn.classList.remove('bg-secondary', 'text-secondary-foreground');
+        } else {
+          btn.classList.remove('bg-primary', 'text-primary-foreground');
+          btn.classList.add('bg-secondary', 'text-secondary-foreground');
+        }
+      });
+
+      const filtered = Object.values(agents).filter(a =>
+        a.name.toLowerCase().includes(query) ||
+        a.description.toLowerCase().includes(query) ||
+        a.category.toLowerCase().includes(query)
+      );
+
+      // Update section titles for search
+      document.getElementById('popularTitle').textContent = `Search Results`;
+      document.getElementById('allAgentsTitle').textContent = `Results for "${query}"`;
+
+      // Update Popular section with search results
+      const popularFiltered = filtered.filter(a => a.popular);
+      const popularContainer = document.getElementById('popularAgents');
+      if (popularFiltered.length > 0) {
+        popularContainer.innerHTML = popularFiltered.map(a => renderAgentCard(a, true)).join('');
+      } else if (filtered.length > 0) {
+        popularContainer.innerHTML = `<p class="text-muted-foreground text-sm col-span-full text-center py-8">No popular agents match "${query}"</p>`;
+      } else {
+        popularContainer.innerHTML = `<p class="text-muted-foreground text-sm col-span-full text-center py-8">No results found</p>`;
+      }
+
+      // Update All Agents section
+      document.getElementById('allAgents').innerHTML = filtered.length > 0
+        ? filtered.map(a => renderAgentRow(a)).join('')
+        : `<p class="text-muted-foreground text-sm text-center py-8">No agents found for "${query}"</p>`;
+      document.getElementById('agentCount').textContent = `${filtered.length} results`;
+
+      // Scroll to All Agents section if there are results
+      if (filtered.length > 0) {
+        document.getElementById('allAgents').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+
+    // Generate agent-specific modal content
+    function getAgentSpecificUI(agent) {
+      switch(agent.id) {
+        case 'virtual-try-on':
+          return `
+            <!-- Step 1: Select or Upload Model Photo -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Step 1: Select Model (or upload your own)</label>
+              <div class="flex gap-2 mb-4">
+                <button class="model-tab-btn px-4 py-2 rounded-ios bg-primary text-primary-foreground text-sm font-medium" data-tab="default">Default models</button>
+                <button class="model-tab-btn px-4 py-2 rounded-ios bg-secondary text-secondary-foreground text-sm font-medium hover:bg-secondary/80" data-tab="custom">Upload custom</button>
+              </div>
+
+              <!-- Default Model Gallery -->
+              <div id="defaultModelTab" class="mb-4">
+                <div class="flex gap-3 mb-3">
+                  <select class="flex-1 px-3 py-2 rounded-ios bg-secondary text-sm border-0">
+                    ${agent.genderOptions.map(g => `<option>${g}</option>`).join('')}
+                  </select>
+                  <select class="flex-1 px-3 py-2 rounded-ios bg-secondary text-sm border-0">
+                    ${agent.bodyTypes.map(b => `<option>${b}</option>`).join('')}
+                  </select>
+                </div>
+                <div class="grid grid-cols-4 gap-2">
+                  ${agent.modelGallery.map((img, i) => `
+                    <div class="aspect-[3/4] rounded-ios-lg overflow-hidden cursor-pointer border-2 ${i === 0 ? 'border-primary' : 'border-transparent hover:border-primary/50'} transition-colors model-select" onclick="selectModel(this)">
+                      <img src="${img}" class="w-full h-full object-cover" alt="Model ${i+1}">
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- Custom Model Upload - In-box preview -->
+              <div id="customModelTab" class="hidden">
+                <div id="uploadBox-${agent.id}" class="relative border-2 border-dashed border-border rounded-ios-xl aspect-[3/4] max-w-[200px] overflow-hidden cursor-pointer hover:border-primary/50 transition-colors" onclick="document.getElementById('fileInput-${agent.id}').click()">
+                  <input type="file" id="fileInput-${agent.id}" class="hidden" accept="image/*" onchange="handleUploadInBox(event, '${agent.id}')">
+                  <div id="placeholder-${agent.id}" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                    <svg class="w-10 h-10 mb-2 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/>
+                    </svg>
+                    <p class="text-sm font-medium text-center">Upload full-body photo</p>
+                    <p class="text-xs text-muted-foreground mt-1 text-center">Clear, front-facing</p>
+                  </div>
+                  <img id="previewImg-${agent.id}" class="absolute inset-0 w-full h-full object-cover hidden" alt="Preview">
+                  <button id="clearBtn-${agent.id}" onclick="event.stopPropagation(); clearUploadInBox('${agent.id}')" class="absolute top-2 right-2 w-6 h-6 bg-ios-red text-white rounded-full items-center justify-center hidden z-10">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Upload Outfit/Clothing Reference - In-box preview -->
+            <div class="mb-6">
+              <div class="flex items-center justify-between mb-3">
+                <label class="text-sm font-semibold">Step 2: Upload Outfit Reference</label>
+                <select class="px-3 py-1.5 rounded-ios bg-secondary text-sm border-0">
+                  ${agent.garmentTypes.map(t => `<option value="${t}">${t.charAt(0).toUpperCase() + t.slice(1)}</option>`).join('')}
+                </select>
+              </div>
+              <div id="uploadBox2-${agent.id}" class="relative border-2 border-dashed border-border rounded-ios-xl aspect-[3/4] max-w-[200px] overflow-hidden cursor-pointer hover:border-primary/50 transition-colors" onclick="document.getElementById('fileInput2-${agent.id}').click()">
+                <input type="file" id="fileInput2-${agent.id}" class="hidden" accept="image/*" onchange="handleUploadInBox2(event, '${agent.id}')">
+                <div id="placeholder2-${agent.id}" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                  <svg class="w-10 h-10 mb-2 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-width="1.5" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/>
+                    <path stroke-width="1.5" d="M6 6h.008v.008H6V6z"/>
+                  </svg>
+                  <p class="text-sm font-medium text-center">Upload clothing image</p>
+                  <p class="text-xs text-muted-foreground mt-1 text-center">Full outfit photo</p>
+                </div>
+                <img id="previewImg2-${agent.id}" class="absolute inset-0 w-full h-full object-cover hidden" alt="Outfit Preview">
+                <button id="clearBtn2-${agent.id}" onclick="event.stopPropagation(); clearUploadInBox2('${agent.id}')" class="absolute top-2 right-2 w-6 h-6 bg-ios-red text-white rounded-full items-center justify-center hidden z-10">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+          `;
+
+        case 'video-generator':
+          return `
+            <!-- Start/End Frame Upload -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  <span class="text-sm font-semibold">Start frame</span>
+                  <span class="text-xs text-muted-foreground">Required</span>
+                </div>
+                <div id="uploadBox-${agent.id}" class="relative border-2 border-dashed border-border rounded-ios-xl aspect-video overflow-hidden cursor-pointer hover:border-primary/50 transition-colors" onclick="document.getElementById('fileInput-${agent.id}').click()">
+                  <input type="file" id="fileInput-${agent.id}" class="hidden" accept="image/*" onchange="handleUploadInBox(event, '${agent.id}')">
+                  <div id="placeholder-${agent.id}" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                    <svg class="w-8 h-8 mb-2 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    <p class="text-xs text-muted-foreground">Click to upload</p>
+                  </div>
+                  <img id="previewImg-${agent.id}" class="absolute inset-0 w-full h-full object-cover hidden" alt="Start Frame">
+                  <button id="clearBtn-${agent.id}" onclick="event.stopPropagation(); clearUploadInBox('${agent.id}')" class="absolute top-2 right-2 w-6 h-6 bg-ios-red text-white rounded-full items-center justify-center hidden z-10">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  <span class="text-sm font-semibold">End frame</span>
+                  <span class="text-xs text-muted-foreground">Optional</span>
+                </div>
+                <div id="uploadBox2-${agent.id}" class="relative border-2 border-dashed border-border rounded-ios-xl aspect-video overflow-hidden cursor-pointer hover:border-primary/50 transition-colors" onclick="document.getElementById('fileInput2-${agent.id}').click()">
+                  <input type="file" id="fileInput2-${agent.id}" class="hidden" accept="image/*" onchange="handleUploadInBox2(event, '${agent.id}')">
+                  <div id="placeholder2-${agent.id}" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                    <svg class="w-8 h-8 mb-2 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    <p class="text-xs text-muted-foreground">Click to upload</p>
+                  </div>
+                  <img id="previewImg2-${agent.id}" class="absolute inset-0 w-full h-full object-cover hidden" alt="End Frame">
+                  <button id="clearBtn2-${agent.id}" onclick="event.stopPropagation(); clearUploadInBox2('${agent.id}')" class="absolute top-2 right-2 w-6 h-6 bg-ios-red text-white rounded-full items-center justify-center hidden z-10">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Prompt -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-2">Prompt</label>
+              <textarea rows="3" placeholder="Describe the scene you imagine, with details." class="w-full px-4 py-3 rounded-ios-lg bg-muted border-0 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"></textarea>
+              <div class="flex items-center gap-2 mt-2">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" class="w-4 h-4 rounded accent-primary">
+                  <span class="text-sm">Enhance on</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Model Selection -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-2">Model</label>
+              <div class="flex items-center gap-3 p-3 rounded-ios-lg bg-muted">
+                <span class="text-lg">${agent.models[0].icon}</span>
+                <select class="flex-1 bg-transparent border-0 text-sm font-medium focus:outline-none">
+                  ${agent.models.map(m => `<option>${m.icon} ${m.name}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+
+            <!-- Duration & Resolution -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div>
+                <label class="block text-sm font-semibold mb-2">Duration</label>
+                <select class="w-full px-3 py-2 rounded-ios bg-muted border-0 text-sm">
+                  ${agent.durations.map(d => `<option>${d}</option>`).join('')}
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold mb-2">Resolution</label>
+                <select class="w-full px-3 py-2 rounded-ios bg-muted border-0 text-sm">
+                  ${agent.resolutions.map(r => `<option>${r}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+          `;
+
+        case 'lip-sync':
+          return `
+            <!-- Upload Portrait -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Upload Portrait Image or Video</label>
+              <div class="border-2 border-dashed border-border rounded-ios-xl p-8 text-center hover:border-primary/50 transition-all cursor-pointer" onclick="document.getElementById('fileInput-${agent.id}').click()">
+                <input type="file" id="fileInput-${agent.id}" class="hidden" accept="image/*,video/*" onchange="handleFileUpload(event, '${agent.id}')">
+                <svg class="w-12 h-12 mx-auto mb-3 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/>
+                </svg>
+                <p class="text-sm font-medium">Upload portrait</p>
+                <p class="text-xs text-muted-foreground mt-1">Image or video with face</p>
+              </div>
+            </div>
+
+            <!-- Audio Input Mode -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Audio Input</label>
+              <div class="flex gap-2 mb-4">
+                ${agent.audioModes.map((mode, i) => `
+                  <button class="flex-1 px-3 py-2 rounded-ios ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors audio-mode-btn">${mode}</button>
+                `).join('')}
+              </div>
+              <div class="border-2 border-dashed border-border rounded-ios-xl p-6 text-center">
+                <svg class="w-8 h-8 mx-auto mb-2 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-width="1.5" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"/>
+                </svg>
+                <p class="text-sm text-muted-foreground">Upload audio file or record</p>
+              </div>
+            </div>
+
+            <!-- Language & Voice -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div>
+                <label class="block text-sm font-semibold mb-2">Language</label>
+                <select class="w-full px-3 py-2 rounded-ios bg-muted border-0 text-sm">
+                  ${agent.languages.map(l => `<option>${l}</option>`).join('')}
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold mb-2">Voice Style</label>
+                <select class="w-full px-3 py-2 rounded-ios bg-muted border-0 text-sm">
+                  ${agent.voiceStyles.map(v => `<option>${v}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+          `;
+
+        case 'music-generator':
+          return `
+            <!-- Prompt -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Describe your music</label>
+              <textarea rows="4" placeholder="Describe the music you want to create... e.g., 'Upbeat electronic track with synths and a catchy melody'" class="w-full px-4 py-3 rounded-ios-lg bg-muted border-0 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"></textarea>
+            </div>
+
+            <!-- Genre Selection -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Genre</label>
+              <div class="flex flex-wrap gap-2">
+                ${agent.genres.map((genre, i) => `
+                  <button class="px-4 py-2 rounded-full ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors genre-btn">${genre}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Mood Selection -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Mood</label>
+              <div class="flex flex-wrap gap-2">
+                ${agent.moods.map((mood, i) => `
+                  <button class="px-4 py-2 rounded-full ${i === 0 ? 'bg-ios-blue text-white' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors mood-btn">${mood}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Duration -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Duration</label>
+              <div class="flex gap-2">
+                ${agent.durations.map((dur, i) => `
+                  <button class="flex-1 px-3 py-2 rounded-ios ${i === 1 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${dur}</button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+        case 'voice-cloner':
+          return `
+            <!-- Voice Type -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Voice Type</label>
+              <div class="grid grid-cols-4 gap-2">
+                ${agent.voiceTypes.map((type, i) => `
+                  <button class="px-3 py-3 rounded-ios-lg ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${type}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Clone Voice Upload -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Upload Voice Sample (for cloning)</label>
+              <div class="border-2 border-dashed border-border rounded-ios-xl p-6 text-center hover:border-primary/50 cursor-pointer">
+                <svg class="w-10 h-10 mx-auto mb-2 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-width="1.5" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"/>
+                </svg>
+                <p class="text-sm font-medium">Upload audio sample</p>
+                <p class="text-xs text-muted-foreground mt-1">MP3, WAV up to 30 seconds</p>
+              </div>
+            </div>
+
+            <!-- Text Input -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Text to Speak</label>
+              <textarea rows="4" placeholder="Enter the text you want the AI to speak..." class="w-full px-4 py-3 rounded-ios-lg bg-muted border-0 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"></textarea>
+            </div>
+
+            <!-- Language & Emotion -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div>
+                <label class="block text-sm font-semibold mb-2">Language</label>
+                <select class="w-full px-3 py-2 rounded-ios bg-muted border-0 text-sm">
+                  ${agent.languages.map(l => `<option>${l}</option>`).join('')}
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold mb-2">Emotion</label>
+                <select class="w-full px-3 py-2 rounded-ios bg-muted border-0 text-sm">
+                  ${agent.emotions.map(e => `<option>${e}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+          `;
+
+        case 'chibi-sticker-maker':
+          return `
+            <!-- Upload Photo -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Upload Your Photo</label>
+              <div class="border-2 border-dashed border-border rounded-ios-xl p-8 text-center hover:border-primary/50 transition-all cursor-pointer" onclick="document.getElementById('fileInput-${agent.id}').click()">
+                <input type="file" id="fileInput-${agent.id}" class="hidden" accept="image/*" onchange="handleFileUpload(event, '${agent.id}')">
+                <svg class="w-12 h-12 mx-auto mb-3 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/>
+                </svg>
+                <p class="text-sm font-medium">Upload a photo with your face</p>
+                <p class="text-xs text-muted-foreground mt-1">Clear face photo works best</p>
+              </div>
+            </div>
+
+            <!-- Sticker Style -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Sticker Style</label>
+              <div class="grid grid-cols-4 gap-2">
+                ${agent.stickerStyles.map((style, i) => `
+                  <button class="px-3 py-3 rounded-ios-lg ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-xs font-medium transition-colors">${style}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Pack Size -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Pack Size</label>
+              <div class="flex gap-2">
+                ${agent.packSizes.map((size, i) => `
+                  <button class="flex-1 px-3 py-2 rounded-ios ${i === 1 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${size}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Expressions Preview -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Expressions Included</label>
+              <div class="flex flex-wrap gap-2">
+                ${agent.expressions.map(exp => `
+                  <span class="px-3 py-1 rounded-full bg-muted text-xs">${exp}</span>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+        case 'product-description-writer':
+          return `
+            <!-- Product Info -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Product Name</label>
+              <input type="text" placeholder="Enter your product name..." class="w-full px-4 py-3 rounded-ios-lg bg-muted border-0 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30">
+            </div>
+
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Key Features (comma separated)</label>
+              <textarea rows="3" placeholder="e.g., waterproof, lightweight, eco-friendly materials..." class="w-full px-4 py-3 rounded-ios-lg bg-muted border-0 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"></textarea>
+            </div>
+
+            <!-- Platform -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Target Platform</label>
+              <div class="flex flex-wrap gap-2">
+                ${agent.platforms.map((platform, i) => `
+                  <button class="px-4 py-2 rounded-full ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${platform}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Tone -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Tone</label>
+              <div class="flex flex-wrap gap-2">
+                ${agent.tones.map((tone, i) => `
+                  <button class="px-4 py-2 rounded-full ${i === 0 ? 'bg-ios-blue text-white' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${tone}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Length -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Description Length</label>
+              <div class="flex gap-2">
+                ${agent.lengths.map((len, i) => `
+                  <button class="flex-1 px-3 py-2 rounded-ios ${i === 1 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-xs font-medium transition-colors">${len}</button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+        case 'face-swap':
+          return `
+            <!-- Two-column upload for face swap -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <!-- Source Face -->
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <svg class="w-5 h-5 text-ios-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/>
+                  </svg>
+                  <span class="text-sm font-semibold">Source Face</span>
+                </div>
+                <p class="text-xs text-muted-foreground mb-2">The face you want to use</p>
+                <div id="uploadBox-${agent.id}" class="relative border-2 border-dashed border-border rounded-ios-xl aspect-square overflow-hidden cursor-pointer hover:border-primary/50 transition-colors" onclick="document.getElementById('fileInput-${agent.id}').click()">
+                  <input type="file" id="fileInput-${agent.id}" class="hidden" accept="image/*" onchange="handleUploadInBox(event, '${agent.id}')">
+                  <!-- Placeholder -->
+                  <div id="placeholder-${agent.id}" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                    <svg class="w-8 h-8 mb-2 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-width="1.5" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    <p class="text-xs text-muted-foreground text-center">Upload face photo</p>
+                  </div>
+                  <!-- Preview (hidden by default) -->
+                  <img id="previewImg-${agent.id}" class="absolute inset-0 w-full h-full object-cover hidden" alt="Source Face">
+                  <!-- Clear button (hidden by default) -->
+                  <button id="clearBtn-${agent.id}" onclick="event.stopPropagation(); clearUploadInBox('${agent.id}')" class="absolute top-2 right-2 w-6 h-6 bg-ios-red text-white rounded-full items-center justify-center hidden z-10">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Target Image -->
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <svg class="w-5 h-5 text-ios-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                  <span class="text-sm font-semibold">Target Image</span>
+                </div>
+                <p class="text-xs text-muted-foreground mb-2">Photo to swap face into</p>
+                <div id="uploadBox2-${agent.id}" class="relative border-2 border-dashed border-border rounded-ios-xl aspect-square overflow-hidden cursor-pointer hover:border-primary/50 transition-colors" onclick="document.getElementById('fileInput2-${agent.id}').click()">
+                  <input type="file" id="fileInput2-${agent.id}" class="hidden" accept="image/*" onchange="handleUploadInBox2(event, '${agent.id}')">
+                  <!-- Placeholder -->
+                  <div id="placeholder2-${agent.id}" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                    <svg class="w-8 h-8 mb-2 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-width="1.5" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    <p class="text-xs text-muted-foreground text-center">Upload target photo</p>
+                  </div>
+                  <!-- Preview (hidden by default) -->
+                  <img id="previewImg2-${agent.id}" class="absolute inset-0 w-full h-full object-cover hidden" alt="Target Image">
+                  <!-- Clear button (hidden by default) -->
+                  <button id="clearBtn2-${agent.id}" onclick="event.stopPropagation(); clearUploadInBox2('${agent.id}')" class="absolute top-2 right-2 w-6 h-6 bg-ios-red text-white rounded-full items-center justify-center hidden z-10">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Swap Mode -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Swap Mode</label>
+              <div class="flex gap-2">
+                ${agent.swapModes.map((mode, i) => `
+                  <button class="flex-1 px-3 py-2 rounded-ios ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${mode}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Enhancement Options -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Enhancement Options</label>
+              <div class="space-y-2">
+                ${agent.enhancementOptions.map((opt, i) => `
+                  <label class="flex items-center gap-3 p-3 rounded-ios-lg bg-muted/50 cursor-pointer hover:bg-muted transition-colors">
+                    <input type="checkbox" ${i === 0 || i === 2 ? 'checked' : ''} class="w-4 h-4 rounded accent-primary">
+                    <span class="text-sm">${opt}</span>
+                  </label>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+        case 'ai-model-swap':
+          return `
+            <!-- Two-column upload for model swap -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <!-- Original Product Photo -->
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <svg class="w-5 h-5 text-ios-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-width="1.5" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"/>
+                  </svg>
+                  <span class="text-sm font-semibold">Product Photo</span>
+                </div>
+                <p class="text-xs text-muted-foreground mb-2">Original with current model</p>
+                <div id="uploadBox-${agent.id}" class="relative border-2 border-dashed border-border rounded-ios-xl aspect-[3/4] overflow-hidden cursor-pointer hover:border-primary/50 transition-colors" onclick="document.getElementById('fileInput-${agent.id}').click()">
+                  <input type="file" id="fileInput-${agent.id}" class="hidden" accept="image/*" onchange="handleUploadInBox(event, '${agent.id}')">
+                  <!-- Placeholder -->
+                  <div id="placeholder-${agent.id}" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                    <svg class="w-8 h-8 mb-2 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-width="1.5" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    <p class="text-xs text-muted-foreground text-center">Upload product photo</p>
+                  </div>
+                  <!-- Preview (hidden by default) -->
+                  <img id="previewImg-${agent.id}" class="absolute inset-0 w-full h-full object-cover hidden" alt="Product Photo">
+                  <!-- Clear button (hidden by default) -->
+                  <button id="clearBtn-${agent.id}" onclick="event.stopPropagation(); clearUploadInBox('${agent.id}')" class="absolute top-2 right-2 w-6 h-6 bg-ios-red text-white rounded-full items-center justify-center hidden z-10">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- New Model Reference -->
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  <svg class="w-5 h-5 text-ios-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/>
+                  </svg>
+                  <span class="text-sm font-semibold">New Model</span>
+                </div>
+                <p class="text-xs text-muted-foreground mb-2">Reference for replacement</p>
+                <div id="uploadBox2-${agent.id}" class="relative border-2 border-dashed border-border rounded-ios-xl aspect-[3/4] overflow-hidden cursor-pointer hover:border-primary/50 transition-colors" onclick="document.getElementById('fileInput2-${agent.id}').click()">
+                  <input type="file" id="fileInput2-${agent.id}" class="hidden" accept="image/*" onchange="handleUploadInBox2(event, '${agent.id}')">
+                  <!-- Placeholder -->
+                  <div id="placeholder2-${agent.id}" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                    <svg class="w-8 h-8 mb-2 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-width="1.5" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    <p class="text-xs text-muted-foreground text-center">Upload model reference</p>
+                  </div>
+                  <!-- Preview (hidden by default) -->
+                  <img id="previewImg2-${agent.id}" class="absolute inset-0 w-full h-full object-cover hidden" alt="New Model">
+                  <!-- Clear button (hidden by default) -->
+                  <button id="clearBtn2-${agent.id}" onclick="event.stopPropagation(); clearUploadInBox2('${agent.id}')" class="absolute top-2 right-2 w-6 h-6 bg-ios-red text-white rounded-full items-center justify-center hidden z-10">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Model Diversity Options -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Model Preferences</label>
+              <div class="grid grid-cols-3 gap-2">
+                ${agent.modelDiversity.map((opt, i) => `
+                  <button class="px-3 py-2 rounded-ios ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-xs font-medium transition-colors">${opt}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Body Type -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Body Type</label>
+              <div class="flex gap-2">
+                ${agent.bodyTypes.map((type, i) => `
+                  <button class="flex-1 px-2 py-2 rounded-ios ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-xs font-medium transition-colors">${type}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Pose Matching -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Pose Matching</label>
+              <div class="flex gap-2">
+                ${agent.poseMatching.map((pose, i) => `
+                  <button class="flex-1 px-3 py-2 rounded-ios ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${pose}</button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+        case 'image-generator':
+          return `
+            <!-- Prompt Input -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Describe your image</label>
+              <textarea
+                id="prompt-${agent.id}"
+                rows="4"
+                placeholder="Describe the image you want to create in detail..."
+                class="w-full px-4 py-3 rounded-ios-xl bg-muted border-0 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"
+              ></textarea>
+              <div class="flex flex-wrap gap-2 mt-3">
+                ${agent.promptSuggestions.map(p => `
+                  <button onclick="setPrompt('${agent.id}', '${p}')" class="px-3 py-1.5 rounded-full bg-secondary/70 hover:bg-secondary text-xs text-secondary-foreground transition-colors">${p.substring(0, 30)}...</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Model Selection -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">AI Model</label>
+              <div id="modelSelection-${agent.id}" class="grid grid-cols-2 gap-2" data-selected="${agent.models[0]?.name || ''}">
+                ${agent.models.map((m, i) => `
+                  <button onclick="selectGridOption(this, 'model-${agent.id}')" data-value="${m.id || m.name}" class="flex items-center gap-2 px-4 py-3 rounded-ios-lg ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'} text-sm font-medium transition-colors">
+                    <span class="text-lg">${m.icon}</span>
+                    <span>${m.name}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Style Selection -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Style</label>
+              <div id="styleSelection-${agent.id}" class="flex flex-wrap gap-2" data-selected="${agent.styles[0] || ''}">
+                ${agent.styles.map((style, i) => `
+                  <button onclick="selectOption(this, 'style-${agent.id}')" class="style-btn px-4 py-2 rounded-full ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${style}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Aspect Ratio -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Aspect Ratio</label>
+              <div id="ratioSelection-${agent.id}" class="flex gap-2" data-selected="${agent.aspectRatios[0] || ''}">
+                ${agent.aspectRatios.map((ratio, i) => `
+                  <button onclick="selectOption(this, 'ratio-${agent.id}')" class="flex-1 px-3 py-2 rounded-ios ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${ratio}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Number of Images -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Number of Images</label>
+              <div id="numImagesSelection-${agent.id}" class="flex gap-2" data-selected="1">
+                ${[1, 2, 4].map((n, i) => `
+                  <button onclick="selectOption(this, 'numImages-${agent.id}')" class="flex-1 px-3 py-2 rounded-ios ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${n}</button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+        case 'image-animator':
+          return `
+            <!-- Upload Image to Animate -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Upload Image to Animate</label>
+              <div id="uploadBox-${agent.id}" class="relative border-2 border-dashed border-border rounded-ios-xl aspect-video overflow-hidden cursor-pointer hover:border-primary/50 transition-colors" onclick="document.getElementById('fileInput-${agent.id}').click()">
+                <input type="file" id="fileInput-${agent.id}" class="hidden" accept="image/*" onchange="handleUploadInBox(event, '${agent.id}')">
+                <div id="placeholder-${agent.id}" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                  <svg class="w-12 h-12 mb-3 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                  <p class="text-sm font-medium">Upload a static image</p>
+                  <p class="text-xs text-muted-foreground mt-1">PNG, JPG, WEBP up to 10MB</p>
+                </div>
+                <img id="previewImg-${agent.id}" class="absolute inset-0 w-full h-full object-cover hidden" alt="Preview">
+                <button id="clearBtn-${agent.id}" onclick="event.stopPropagation(); clearUploadInBox('${agent.id}')" class="absolute top-2 right-2 w-6 h-6 bg-ios-red text-white rounded-full items-center justify-center hidden z-10">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Motion Type -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Motion Type</label>
+              <div id="motionSelection-${agent.id}" class="flex flex-wrap gap-2" data-selected="${agent.motionTypes[0] || ''}">
+                ${agent.motionTypes.map((motion, i) => `
+                  <button onclick="selectOption(this, 'motion-${agent.id}')" class="px-4 py-2 rounded-full ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${motion}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Loop Options -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Loop Style</label>
+              <div id="loopSelection-${agent.id}" class="flex gap-2" data-selected="${agent.loopOptions[0] || ''}">
+                ${agent.loopOptions.map((opt, i) => `
+                  <button onclick="selectOption(this, 'loop-${agent.id}')" class="flex-1 px-3 py-2 rounded-ios ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${opt}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Duration -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Duration</label>
+              <div id="durationSelection-${agent.id}" class="flex gap-2" data-selected="${agent.durationOptions[1] || ''}">
+                ${agent.durationOptions.map((dur, i) => `
+                  <button onclick="selectOption(this, 'duration-${agent.id}')" class="flex-1 px-3 py-2 rounded-ios ${i === 1 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${dur}</button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+        case 'talking-avatar':
+          return `
+            <!-- Upload Portrait Image -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Upload Portrait Image</label>
+              <div id="uploadBox-${agent.id}" class="relative border-2 border-dashed border-border rounded-ios-xl aspect-square overflow-hidden cursor-pointer hover:border-primary/50 transition-colors" onclick="document.getElementById('fileInput-${agent.id}').click()">
+                <input type="file" id="fileInput-${agent.id}" class="hidden" accept="image/*" onchange="handleUploadInBox(event, '${agent.id}')">
+                <div id="placeholder-${agent.id}" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                  <svg class="w-12 h-12 mb-3 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/>
+                  </svg>
+                  <p class="text-sm font-medium">Upload a portrait photo</p>
+                  <p class="text-xs text-muted-foreground mt-1">Clear face photo with good lighting</p>
+                </div>
+                <img id="previewImg-${agent.id}" class="absolute inset-0 w-full h-full object-cover hidden" alt="Portrait">
+                <button id="clearBtn-${agent.id}" onclick="event.stopPropagation(); clearUploadInBox('${agent.id}')" class="absolute top-2 right-2 w-6 h-6 bg-ios-red text-white rounded-full items-center justify-center hidden z-10">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Text to Speak -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Text to Speak</label>
+              <textarea rows="4" placeholder="Enter the text you want the avatar to speak..." class="w-full px-4 py-3 rounded-ios-lg bg-muted border-0 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"></textarea>
+            </div>
+
+            <!-- Avatar Style -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Avatar Style</label>
+              <div id="avatarStyleSelection-${agent.id}" class="flex flex-wrap gap-2" data-selected="${agent.avatarStyles[0] || ''}">
+                ${agent.avatarStyles.map((style, i) => `
+                  <button onclick="selectOption(this, 'avatarStyle-${agent.id}')" class="px-4 py-2 rounded-full ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${style}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Expression -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Expression</label>
+              <div id="expressionSelection-${agent.id}" class="flex flex-wrap gap-2" data-selected="${agent.expressions[0] || ''}">
+                ${agent.expressions.map((exp, i) => `
+                  <button onclick="selectOption(this, 'expression-${agent.id}')" class="px-4 py-2 rounded-full ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${exp}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Background -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Background</label>
+              <div id="backgroundSelection-${agent.id}" class="flex gap-2" data-selected="${agent.backgrounds[0] || ''}">
+                ${agent.backgrounds.map((bg, i) => `
+                  <button onclick="selectOption(this, 'background-${agent.id}')" class="flex-1 px-3 py-2 rounded-ios ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-xs font-medium transition-colors">${bg}</button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+        case 'video-upscaler':
+          return `
+            <!-- Upload Video -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Upload Video to Upscale</label>
+              <div class="border-2 border-dashed border-border rounded-ios-xl p-8 text-center hover:border-primary/50 transition-all cursor-pointer" onclick="document.getElementById('fileInput-${agent.id}').click()">
+                <input type="file" id="fileInput-${agent.id}" class="hidden" accept="video/*" onchange="handleFileUpload(event, '${agent.id}')">
+                <svg class="w-12 h-12 mx-auto mb-3 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-width="1.5" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"/>
+                </svg>
+                <p class="text-sm font-medium">Upload video file</p>
+                <p class="text-xs text-muted-foreground mt-1">MP4, MOV up to 100MB</p>
+              </div>
+              <div id="preview-${agent.id}" class="mt-4 hidden">
+                <div class="relative inline-block">
+                  <video id="previewVideo-${agent.id}" class="max-h-48 rounded-ios-lg" controls></video>
+                  <button onclick="clearUpload('${agent.id}')" class="absolute -top-2 -right-2 w-6 h-6 bg-ios-red text-white rounded-full flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Target Resolution -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Target Resolution</label>
+              <div id="resolutionSelection-${agent.id}" class="flex gap-2" data-selected="${agent.targetResolutions[2] || ''}">
+                ${agent.targetResolutions.map((res, i) => `
+                  <button onclick="selectOption(this, 'resolution-${agent.id}')" class="flex-1 px-3 py-2 rounded-ios ${i === 2 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${res}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Frame Rate -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Frame Rate</label>
+              <div id="frameRateSelection-${agent.id}" class="flex gap-2" data-selected="${agent.frameRates[0] || ''}">
+                ${agent.frameRates.map((rate, i) => `
+                  <button onclick="selectOption(this, 'frameRate-${agent.id}')" class="flex-1 px-3 py-2 rounded-ios ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${rate}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Stabilization -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Stabilization</label>
+              <div id="stabSelection-${agent.id}" class="flex gap-2" data-selected="${agent.stabilization[2] || ''}">
+                ${agent.stabilization.map((stab, i) => `
+                  <button onclick="selectOption(this, 'stab-${agent.id}')" class="flex-1 px-3 py-2 rounded-ios ${i === 2 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-xs font-medium transition-colors">${stab}</button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+        case 'background-remover':
+          return `
+            <!-- Upload Image -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Upload Image</label>
+              <div id="uploadBox-${agent.id}" class="relative border-2 border-dashed border-border rounded-ios-xl aspect-video overflow-hidden cursor-pointer hover:border-primary/50 transition-colors" onclick="document.getElementById('fileInput-${agent.id}').click()">
+                <input type="file" id="fileInput-${agent.id}" class="hidden" accept="image/*" onchange="handleUploadInBox(event, '${agent.id}')">
+                <div id="placeholder-${agent.id}" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                  <svg class="w-12 h-12 mb-3 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                  <p class="text-sm font-medium">Upload image</p>
+                  <p class="text-xs text-muted-foreground mt-1">PNG, JPG, WEBP up to 10MB</p>
+                </div>
+                <img id="previewImg-${agent.id}" class="absolute inset-0 w-full h-full object-cover hidden" alt="Preview">
+                <button id="clearBtn-${agent.id}" onclick="event.stopPropagation(); clearUploadInBox('${agent.id}')" class="absolute top-2 right-2 w-6 h-6 bg-ios-red text-white rounded-full items-center justify-center hidden z-10">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Output Format -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Output Format</label>
+              <div id="formatSelection-${agent.id}" class="flex gap-2" data-selected="PNG (Transparent)">
+                <button onclick="selectOption(this, 'format-${agent.id}')" class="flex-1 px-3 py-2 rounded-ios bg-primary text-primary-foreground text-sm font-medium">PNG (Transparent)</button>
+                <button onclick="selectOption(this, 'format-${agent.id}')" class="flex-1 px-3 py-2 rounded-ios bg-secondary text-secondary-foreground hover:bg-secondary/80 text-sm font-medium transition-colors">JPG (White BG)</button>
+              </div>
+            </div>
+          `;
+
+        case 'portrait-enhancer':
+          return `
+            <!-- Upload Portrait -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Upload Portrait</label>
+              <div id="uploadBox-${agent.id}" class="relative border-2 border-dashed border-border rounded-ios-xl aspect-square overflow-hidden cursor-pointer hover:border-primary/50 transition-colors" onclick="document.getElementById('fileInput-${agent.id}').click()">
+                <input type="file" id="fileInput-${agent.id}" class="hidden" accept="image/*" onchange="handleUploadInBox(event, '${agent.id}')">
+                <div id="placeholder-${agent.id}" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                  <svg class="w-12 h-12 mb-3 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/>
+                  </svg>
+                  <p class="text-sm font-medium">Upload portrait photo</p>
+                  <p class="text-xs text-muted-foreground mt-1">Face should be clearly visible</p>
+                </div>
+                <img id="previewImg-${agent.id}" class="absolute inset-0 w-full h-full object-cover hidden" alt="Portrait">
+                <button id="clearBtn-${agent.id}" onclick="event.stopPropagation(); clearUploadInBox('${agent.id}')" class="absolute top-2 right-2 w-6 h-6 bg-ios-red text-white rounded-full items-center justify-center hidden z-10">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Enhancement Level -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Enhancement Level</label>
+              <div id="enhancementSelection-${agent.id}" class="flex gap-2" data-selected="${agent.enhancementLevel[1] || ''}">
+                ${agent.enhancementLevel.map((level, i) => `
+                  <button onclick="selectOption(this, 'enhancement-${agent.id}')" class="flex-1 px-3 py-2 rounded-ios ${i === 1 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${level}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Features Toggle -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Enhancement Features</label>
+              <div class="space-y-2">
+                ${agent.features_toggle.map((feat, i) => `
+                  <label class="flex items-center gap-3 p-3 rounded-ios-lg bg-muted/50 cursor-pointer hover:bg-muted transition-colors">
+                    <input type="checkbox" ${i < 2 ? 'checked' : ''} class="w-4 h-4 rounded accent-primary">
+                    <span class="text-sm">${feat}</span>
+                  </label>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+        case 'style-transfer':
+          return `
+            <!-- Upload Image -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Upload Image</label>
+              <div id="uploadBox-${agent.id}" class="relative border-2 border-dashed border-border rounded-ios-xl aspect-video overflow-hidden cursor-pointer hover:border-primary/50 transition-colors" onclick="document.getElementById('fileInput-${agent.id}').click()">
+                <input type="file" id="fileInput-${agent.id}" class="hidden" accept="image/*" onchange="handleUploadInBox(event, '${agent.id}')">
+                <div id="placeholder-${agent.id}" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                  <svg class="w-12 h-12 mb-3 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                  <p class="text-sm font-medium">Upload your photo</p>
+                  <p class="text-xs text-muted-foreground mt-1">PNG, JPG, WEBP up to 10MB</p>
+                </div>
+                <img id="previewImg-${agent.id}" class="absolute inset-0 w-full h-full object-cover hidden" alt="Preview">
+                <button id="clearBtn-${agent.id}" onclick="event.stopPropagation(); clearUploadInBox('${agent.id}')" class="absolute top-2 right-2 w-6 h-6 bg-ios-red text-white rounded-full items-center justify-center hidden z-10">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Popular Styles -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Popular Styles</label>
+              <div class="flex flex-wrap gap-2">
+                ${agent.popularStyles.map((style, i) => `
+                  <button class="px-4 py-2 rounded-full ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${style}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Style Category -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Style Category</label>
+              <div class="flex flex-wrap gap-2">
+                ${agent.styleCategories.map((cat, i) => `
+                  <button class="px-4 py-2 rounded-full ${i === 2 ? 'bg-ios-purple text-white' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${cat}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Intensity -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Style Intensity</label>
+              <div class="flex gap-2">
+                ${agent.intensity.map((int, i) => `
+                  <button class="flex-1 px-3 py-2 rounded-ios ${i === 1 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${int}</button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+        case 'image-upscaler':
+          return `
+            <!-- Upload Image -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Upload Image</label>
+              <div id="uploadBox-${agent.id}" class="relative border-2 border-dashed border-border rounded-ios-xl aspect-video overflow-hidden cursor-pointer hover:border-primary/50 transition-colors" onclick="document.getElementById('fileInput-${agent.id}').click()">
+                <input type="file" id="fileInput-${agent.id}" class="hidden" accept="image/*" onchange="handleUploadInBox(event, '${agent.id}')">
+                <div id="placeholder-${agent.id}" class="absolute inset-0 flex flex-col items-center justify-center p-4">
+                  <svg class="w-12 h-12 mb-3 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                  <p class="text-sm font-medium">Upload image to upscale</p>
+                  <p class="text-xs text-muted-foreground mt-1">PNG, JPG, WEBP</p>
+                </div>
+                <img id="previewImg-${agent.id}" class="absolute inset-0 w-full h-full object-cover hidden" alt="Preview">
+                <button id="clearBtn-${agent.id}" onclick="event.stopPropagation(); clearUploadInBox('${agent.id}')" class="absolute top-2 right-2 w-6 h-6 bg-ios-red text-white rounded-full items-center justify-center hidden z-10">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Scale -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Scale</label>
+              <div class="flex gap-2">
+                ${agent.scaleOptions.map((scale, i) => `
+                  <button class="flex-1 px-3 py-2 rounded-ios ${i === 1 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${scale}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Enhancement Type -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Enhancement Type</label>
+              <div class="flex flex-wrap gap-2">
+                ${agent.enhancementTypes.map((type, i) => `
+                  <button class="px-4 py-2 rounded-full ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-sm font-medium transition-colors">${type}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Noise Reduction -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold mb-3">Noise Reduction</label>
+              <div class="flex gap-2">
+                ${agent.noiseReduction.map((level, i) => `
+                  <button class="flex-1 px-3 py-2 rounded-ios ${i === 1 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'} text-xs font-medium transition-colors">${level}</button>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+        default:
+          return getDefaultAgentUI(agent);
+      }
+    }
+
+    // Default UI for agents without specific templates
+    function getDefaultAgentUI(agent) {
+      const needsImageUpload = ['image', 'creative', 'ecommerce'].some(c => agent.categoryKey?.includes(c));
+      const needsVideoUpload = agent.categoryKey === 'video';
+      const isAudio = agent.categoryKey === 'audio';
+      const isText = agent.categoryKey === 'productivity';
+
+      let ui = '';
+
+      // Upload section
+      if (needsImageUpload || needsVideoUpload) {
+        ui += `
+          <div class="mb-6">
+            <label class="block text-sm font-semibold mb-3">${needsVideoUpload ? 'Upload Video' : 'Upload Image'}</label>
+            <div class="border-2 border-dashed border-border rounded-ios-xl p-8 text-center hover:border-primary/50 hover:bg-muted/30 transition-all cursor-pointer" onclick="document.getElementById('fileInput-${agent.id}').click()">
+              <input type="file" id="fileInput-${agent.id}" class="hidden" accept="${needsVideoUpload ? 'video/*' : 'image/*'}" onchange="handleFileUpload(event, '${agent.id}')">
+              <svg class="w-12 h-12 mx-auto mb-3 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+              <p class="text-sm font-medium">Click to upload or drag and drop</p>
+              <p class="text-xs text-muted-foreground">${needsVideoUpload ? 'MP4, MOV up to 100MB' : 'PNG, JPG, WEBP up to 10MB'}</p>
+            </div>
+            <div id="preview-${agent.id}" class="mt-4 hidden">
+              <div class="relative inline-block">
+                <img id="previewImg-${agent.id}" class="max-h-48 rounded-ios-lg object-contain" alt="Preview">
+                <button onclick="clearUpload('${agent.id}')" class="absolute -top-2 -right-2 w-6 h-6 bg-ios-red text-white rounded-full flex items-center justify-center">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Second image for face-swap type agents
+      if (agent.id === 'face-swap' || agent.id === 'ai-model-swap') {
+        ui += `
+          <div class="mb-6">
+            <label class="block text-sm font-semibold mb-3">${agent.id === 'face-swap' ? 'Target Face Image' : 'Target Model Image'}</label>
+            <div class="border-2 border-dashed border-border rounded-ios-xl p-6 text-center hover:border-primary/50 cursor-pointer" onclick="document.getElementById('fileInput2-${agent.id}').click()">
+              <input type="file" id="fileInput2-${agent.id}" class="hidden" accept="image/*" onchange="handleFileUpload2(event, '${agent.id}')">
+              <svg class="w-8 h-8 mx-auto mb-2 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1.5" d="M12 4v16m8-8H4"/></svg>
+              <p class="text-xs text-muted-foreground">Add second image</p>
+            </div>
+          </div>
+        `;
+      }
+
+      // Options from agent config
+      if (agent.swapModes) {
+        ui += `
+          <div class="mb-6">
+            <label class="block text-sm font-semibold mb-3">Swap Mode</label>
+            <div class="flex gap-2">
+              ${agent.swapModes.map((mode, i) => `
+                <button class="flex-1 px-3 py-2 rounded-ios ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'} text-sm font-medium">${mode}</button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      if (agent.scaleOptions) {
+        ui += `
+          <div class="mb-6">
+            <label class="block text-sm font-semibold mb-3">Scale</label>
+            <div class="flex gap-2">
+              ${agent.scaleOptions.map((scale, i) => `
+                <button class="flex-1 px-3 py-2 rounded-ios ${i === 1 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'} text-sm font-medium">${scale}</button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      if (agent.motionTypes) {
+        ui += `
+          <div class="mb-6">
+            <label class="block text-sm font-semibold mb-3">Motion Type</label>
+            <div class="flex flex-wrap gap-2">
+              ${agent.motionTypes.map((motion, i) => `
+                <button class="px-4 py-2 rounded-full ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'} text-sm font-medium">${motion}</button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      if (agent.styleCategories || agent.popularStyles) {
+        const styles = agent.popularStyles || agent.styleCategories;
+        ui += `
+          <div class="mb-6">
+            <label class="block text-sm font-semibold mb-3">Style</label>
+            <div class="flex flex-wrap gap-2">
+              ${styles.map((style, i) => `
+                <button class="px-4 py-2 rounded-full ${i === 0 ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'} text-sm font-medium">${style}</button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      // Features display
+      if (agent.features && agent.features.length > 0) {
+        ui += `
+          <div class="mb-6">
+            <label class="block text-sm font-semibold mb-3">Features</label>
+            <div class="flex flex-wrap gap-2">
+              ${agent.features.map(f => `<span class="px-3 py-1 rounded-full bg-muted text-xs">${f}</span>`).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      return ui;
+    }
+
+    // Open detail modal with interactive workspace
+    function openDetail(agentId) {
+      const agent = agents[agentId];
+      if (!agent) return;
+
+      // Get agent-specific UI
+      const agentSpecificUI = getAgentSpecificUI(agent);
+
+      document.getElementById('modalContent').innerHTML = `
+        <div class="max-w-5xl mx-auto">
+          <!-- Header Section -->
+          <div class="p-6 pb-4 border-b border-border/50">
+            <div class="flex gap-4">
+              <img src="${agent.icon}" alt="${agent.name}" class="w-16 h-16 md:w-20 md:h-20 rounded-ios-xl object-cover app-icon flex-shrink-0">
+              <div class="flex-1 min-w-0">
+                <h2 class="text-xl md:text-2xl font-bold mb-0.5">${agent.name}</h2>
+                <p class="text-sm text-muted-foreground">${agent.developer} • ${agent.category}</p>
+                <div class="flex items-center gap-2 mt-1">
+                  <svg class="w-4 h-4 text-ios-orange" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                  <span class="text-sm font-medium">${agent.rating}</span>
+                  <span class="text-xs text-muted-foreground">(${agent.reviews})</span>
+                  <span class="px-2 py-0.5 rounded-full ${agent.price === 'Free' ? 'bg-ios-green/20 text-ios-green' : 'bg-ios-blue/20 text-ios-blue'} text-xs font-medium ml-2">${agent.price}</span>
+                </div>
+              </div>
+            </div>
+            <p class="text-sm text-muted-foreground mt-4">${agent.description}</p>
+          </div>
+
+          <!-- Two-column layout on desktop -->
+          <div class="md:grid md:grid-cols-2 md:gap-6">
+            <!-- Left Column: Inputs -->
+            <div class="p-6">
+              <h3 class="text-lg font-semibold mb-4">Configuration</h3>
+              ${agentSpecificUI}
+
+              <!-- Generate Button -->
+              <button
+                id="generateBtn-${agent.id}"
+                onclick="generateOutput('${agent.id}')"
+                class="w-full py-4 rounded-ios-xl bg-primary text-primary-foreground font-semibold text-base hover:opacity-90 transition-all btn-press flex items-center justify-center gap-2"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                Generate ${agent.price === 'Free' ? '- Free' : `- ${agent.price}`}
+              </button>
+              <p class="text-xs text-center text-muted-foreground mt-3">
+                ${agent.price === 'Free' ? 'This agent is free to use' : `Estimated cost: ${agent.price} per generation`}
+              </p>
+            </div>
+
+            <!-- Right Column: Output -->
+            <div class="p-6 md:border-l md:border-border/50 bg-muted/30">
+              <h3 class="text-lg font-semibold mb-4">Output</h3>
+              <div id="output-${agent.id}" class="min-h-64 rounded-ios-xl bg-background border border-border flex items-center justify-center">
+                <div class="text-center p-6">
+                  <svg class="w-16 h-16 mx-auto mb-4 text-muted-foreground/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                  <p class="text-sm text-muted-foreground">Your generated result will appear here</p>
+                  <p class="text-xs text-muted-foreground/70 mt-1">Fill in the configuration and click Generate</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Add style button click handlers
+      setTimeout(() => {
+        document.querySelectorAll('.style-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.style-btn').forEach(b => {
+              b.classList.remove('active', 'border-primary', 'bg-primary/5');
+              b.classList.add('border-border');
+            });
+            btn.classList.add('active', 'border-primary', 'bg-primary/5');
+            btn.classList.remove('border-border');
+          });
+        });
+        // Initialize model tab switching for Virtual Try-On
+        initModelTabs();
+      }, 100);
+
+      // Show full-page detail view
+      const detailPage = document.getElementById('agentDetailPage');
+      document.getElementById('detailPageTitle').textContent = agent.name;
+
+      detailPage.classList.remove('translate-x-full');
+      detailPage.classList.add('translate-x-0');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // File upload handlers
+    function handleFileUpload(event, agentId) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          document.getElementById(`previewImg-${agentId}`).src = e.target.result;
+          document.getElementById(`preview-${agentId}`).classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function handleFileUpload2(event, agentId) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          document.getElementById(`previewImg2-${agentId}`).src = e.target.result;
+          document.getElementById(`preview2-${agentId}`).classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function clearUpload(agentId) {
+      document.getElementById(`fileInput-${agentId}`).value = '';
+      document.getElementById(`preview-${agentId}`).classList.add('hidden');
+    }
+
+    function clearUpload2(agentId) {
+      document.getElementById(`fileInput2-${agentId}`).value = '';
+      document.getElementById(`preview2-${agentId}`).classList.add('hidden');
+    }
+
+    // Upload handlers for in-box preview (Face Swap, AI Model Swap)
+    function handleUploadInBox(event, agentId) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const placeholder = document.getElementById(`placeholder-${agentId}`);
+          const preview = document.getElementById(`previewImg-${agentId}`);
+          const clearBtn = document.getElementById(`clearBtn-${agentId}`);
+          const uploadBox = document.getElementById(`uploadBox-${agentId}`);
+
+          if (placeholder) placeholder.classList.add('hidden');
+          if (preview) {
+            preview.src = e.target.result;
+            preview.classList.remove('hidden');
+          }
+          if (clearBtn) clearBtn.classList.remove('hidden');
+          if (clearBtn) clearBtn.classList.add('flex');
+          if (uploadBox) {
+            uploadBox.classList.remove('border-dashed');
+            uploadBox.classList.add('border-solid', 'border-primary');
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function handleUploadInBox2(event, agentId) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const placeholder = document.getElementById(`placeholder2-${agentId}`);
+          const preview = document.getElementById(`previewImg2-${agentId}`);
+          const clearBtn = document.getElementById(`clearBtn2-${agentId}`);
+          const uploadBox = document.getElementById(`uploadBox2-${agentId}`);
+
+          if (placeholder) placeholder.classList.add('hidden');
+          if (preview) {
+            preview.src = e.target.result;
+            preview.classList.remove('hidden');
+          }
+          if (clearBtn) clearBtn.classList.remove('hidden');
+          if (clearBtn) clearBtn.classList.add('flex');
+          if (uploadBox) {
+            uploadBox.classList.remove('border-dashed');
+            uploadBox.classList.add('border-solid', 'border-primary');
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function clearUploadInBox(agentId) {
+      const fileInput = document.getElementById(`fileInput-${agentId}`);
+      const placeholder = document.getElementById(`placeholder-${agentId}`);
+      const preview = document.getElementById(`previewImg-${agentId}`);
+      const clearBtn = document.getElementById(`clearBtn-${agentId}`);
+      const uploadBox = document.getElementById(`uploadBox-${agentId}`);
+
+      if (fileInput) fileInput.value = '';
+      if (placeholder) placeholder.classList.remove('hidden');
+      if (preview) preview.classList.add('hidden');
+      if (clearBtn) {
+        clearBtn.classList.add('hidden');
+        clearBtn.classList.remove('flex');
+      }
+      if (uploadBox) {
+        uploadBox.classList.add('border-dashed');
+        uploadBox.classList.remove('border-solid', 'border-primary');
+      }
+    }
+
+    function clearUploadInBox2(agentId) {
+      const fileInput = document.getElementById(`fileInput2-${agentId}`);
+      const placeholder = document.getElementById(`placeholder2-${agentId}`);
+      const preview = document.getElementById(`previewImg2-${agentId}`);
+      const clearBtn = document.getElementById(`clearBtn2-${agentId}`);
+      const uploadBox = document.getElementById(`uploadBox2-${agentId}`);
+
+      if (fileInput) fileInput.value = '';
+      if (placeholder) placeholder.classList.remove('hidden');
+      if (preview) preview.classList.add('hidden');
+      if (clearBtn) {
+        clearBtn.classList.add('hidden');
+        clearBtn.classList.remove('flex');
+      }
+      if (uploadBox) {
+        uploadBox.classList.add('border-dashed');
+        uploadBox.classList.remove('border-solid', 'border-primary');
+      }
+    }
+
+    // Model selection for Virtual Try-On
+    function selectModel(element) {
+      // Remove selection from all models
+      document.querySelectorAll('.model-select').forEach(el => {
+        el.classList.remove('border-primary');
+        el.classList.add('border-transparent');
+      });
+      // Add selection to clicked model
+      element.classList.remove('border-transparent');
+      element.classList.add('border-primary');
+    }
+
+    // Generic button group selection (for Image Generator, etc.)
+    function selectOption(element, groupId) {
+      const container = element.parentElement;
+      // Remove selection from all buttons in the group
+      container.querySelectorAll('button').forEach(btn => {
+        btn.classList.remove('bg-primary', 'text-primary-foreground');
+        btn.classList.add('bg-secondary', 'text-secondary-foreground', 'hover:bg-secondary/80');
+      });
+      // Add selection to clicked button
+      element.classList.remove('bg-secondary', 'text-secondary-foreground', 'hover:bg-secondary/80');
+      element.classList.add('bg-primary', 'text-primary-foreground');
+      // Store selected value in a data attribute on the container
+      container.dataset.selected = element.textContent.trim();
+    }
+
+    // Generic button group selection for grid layouts (2-column model selection)
+    function selectGridOption(element, groupId) {
+      const container = element.parentElement;
+      // Remove selection from all buttons in the group
+      container.querySelectorAll('button').forEach(btn => {
+        btn.classList.remove('bg-primary', 'text-primary-foreground');
+        btn.classList.add('bg-muted', 'hover:bg-muted/80');
+      });
+      // Add selection to clicked button
+      element.classList.remove('bg-muted', 'hover:bg-muted/80');
+      element.classList.add('bg-primary', 'text-primary-foreground');
+      // Store selected value in a data attribute on the container
+      container.dataset.selected = element.querySelector('span:last-child')?.textContent.trim() || element.textContent.trim();
+    }
+
+    // Model tab switching for Virtual Try-On
+    function initModelTabs() {
+      document.querySelectorAll('.model-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tab = btn.dataset.tab;
+
+          // Update button styles
+          document.querySelectorAll('.model-tab-btn').forEach(b => {
+            if (b.dataset.tab === tab) {
+              b.classList.add('bg-primary', 'text-primary-foreground');
+              b.classList.remove('bg-secondary', 'text-secondary-foreground', 'hover:bg-secondary/80');
+            } else {
+              b.classList.remove('bg-primary', 'text-primary-foreground');
+              b.classList.add('bg-secondary', 'text-secondary-foreground', 'hover:bg-secondary/80');
+            }
+          });
+
+          // Show/hide tab content
+          const defaultTab = document.getElementById('defaultModelTab');
+          const customTab = document.getElementById('customModelTab');
+
+          if (tab === 'default') {
+            defaultTab?.classList.remove('hidden');
+            customTab?.classList.add('hidden');
+          } else {
+            defaultTab?.classList.add('hidden');
+            customTab?.classList.remove('hidden');
+          }
+        });
+      });
+    }
+
+    function setPrompt(agentId, text) {
+      document.getElementById(`prompt-${agentId}`).value = text;
+    }
+
+    // API Backend URL
+    const API_BASE_URL = 'http://localhost:8000';
+
+    // Collect form inputs based on agent type
+    function collectAgentInputs(agentId) {
+      const inputs = {};
+      const agent = agents[agentId];
+
+      // Get uploaded image/file (base64)
+      const previewImg = document.getElementById(`previewImg-${agentId}`);
+      if (previewImg && previewImg.src && !previewImg.classList.contains('hidden')) {
+        inputs.image = previewImg.src;
+      }
+
+      // Get second uploaded image (for video generator end frame)
+      const previewImg2 = document.getElementById(`previewImg2-${agentId}`);
+      if (previewImg2 && previewImg2.src && !previewImg2.classList.contains('hidden')) {
+        inputs.end_frame = previewImg2.src;
+      }
+
+      // Get prompt if available
+      const promptEl = document.getElementById(`prompt-${agentId}`);
+      if (promptEl && promptEl.value) {
+        inputs.prompt = promptEl.value;
+      }
+
+      // Get selected options from data attributes
+      const selectionIds = [
+        'modelSelection', 'styleSelection', 'ratioSelection', 'numImagesSelection',
+        'motionSelection', 'loopSelection', 'durationSelection',
+        'avatarStyleSelection', 'expressionSelection', 'backgroundSelection',
+        'resolutionSelection', 'frameRateSelection', 'stabSelection',
+        'formatSelection', 'enhancementSelection'
+      ];
+
+      selectionIds.forEach(id => {
+        const el = document.getElementById(`${id}-${agentId}`);
+        if (el && el.dataset.selected) {
+          // Convert ID to input field name
+          const fieldName = id.replace('Selection', '').replace(/([A-Z])/g, '_$1').toLowerCase();
+          inputs[fieldName] = el.dataset.selected;
+        }
+      });
+
+      return inputs;
+    }
+
+    // Generate output (real API call)
+    async function generateOutput(agentId) {
+      const btn = document.getElementById(`generateBtn-${agentId}`);
+      const output = document.getElementById(`output-${agentId}`);
+      const agent = agents[agentId];
+
+      // Show loading
+      btn.disabled = true;
+      btn.innerHTML = `
+        <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Generating...
+      `;
+
+      output.innerHTML = `
+        <div class="p-6 text-center">
+          <svg class="w-12 h-12 mx-auto mb-3 text-primary animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <p class="text-sm font-medium">Processing...</p>
+          <p class="text-xs text-muted-foreground mt-1">This may take a moment</p>
+        </div>
+      `;
+
+      try {
+        // Collect inputs from the form
+        const inputs = collectAgentInputs(agentId);
+
+        // Make API call
+        const response = await fetch(`${API_BASE_URL}/api/agents/${agentId}/run`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ inputs }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.detail || errorData.message || `API error: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        // Reset button
+        btn.disabled = false;
+        btn.innerHTML = `
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          Generate ${agent.price === 'Free' ? '- Free' : `- ${agent.price}`}
+        `;
+
+        // Display result based on output type
+        const data = result.data || result;
+
+        if (data.video || data.video_url) {
+          const videoUrl = data.video || data.video_url;
+          output.innerHTML = `
+            <video class="w-full rounded-ios-lg" autoplay muted loop playsinline controls>
+              <source src="${videoUrl}" type="video/mp4">
+            </video>
+            <a href="${videoUrl}" download class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-ios bg-primary text-primary-foreground text-sm font-medium">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Download Video
+            </a>
+          `;
+        } else if (data.image || data.image_url || data.images) {
+          const imageUrl = data.image || data.image_url || (data.images && data.images[0]);
+          if (imageUrl) {
+            output.innerHTML = `
+              <img src="${imageUrl}" class="w-full rounded-ios-lg" alt="Generated">
+              <a href="${imageUrl}" download class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-ios bg-primary text-primary-foreground text-sm font-medium">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Download Image
+              </a>
+            `;
+          }
+        } else if (data.audio || data.audio_url) {
+          const audioUrl = data.audio || data.audio_url;
+          output.innerHTML = `
+            <audio controls class="w-full rounded-ios-lg">
+              <source src="${audioUrl}" type="audio/mpeg">
+            </audio>
+            <a href="${audioUrl}" download class="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-ios bg-primary text-primary-foreground text-sm font-medium">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Download Audio
+            </a>
+          `;
+        } else {
+          output.innerHTML = `
+            <div class="p-6 text-center">
+              <svg class="w-12 h-12 mx-auto mb-3 text-ios-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <p class="text-sm font-medium">Generation Complete!</p>
+              <p class="text-xs text-muted-foreground mt-1">Your output is ready</p>
+              <pre class="mt-4 text-left text-xs bg-muted p-3 rounded-ios overflow-auto max-h-48">${JSON.stringify(data, null, 2)}</pre>
+            </div>
+          `;
+        }
+
+      } catch (error) {
+        console.error('Generation error:', error);
+
+        // Extract error message properly from various error formats
+        let errorMessage = 'An unexpected error occurred';
+        if (typeof error === 'string') {
+          errorMessage = error;
+        } else if (error && typeof error === 'object') {
+          errorMessage = error.message || error.detail || error.error || JSON.stringify(error);
+        }
+
+        btn.disabled = false;
+        btn.innerHTML = `
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          Generate ${agent.price === 'Free' ? '- Free' : `- ${agent.price}`}
+        `;
+
+        output.innerHTML = `
+          <div class="p-6 text-center">
+            <svg class="w-12 h-12 mx-auto mb-3 text-ios-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            <p class="text-sm font-medium text-ios-red">Generation Failed</p>
+            <p class="text-xs text-muted-foreground mt-1">${errorMessage}</p>
+            <button onclick="generateOutput('${agentId}')" class="mt-4 px-4 py-2 rounded-ios bg-primary text-primary-foreground text-sm font-medium">
+              Try Again
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    // Close detail page
+    function closeDetail() {
+      const detailPage = document.getElementById('agentDetailPage');
+
+      detailPage.classList.add('translate-x-full');
+      detailPage.classList.remove('translate-x-0');
+
+      setTimeout(() => {
+        document.body.style.overflow = '';
+      }, 300);
+    }
+
+    // Tab navigation
+    function showTab(tab) {
+      // Update tab buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        if (btn.dataset.tab === tab) {
+          btn.classList.add('text-primary');
+          btn.classList.remove('text-muted-foreground');
+        } else {
+          btn.classList.remove('text-primary');
+          btn.classList.add('text-muted-foreground');
+        }
+      });
+
+      // Show/hide tab content
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.add('hidden');
+      });
+      document.getElementById(tab + 'Tab').classList.remove('hidden');
+
+      // Focus search input if search tab
+      if (tab === 'search') {
+        document.getElementById('searchInputMain').focus();
+      }
+
+      // Populate agents tab if needed
+      if (tab === 'agents') {
+        populateAgentsTab();
+      }
+    }
+
+    // Populate Agents Tab
+    function populateAgentsTab() {
+      const freeAgents = Object.values(agents).filter(a => a.price === 'Free').slice(0, 5);
+      const paidAgents = Object.values(agents).filter(a => a.price !== 'Free').slice(0, 5);
+
+      document.getElementById('topFreeAgents').innerHTML = freeAgents.map((a, i) => `
+        <div class="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors cursor-pointer" onclick="openDetail('${a.id}')">
+          <span class="text-lg font-bold text-muted-foreground w-6">${i + 1}</span>
+          <img src="${a.icon}" class="w-14 h-14 rounded-ios object-cover app-icon" alt="${a.name}">
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold text-sm truncate">${a.name}</h3>
+            <p class="text-xs text-muted-foreground truncate">${a.category}</p>
+          </div>
+          <button class="px-4 py-1.5 rounded-full bg-secondary text-primary text-xs font-semibold">Get</button>
+        </div>
+      `).join('');
+
+      document.getElementById('topPaidAgents').innerHTML = paidAgents.map((a, i) => `
+        <div class="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors cursor-pointer" onclick="openDetail('${a.id}')">
+          <span class="text-lg font-bold text-muted-foreground w-6">${i + 1}</span>
+          <img src="${a.icon}" class="w-14 h-14 rounded-ios object-cover app-icon" alt="${a.name}">
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold text-sm truncate">${a.name}</h3>
+            <p class="text-xs text-muted-foreground truncate">${a.category}</p>
+          </div>
+          <button class="px-4 py-1.5 rounded-full bg-secondary text-primary text-xs font-semibold">${a.price}</button>
+        </div>
+      `).join('');
+    }
+
+    // Search functionality for main search
+    document.getElementById('searchInputMain')?.addEventListener('input', (e) => {
+      searchFor(e.target.value);
+    });
+
+    function searchFor(query) {
+      if (!query) {
+        document.getElementById('searchResults').innerHTML = Object.values(agents).slice(0, 5).map(a => renderSearchRow(a)).join('');
+        document.getElementById('searchResultsTitle').textContent = 'Suggested';
+        return;
+      }
+
+      const filtered = Object.values(agents).filter(a =>
+        a.name.toLowerCase().includes(query.toLowerCase()) ||
+        a.description.toLowerCase().includes(query.toLowerCase()) ||
+        a.category.toLowerCase().includes(query.toLowerCase())
+      );
+
+      document.getElementById('searchResults').innerHTML = filtered.length
+        ? filtered.map(a => renderSearchRow(a)).join('')
+        : '<p class="p-6 text-center text-muted-foreground">No results found</p>';
+      document.getElementById('searchResultsTitle').textContent = `Results for "${query}"`;
+    }
+
+    function renderSearchRow(agent) {
+      return `
+        <div class="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors cursor-pointer" onclick="openDetail('${agent.id}')">
+          <img src="${agent.icon}" class="w-14 h-14 rounded-ios object-cover app-icon" alt="${agent.name}">
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold text-sm truncate">${agent.name}</h3>
+            <p class="text-xs text-muted-foreground truncate">${agent.description}</p>
+            <div class="flex items-center gap-2 mt-1">
+              <svg class="w-3 h-3 text-ios-orange" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
+              <span class="text-xs">${agent.rating}</span>
+            </div>
+          </div>
+          <button class="px-4 py-1.5 rounded-full ${agent.price === 'Free' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-primary'} text-xs font-semibold">
+            ${agent.price === 'Free' ? 'Free' : 'Get'}
+          </button>
+        </div>
+      `;
+    }
+
+    // Initialize search results
+    searchFor('');
+
+    // Theme toggle
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    // Initialize theme
+    if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+
+    // Scroll effects for header
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      const currentScroll = window.scrollY;
+
+      if (currentScroll > 50) {
+        header.classList.add('shadow-sm');
+      } else {
+        header.classList.remove('shadow-sm');
+      }
+
+      lastScroll = currentScroll;
+    });
+
+    // Initialize
+    populateAgents();
+  </script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e7]
+        - generic [ref=e9]: AI Store
+      - generic [ref=e11]:
+        - img [ref=e12]
+        - textbox "Search agents..." [ref=e15]
+      - generic [ref=e16]:
+        - button [ref=e17] [cursor=pointer]:
+          - img [ref=e18]
+        - link "Design System" [ref=e20] [cursor=pointer]:
+          - /url: /design.html
+  - main [ref=e21]:
+    - generic [ref=e22]:
+      - generic [ref=e23]:
+        - paragraph
+        - heading "Today" [level=1] [ref=e24]
+      - generic [ref=e28] [cursor=pointer]:
+        - text: Featured Agent
+        - heading "Video Generator" [level=2] [ref=e29]
+        - paragraph [ref=e30]: Create stunning AI videos with Runway Gen-3 Alpha
+        - generic [ref=e31]:
+          - generic [ref=e32]:
+            - paragraph [ref=e33]: Video Generator
+            - paragraph [ref=e34]: Higgsfield AI
+          - button "Get" [ref=e35]
+      - generic [ref=e37]:
+        - button "All Agents" [ref=e38] [cursor=pointer]
+        - button "Image" [ref=e39] [cursor=pointer]
+        - button "Video" [ref=e40] [cursor=pointer]
+        - button "Audio" [ref=e41] [cursor=pointer]
+        - button "Creative" [ref=e42] [cursor=pointer]
+        - button "E-Commerce" [ref=e43] [cursor=pointer]
+        - button "Productivity" [ref=e44] [cursor=pointer]
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - heading "Popular Right Now" [level=2] [ref=e47]
+          - button "See All" [ref=e48] [cursor=pointer]
+        - generic [ref=e49]:
+          - generic [ref=e50] [cursor=pointer]:
+            - generic [ref=e51]:
+              - img "Virtual Try-On" [ref=e52]
+              - generic [ref=e53]: Popular
+            - generic [ref=e54]:
+              - generic [ref=e55]:
+                - generic [ref=e56]:
+                  - heading "Virtual Try-On" [level=3] [ref=e57]
+                  - paragraph [ref=e58]: E-Commerce
+                - generic [ref=e59]: Pro
+              - paragraph [ref=e60]: Transform flat-lay clothing into photorealistic model shots. Eliminate expensive photoshoots while maintaining studio quality.
+              - generic [ref=e61]:
+                - generic [ref=e62]:
+                  - img [ref=e63]
+                  - generic [ref=e65]: "4.8"
+                  - generic [ref=e66]: (15.2K)
+                - button "Get" [ref=e67]
+          - generic [ref=e68] [cursor=pointer]:
+            - generic [ref=e69]:
+              - img "Face Swap" [ref=e70]
+              - generic [ref=e71]: Popular
+            - generic [ref=e72]:
+              - generic [ref=e73]:
+                - generic [ref=e74]:
+                  - heading "Face Swap" [level=3] [ref=e75]
+                  - paragraph [ref=e76]: Creative
+                - generic [ref=e77]: Pro
+              - paragraph [ref=e78]: Swap faces between two images seamlessly using advanced AI with natural blending.
+              - generic [ref=e79]:
+                - generic [ref=e80]:
+                  - img [ref=e81]
+                  - generic [ref=e83]: "4.7"
+                  - generic [ref=e84]: (12.8K)
+                - button "Get" [ref=e85]
+          - generic [ref=e86] [cursor=pointer]:
+            - generic [ref=e87]:
+              - img "Image Generator" [ref=e88]
+              - generic [ref=e89]: Popular
+            - generic [ref=e90]:
+              - generic [ref=e91]:
+                - generic [ref=e92]:
+                  - heading "Image Generator" [level=3] [ref=e93]
+                  - paragraph [ref=e94]: AI Art
+                - generic [ref=e95]: Pro
+              - paragraph [ref=e96]: Multi-provider AI image generation using DALL-E 3, Stability AI, and Flux models.
+              - generic [ref=e97]:
+                - generic [ref=e98]:
+                  - img [ref=e99]
+                  - generic [ref=e101]: "4.9"
+                  - generic [ref=e102]: (28.5K)
+                - button "Get" [ref=e103]
+          - generic [ref=e104] [cursor=pointer]:
+            - generic [ref=e105]:
+              - img "Background Remover" [ref=e106]
+              - generic [ref=e107]: Popular
+            - generic [ref=e108]:
+              - generic [ref=e109]:
+                - generic [ref=e110]:
+                  - heading "Background Remover" [level=3] [ref=e111]
+                  - paragraph [ref=e112]: Image
+                - generic [ref=e113]: Free
+              - paragraph [ref=e114]: Remove backgrounds from images instantly using AI with high quality edges.
+              - generic [ref=e115]:
+                - generic [ref=e116]:
+                  - img [ref=e117]
+                  - generic [ref=e119]: "4.8"
+                  - generic [ref=e120]: (45.1K)
+                - button "Free" [ref=e121]
+          - generic [ref=e122] [cursor=pointer]:
+            - generic [ref=e123]:
+              - img "Video Generator" [ref=e124]
+              - generic [ref=e125]: Popular
+            - generic [ref=e126]:
+              - generic [ref=e127]:
+                - generic [ref=e128]:
+                  - heading "Video Generator" [level=3] [ref=e129]
+                  - paragraph [ref=e130]: Video
+                - generic [ref=e131]: Enterprise
+              - paragraph [ref=e132]: AI video generation using Runway Gen-3 Alpha. Create stunning videos from text or images.
+              - generic [ref=e133]:
+                - generic [ref=e134]:
+                  - img [ref=e135]
+                  - generic [ref=e137]: "4.9"
+                  - generic [ref=e138]: (8.3K)
+                - button "Get" [ref=e139]
+          - generic [ref=e140] [cursor=pointer]:
+            - generic [ref=e141]:
+              - img "Lip Sync" [ref=e142]
+              - generic [ref=e143]: Popular
+            - generic [ref=e144]:
+              - generic [ref=e145]:
+                - generic [ref=e146]:
+                  - heading "Lip Sync" [level=3] [ref=e147]
+                  - paragraph [ref=e148]: Video
+                - generic [ref=e149]: Pro
+              - paragraph [ref=e150]: AI-powered lip synchronization for videos with natural mouth movements.
+              - generic [ref=e151]:
+                - generic [ref=e152]:
+                  - img [ref=e153]
+                  - generic [ref=e155]: "4.6"
+                  - generic [ref=e156]: (5.2K)
+                - button "Get" [ref=e157]
+          - generic [ref=e158] [cursor=pointer]:
+            - generic [ref=e159]:
+              - img "Image Upscaler" [ref=e160]
+              - generic [ref=e161]: Popular
+            - generic [ref=e162]:
+              - generic [ref=e163]:
+                - generic [ref=e164]:
+                  - heading "Image Upscaler" [level=3] [ref=e165]
+                  - paragraph [ref=e166]: Image
+                - generic [ref=e167]: Starter
+              - paragraph [ref=e168]: AI image upscaling and enhancement up to 4x resolution.
+              - generic [ref=e169]:
+                - generic [ref=e170]:
+                  - img [ref=e171]
+                  - generic [ref=e173]: "4.8"
+                  - generic [ref=e174]: (22.4K)
+                - button "Get" [ref=e175]
+          - generic [ref=e176] [cursor=pointer]:
+            - generic [ref=e177]:
+              - img "Chibi Sticker Maker" [ref=e178]
+              - generic [ref=e179]: Popular
+            - generic [ref=e180]:
+              - generic [ref=e181]:
+                - generic [ref=e182]:
+                  - heading "Chibi Sticker Maker" [level=3] [ref=e183]
+                  - paragraph [ref=e184]: Creative
+                - generic [ref=e185]: Starter
+              - paragraph [ref=e186]: Turn photos into cute sticker packs instantly.
+              - generic [ref=e187]:
+                - generic [ref=e188]:
+                  - img [ref=e189]
+                  - generic [ref=e191]: "4.9"
+                  - generic [ref=e192]: (8.4K)
+                - button "Get" [ref=e193]
+      - generic [ref=e194]:
+        - generic [ref=e195]:
+          - heading "See It In Action" [level=2] [ref=e196]
+          - generic [ref=e197]: AI Generated Content
+        - generic [ref=e199] [cursor=pointer]:
+          - generic:
+            - generic:
+              - img "Video Generator"
+              - generic:
+                - heading "Video Generator" [level=3]
+                - paragraph: AI-powered video creation with Runway Gen-3
+              - generic:
+                - img
+        - generic [ref=e201]:
+          - generic [ref=e202] [cursor=pointer]:
+            - generic [ref=e203]:
+              - generic: Lip Sync
+              - generic:
+                - img
+            - paragraph [ref=e205]: Character Animation
+            - paragraph [ref=e206]: Lip Sync • Higgsfield AI
+          - generic [ref=e207] [cursor=pointer]:
+            - generic [ref=e208]:
+              - generic: Animation
+              - generic:
+                - img
+            - paragraph [ref=e210]: Motion Effect
+            - paragraph [ref=e211]: Image Animator • Higgsfield AI
+          - generic [ref=e212] [cursor=pointer]:
+            - generic [ref=e213]:
+              - img "AI Generated" [ref=e214]
+              - generic [ref=e215]: AI Art
+            - paragraph [ref=e216]: Dental Grills Portrait
+            - paragraph [ref=e217]: Image Generator • Higgsfield AI
+          - generic [ref=e218] [cursor=pointer]:
+            - generic [ref=e219]:
+              - generic: Video
+              - generic:
+                - img
+            - paragraph [ref=e221]: Splash Transition Effect
+            - paragraph [ref=e222]: Video Generator • Higgsfield AI
+          - generic [ref=e223] [cursor=pointer]:
+            - generic [ref=e224]:
+              - img "AI Generated" [ref=e225]
+              - generic [ref=e226]: AI Art
+            - paragraph [ref=e227]: Cotton Candy Portrait
+            - paragraph [ref=e228]: Image Generator • Higgsfield AI
+          - generic [ref=e229] [cursor=pointer]:
+            - generic [ref=e230]:
+              - img "Virtual Try-On" [ref=e231]
+              - generic [ref=e232]: E-Commerce
+            - paragraph [ref=e233]: Virtual Model Fitting
+            - paragraph [ref=e234]: Virtual Try-On • MuleRun
+          - generic [ref=e235] [cursor=pointer]:
+            - generic [ref=e236]:
+              - generic: Video
+              - generic:
+                - img
+            - paragraph [ref=e238]: Flying Effect
+            - paragraph [ref=e239]: Video Generator • Higgsfield AI
+          - generic [ref=e240] [cursor=pointer]:
+            - generic [ref=e241]:
+              - img "Face Swap" [ref=e242]
+              - generic [ref=e243]: Face Swap
+            - paragraph [ref=e244]: Face Replacement
+            - paragraph [ref=e245]: Face Swap • Higgsfield AI
+          - generic [ref=e246] [cursor=pointer]:
+            - generic [ref=e247]:
+              - img "Chibi Sticker" [ref=e248]
+              - generic [ref=e249]: Creative
+            - paragraph [ref=e250]: Cute Sticker Pack
+            - paragraph [ref=e251]: Chibi Sticker Maker • MuleRun
+      - generic [ref=e252]:
+        - generic [ref=e253]:
+          - heading "All Agents" [level=2] [ref=e254]
+          - generic [ref=e255]: 17 agents
+        - generic [ref=e256]:
+          - generic [ref=e257] [cursor=pointer]:
+            - img "Virtual Try-On" [ref=e258]
+            - generic [ref=e259]:
+              - heading "Virtual Try-On" [level=3] [ref=e260]
+              - paragraph [ref=e261]: Transform flat-lay clothing into photorealistic model shots. Eliminate expensive photoshoots while maintaining studio quality.
+              - generic [ref=e262]:
+                - generic [ref=e263]:
+                  - img [ref=e264]
+                  - generic [ref=e266]: "4.8"
+                - generic [ref=e267]: E-Commerce
+            - button "Get" [ref=e268]
+          - generic [ref=e269] [cursor=pointer]:
+            - img "Face Swap" [ref=e270]
+            - generic [ref=e271]:
+              - heading "Face Swap" [level=3] [ref=e272]
+              - paragraph [ref=e273]: Swap faces between two images seamlessly using advanced AI with natural blending.
+              - generic [ref=e274]:
+                - generic [ref=e275]:
+                  - img [ref=e276]
+                  - generic [ref=e278]: "4.7"
+                - generic [ref=e279]: Creative
+            - button "Get" [ref=e280]
+          - generic [ref=e281] [cursor=pointer]:
+            - img "Image Generator" [ref=e282]
+            - generic [ref=e283]:
+              - heading "Image Generator" [level=3] [ref=e284]
+              - paragraph [ref=e285]: Multi-provider AI image generation using DALL-E 3, Stability AI, and Flux models.
+              - generic [ref=e286]:
+                - generic [ref=e287]:
+                  - img [ref=e288]
+                  - generic [ref=e290]: "4.9"
+                - generic [ref=e291]: AI Art
+            - button "Get" [ref=e292]
+          - generic [ref=e293] [cursor=pointer]:
+            - img "Background Remover" [ref=e294]
+            - generic [ref=e295]:
+              - heading "Background Remover" [level=3] [ref=e296]
+              - paragraph [ref=e297]: Remove backgrounds from images instantly using AI with high quality edges.
+              - generic [ref=e298]:
+                - generic [ref=e299]:
+                  - img [ref=e300]
+                  - generic [ref=e302]: "4.8"
+                - generic [ref=e303]: Image
+            - button "Free" [ref=e304]
+          - generic [ref=e305] [cursor=pointer]:
+            - img "Video Generator" [ref=e306]
+            - generic [ref=e307]:
+              - heading "Video Generator" [level=3] [ref=e308]
+              - paragraph [ref=e309]: AI video generation using Runway Gen-3 Alpha. Create stunning videos from text or images.
+              - generic [ref=e310]:
+                - generic [ref=e311]:
+                  - img [ref=e312]
+                  - generic [ref=e314]: "4.9"
+                - generic [ref=e315]: Video
+            - button "Get" [ref=e316]
+          - generic [ref=e317] [cursor=pointer]:
+            - img "Lip Sync" [ref=e318]
+            - generic [ref=e319]:
+              - heading "Lip Sync" [level=3] [ref=e320]
+              - paragraph [ref=e321]: AI-powered lip synchronization for videos with natural mouth movements.
+              - generic [ref=e322]:
+                - generic [ref=e323]:
+                  - img [ref=e324]
+                  - generic [ref=e326]: "4.6"
+                - generic [ref=e327]: Video
+            - button "Get" [ref=e328]
+          - generic [ref=e329] [cursor=pointer]:
+            - img "Talking Avatar" [ref=e330]
+            - generic [ref=e331]:
+              - heading "Talking Avatar" [level=3] [ref=e332]
+              - paragraph [ref=e333]: Generate talking head videos from still images with text-to-speech.
+              - generic [ref=e334]:
+                - generic [ref=e335]:
+                  - img [ref=e336]
+                  - generic [ref=e338]: "4.7"
+                - generic [ref=e339]: Video
+            - button "Get" [ref=e340]
+          - generic [ref=e341] [cursor=pointer]:
+            - img "Image Upscaler" [ref=e342]
+            - generic [ref=e343]:
+              - heading "Image Upscaler" [level=3] [ref=e344]
+              - paragraph [ref=e345]: AI image upscaling and enhancement up to 4x resolution.
+              - generic [ref=e346]:
+                - generic [ref=e347]:
+                  - img [ref=e348]
+                  - generic [ref=e350]: "4.8"
+                - generic [ref=e351]: Image
+            - button "Get" [ref=e352]
+          - generic [ref=e353] [cursor=pointer]:
+            - img "Portrait Enhancer" [ref=e354]
+            - generic [ref=e355]:
+              - heading "Portrait Enhancer" [level=3] [ref=e356]
+              - paragraph [ref=e357]: Professional portrait enhancement and retouching with AI.
+              - generic [ref=e358]:
+                - generic [ref=e359]:
+                  - img [ref=e360]
+                  - generic [ref=e362]: "4.6"
+                - generic [ref=e363]: Image
+            - button "Get" [ref=e364]
+          - generic [ref=e365] [cursor=pointer]:
+            - img "Image Animator" [ref=e366]
+            - generic [ref=e367]:
+              - heading "Image Animator" [level=3] [ref=e368]
+              - paragraph [ref=e369]: Animate still images with AI motion synthesis.
+              - generic [ref=e370]:
+                - generic [ref=e371]:
+                  - img [ref=e372]
+                  - generic [ref=e374]: "4.7"
+                - generic [ref=e375]: Video
+            - button "Get" [ref=e376]
+          - generic [ref=e377] [cursor=pointer]:
+            - img "Video Upscaler" [ref=e378]
+            - generic [ref=e379]:
+              - heading "Video Upscaler" [level=3] [ref=e380]
+              - paragraph [ref=e381]: Upscale and enhance video quality up to 4K.
+              - generic [ref=e382]:
+                - generic [ref=e383]:
+                  - img [ref=e384]
+                  - generic [ref=e386]: "4.6"
+                - generic [ref=e387]: Video
+            - button "Get" [ref=e388]
+          - generic [ref=e389] [cursor=pointer]:
+            - img "Music Generator" [ref=e390]
+            - generic [ref=e391]:
+              - heading "Music Generator" [level=3] [ref=e392]
+              - paragraph [ref=e393]: AI music and sound effect generation with MusicGen.
+              - generic [ref=e394]:
+                - generic [ref=e395]:
+                  - img [ref=e396]
+                  - generic [ref=e398]: "4.5"
+                - generic [ref=e399]: Audio
+            - button "Get" [ref=e400]
+          - generic [ref=e401] [cursor=pointer]:
+            - img "Voice Cloner" [ref=e402]
+            - generic [ref=e403]:
+              - heading "Voice Cloner" [level=3] [ref=e404]
+              - paragraph [ref=e405]: AI voice synthesis with multiple voice presets.
+              - generic [ref=e406]:
+                - generic [ref=e407]:
+                  - img [ref=e408]
+                  - generic [ref=e410]: "4.4"
+                - generic [ref=e411]: Audio
+            - button "Get" [ref=e412]
+          - generic [ref=e413] [cursor=pointer]:
+            - img "AI Model Swap" [ref=e414]
+            - generic [ref=e415]:
+              - heading "AI Model Swap" [level=3] [ref=e416]
+              - paragraph [ref=e417]: Swap fashion models in product photos while keeping garments intact.
+              - generic [ref=e418]:
+                - generic [ref=e419]:
+                  - img [ref=e420]
+                  - generic [ref=e422]: "4.7"
+                - generic [ref=e423]: E-Commerce
+            - button "Get" [ref=e424]
+          - generic [ref=e425] [cursor=pointer]:
+            - img "Chibi Sticker Maker" [ref=e426]
+            - generic [ref=e427]:
+              - heading "Chibi Sticker Maker" [level=3] [ref=e428]
+              - paragraph [ref=e429]: Turn photos into cute sticker packs instantly.
+              - generic [ref=e430]:
+                - generic [ref=e431]:
+                  - img [ref=e432]
+                  - generic [ref=e434]: "4.9"
+                - generic [ref=e435]: Creative
+            - button "Get" [ref=e436]
+          - generic [ref=e437] [cursor=pointer]:
+            - img "Product Description Writer" [ref=e438]
+            - generic [ref=e439]:
+              - heading "Product Description Writer" [level=3] [ref=e440]
+              - paragraph [ref=e441]: Generate compelling product descriptions with SEO optimization.
+              - generic [ref=e442]:
+                - generic [ref=e443]:
+                  - img [ref=e444]
+                  - generic [ref=e446]: "4.8"
+                - generic [ref=e447]: Productivity
+            - button "Free" [ref=e448]
+          - generic [ref=e449] [cursor=pointer]:
+            - img "Style Transfer" [ref=e450]
+            - generic [ref=e451]:
+              - heading "Style Transfer" [level=3] [ref=e452]
+              - paragraph [ref=e453]: Apply artistic styles to images with AI.
+              - generic [ref=e454]:
+                - generic [ref=e455]:
+                  - img [ref=e456]
+                  - generic [ref=e458]: "4.5"
+                - generic [ref=e459]: Creative
+            - button "Get" [ref=e460]
+  - button [ref=e462] [cursor=pointer]:
+    - img [ref=e463]
+```

@@ -1,0 +1,112 @@
+{
+  "mulerun": {
+    "branding": {
+      "logo": "https://mulerun.com/assets/static/mule_logo.CJBZava4.svg",
+      "winBadge": "https://assets-01.mulerun.com/pages/landing/agents/win.BDLiPCXt.webp",
+      "signupBg": "https://assets-01.mulerun.com/pages/landing/agents/signup-bg.BtSvrbnM.png",
+      "muleFrame": "https://assets-01.mulerun.com/pages/landing/agents/mule-frame-svg.CmqahPg1.svg"
+    },
+    "personas": {
+      "businessUser": "https://assets-01.mulerun.com/pages/landing/agents/agent-head-4.webp",
+      "gamer": "https://assets-01.mulerun.com/pages/landing/agents/agent-head-6.webp",
+      "ecommerceManager": "https://assets-01.mulerun.com/pages/landing/agents/agent-head-2.webp",
+      "imageHobbyist": "https://assets-01.mulerun.com/pages/landing/agents/agent-head-1.webp",
+      "retailInvestor": "https://assets-01.mulerun.com/pages/landing/agents/agent-head-5.webp",
+      "worker": "https://assets-01.mulerun.com/pages/landing/agents/agent-head-7.webp",
+      "contentCreator": "https://assets-01.mulerun.com/pages/landing/agents/agent-head-3.webp"
+    },
+    "decorative": {
+      "reasonBg": "https://assets-01.mulerun.com/pages/landing/agents/reason-tr.DxyBYLUq.svg",
+      "reasonBr": "https://assets-01.mulerun.com/pages/landing/agents/reason-br.lLAzS7OM.svg",
+      "reasonGrid": "https://assets-01.mulerun.com/pages/landing/agents/reason-grid.Dbn43wIF.svg",
+      "collectionBg": "https://assets-01.mulerun.com/pages/landing/agents/collection-bg-1.hQ9Po2RF.svg",
+      "moreCreators": "https://assets-01.mulerun.com/pages/landing/agents/more-creators.xzGCfsSD.webp"
+    },
+    "showcase": {
+      "reason1": "https://assets-01.mulerun.com/pages/landing/agents/reason1.webp",
+      "reason3": "https://assets-01.mulerun.com/pages/landing/agents/reason3.webp"
+    }
+  },
+  "higgsfield": {
+    "banners": {
+      "cyberWeek": "https://cdn.higgsfield.ai/card/c5bae1eb-d725-4bc4-8472-496db3a9b7dc.webp",
+      "kling2_6": "https://cdn.higgsfield.ai/card/ae2180fa-cbab-47a1-b52e-bf07432f34f5.webp",
+      "seedream": "https://cdn.higgsfield.ai/card/75702883-8d92-4737-94f0-975af4036cec.webp"
+    },
+    "videos": {
+      "earthZoom": "https://static.higgsfield.ai/70e490b9-26b7-4572-8d9c-2ac8dcc9adc0.mp4",
+      "ravenTransition": "https://cdn.higgsfield.ai/kling_motion/8c4795a8-e7ef-4272-8fb3-9d349192a013.mp4",
+      "splashTransition": "https://cdn.higgsfield.ai/kling_motion/413e9bed-2fb7-4f61-b69f-e8c7466bfcf6.mp4",
+      "ahegaoEffect": "https://cdn.higgsfield.ai/wan2_2_motion/22b6f9ca-5469-4086-8956-a2deb4944307.mp4",
+      "groupPhoto": "https://cdn.higgsfield.ai/minimax_hailuo_motion/382ba2da-a405-4459-89c2-c31a31469185.mp4",
+      "iCanFly": "https://cdn.higgsfield.ai/kling_motion/dbe2fcf5-9605-41ea-96ed-b5b655bbbeb0.mp4"
+    },
+    "generatedImages": {
+      "dentalGrills": "https://dqv0cqkoy5oj7.cloudfront.net/user_2vtxM3DRcDcQIjpmiCpUDF2wcAT/453bc1ba-2cf6-4897-9268-a4403f35e18e_min.webp",
+      "cottonCandy": "https://d8j0ntlcm91z4.cloudfront.net/content_user_id/83034e1a-1d32-4053-a1bc-bbcb7a9491c8.jpeg",
+      "y2kFashion": "https://cdn.higgsfield.ai/8ab53648-e4d3-41ad-900e-b38b6f33dbaf.webp"
+    },
+    "thumbnails": {
+      "default": "https://higgsfield.ai/thumbnail/default.jpg",
+      "wan2_5": "https://higgsfield.ai/thumbnail/wan2_5.jpg"
+    }
+  },
+  "agents": {
+    "virtual-try-on": {
+      "icon": "https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/54e2dc15-d602-40aa-9b09-0983f7a4f8b3/虚拟试衣.png",
+      "screenshots": [
+        "https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/71b89f38-5a95-496a-bdbd-2e1c30bdb993/cover-1_(10).png",
+        "https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/cbadc961-804c-4059-a140-fff3fddc70d7/cover_(12).png",
+        "https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/c36c0f2f-c914-45a7-9b66-55db2c3e64fe/cover-1_(9).png"
+      ]
+    },
+    "face-swap": {
+      "icon": "https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/3b3049b7-bc21-46a8-b445-f2e339e3e65a/换脸.png",
+      "screenshots": [
+        "https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/a72088b2-0505-4924-bf9b-6c9e1c49db8b/cover-2_(3).png",
+        "https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/129840a5-8f47-4006-b9ba-ca4b0615ca62/cover_(16).png"
+      ]
+    },
+    "ai-model-swap": {
+      "icon": "https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/8e282302-b729-45c7-be39-7c48b3161a96/cover_(11).png",
+      "screenshots": [
+        "https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251111/09d4e979-5eb0-4e27-b865-c3856d6cccd0/模特换肤.png"
+      ]
+    },
+    "background-remover": {
+      "icon": "https://assets-01.mulerun.com/agent/10aa0000-d27e-49f0-9ee9-0ad7d99f57b3/v1.0.3/showcase-1.webp",
+      "screenshots": [
+        "https://assets-01.mulerun.com/agent/10aa0000-d27e-49f0-9ee9-0ad7d99f57b3/v1.0.3/showcase-2.webp"
+      ]
+    },
+    "image-generator": {
+      "icon": "https://assets-01.mulerun.com/agent/311be0d7-cd68-4fa7-99bc-232e535ebb39/v2025.09.02-07.37.32/showcase-1.png",
+      "screenshots": [
+        "https://assets-01.mulerun.com/agent/311be0d7-cd68-4fa7-99bc-232e535ebb39/v2025.09.02-07.37.32/showcase-2.webp"
+      ]
+    },
+    "image-upscaler": {
+      "icon": "https://assets-01.mulerun.com/agent/c55ea644-5e6f-45ca-bcb7-30135f3e984c/v1.0.1/showcase-1.webp",
+      "screenshots": [
+        "https://assets-01.mulerun.com/agent/c55ea644-5e6f-45ca-bcb7-30135f3e984c/v1.0.1/showcase-2.webp",
+        "https://assets-01.mulerun.com/agent/c55ea644-5e6f-45ca-bcb7-30135f3e984c/v1.0.1/showcase-3.webp"
+      ]
+    },
+    "chibi-sticker-maker": {
+      "icon": "https://assets-01.mulerun.com/agent/82428895-e64f-4339-ba9f-1ac174b2bb4a/v1.0.1/showcase-1.png",
+      "screenshots": [
+        "https://assets-01.mulerun.com/agent/82428895-e64f-4339-ba9f-1ac174b2bb4a/v1.0.1/showcase-2.webp"
+      ]
+    },
+    "product-description-writer": {
+      "icon": "https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251110/c3e5fd64-938e-4bd1-b389-71d113b3ed28/mulerun3.png",
+      "screenshots": [
+        "https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20251110/b9d40528-104f-4146-a83b-9997afafb338/mulerun2.png"
+      ]
+    },
+    "mini-me-creator": {
+      "icon": "https://agent-assets-prod.muleusercontent.com/agents/agent-assets/20250919/e337c7b0-0780-4c1b-aaf0-34195ff2c802/Me_And_My_Mini-Me.webp",
+      "screenshots": []
+    }
+  }
+}

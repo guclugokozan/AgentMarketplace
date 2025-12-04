@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Higgsfield AI Agents - Test Suite</title>
+  <style>
+    :root {
+      --bg-primary: #0f0f23;
+      --bg-secondary: #1a1a2e;
+      --bg-card: #16213e;
+      --accent: #00d4ff;
+      --accent-secondary: #7b2cbf;
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0a0;
+      --success: #00ff88;
+      --warning: #ffaa00;
+      --error: #ff4444;
+      --border: #2a2a4a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+      padding: 2rem;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .header p { color: var(--text-secondary); }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      background: var(--bg-primary);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .stat-value { font-size: 1.5rem; font-weight: bold; color: var(--accent); }
+    .stat-label { font-size: 0.8rem; color: var(--text-secondary); }
+
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .tab {
+      padding: 0.75rem 1.5rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .tab:hover { border-color: var(--accent); color: var(--text-primary); }
+    .tab.active { background: var(--accent); color: var(--bg-primary); border-color: var(--accent); }
+
+    .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .agent-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .agent-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0, 212, 255, 0.15);
+    }
+
+    .agent-header {
+      padding: 1.25rem;
+      background: linear-gradient(135deg, var(--bg-secondary), transparent);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .agent-number {
+      font-size: 0.75rem;
+      color: var(--accent);
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+    }
+
+    .agent-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .agent-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .agent-body { padding: 1.25rem; }
+
+    .feature-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .tag {
+      padding: 0.25rem 0.75rem;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .tag.consent { border-color: var(--warning); color: var(--warning); }
+    .tag.async { border-color: var(--accent); color: var(--accent); }
+
+    .test-form { margin-top: 1rem; }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 80px; }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: white;
+    }
+
+    .btn-primary:hover { transform: scale(1.02); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .btn-secondary {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+    }
+
+    .result-area {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: var(--bg-primary);
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      display: none;
+    }
+
+    .result-area.show { display: block; }
+
+    .result-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .result-status.success { color: var(--success); }
+    .result-status.error { color: var(--error); }
+    .result-status.pending { color: var(--warning); }
+
+    .result-content {
+      font-family: 'Monaco', 'Consolas', monospace;
+      font-size: 0.8rem;
+      white-space: pre-wrap;
+      max-height: 300px;
+      overflow-y: auto;
+      color: var(--text-secondary);
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 2rem;
+    }
+
+    .modal-overlay.show { display: flex; }
+
+    .modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-body { padding: 1.5rem; }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .close-btn:hover { color: var(--text-primary); }
+
+    .json-viewer {
+      background: var(--bg-primary);
+      border-radius: 6px;
+      padding: 1rem;
+      font-family: monospace;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .json-key { color: #7ee787; }
+    .json-string { color: #a5d6ff; }
+    .json-number { color: #ffa657; }
+    .json-boolean { color: #ff7b72; }
+
+    .quick-test-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .quick-test-panel h3 {
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .health-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg-primary);
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+
+    .health-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    .health-dot.offline { background: var(--error); }
+    .health-dot.checking { background: var(--warning); animation: pulse 1s infinite; }
+
+    @keyframes pulse { 50% { opacity: 0.5; } }
+
+    .tool-list {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+    }
+
+    .tool-item {
+      padding: 0.5rem;
+      background: var(--bg-primary);
+      border-radius: 4px;
+      margin-bottom: 0.25rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .tool-name { color: var(--accent); font-weight: 500; }
+    .tool-desc { color: var(--text-secondary); }
+
+    @media (max-width: 768px) {
+      .header h1 { font-size: 1.8rem; }
+      .stats-bar { gap: 1rem; }
+      .agent-grid { grid-template-columns: 1fr; }
+      .container { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Higgsfield AI Agents</h1>
+    <p>Comprehensive Test Suite for 20 AI-Powered Agents</p>
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-value" id="totalAgents">20</div>
+        <div class="stat-label">Total Agents</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="availableAgents">-</div>
+        <div class="stat-label">Available</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="activeJobs">0</div>
+        <div class="stat-label">Active Jobs</div>
+      </div>
+      <div class="health-indicator">
+        <span class="health-dot checking" id="healthDot"></span>
+        <span id="healthStatus">Checking...</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="quick-test-panel">
+      <h3>Quick Actions</h3>
+      <div class="quick-actions">
+        <button class="btn btn-primary" onclick="checkHealth()">Check API Health</button>
+        <button class="btn btn-primary" onclick="loadAgentCatalog()">Load Agent Catalog</button>
+        <button class="btn btn-primary" onclick="runAllTests()">Run All Basic Tests</button>
+        <button class="btn btn-secondary" onclick="clearAllResults()">Clear All Results</button>
+        <button class="btn btn-secondary" onclick="openConsole()">Open Console</button>
+      </div>
+    </div>
+
+    <div class="tabs" id="categoryTabs">
+      <button class="tab active" data-category="all">All Agents</button>
+      <button class="tab" data-category="image">Image Generation</button>
+      <button class="tab" data-category="video">Video Processing</button>
+      <button class="tab" data-category="audio">Audio & Voice</button>
+      <button class="tab" data-category="biometric">Biometric (Consent)</button>
+      <button class="tab" data-category="ai">AI & ML</button>
+    </div>
+
+    <div class="agent-grid" id="agentGrid"></div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="detailModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Agent Details</h2>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Console Modal -->
+  <div class="modal-overlay" id="consoleModal">
+    <div class="modal" style="max-width: 1000px;">
+      <div class="modal-header">
+        <h2>API Console</h2>
+        <button class="close-btn" onclick="closeConsole()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Endpoint</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <select id="consoleMethod" style="width: 100px;">
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+            <input type="text" id="consoleEndpoint" value="/mulerun/agents" style="flex: 1;">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Request Body (JSON)</label>
+          <textarea id="consoleBody" placeholder='{"input": {...}}'></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="sendConsoleRequest()">Send Request</button>
+        <div class="form-group" style="margin-top: 1rem;">
+          <label>Response</label>
+          <div class="json-viewer" id="consoleResponse">Click "Send Request" to see results</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = '';
+
+    // All 20 Higgsfield agents with their full configurations
+    const agents = [
+      {
+        id: '01-image-generator',
+        number: '01',
+        name: 'Image Generator',
+        description: 'Multi-provider image generation (DALL-E, Stability AI, Flux)',
+        category: 'image',
+        features: ['DALL-E 3', 'SDXL', 'Flux', 'Multiple Styles', 'Batch Generation'],
+        async: true,
+        tools: ['generate_dalle', 'generate_stability', 'generate_flux', 'wait_for_job'],
+        testInput: {
+          prompt: 'A futuristic city at sunset with flying cars',
+          provider: 'stability',
+          width: 1024,
+          height: 1024,
+          style: 'photographic'
+        }
+      },
+      {
+        id: '02-video-generator',
+        number: '02',
+        name: 'Video Generator',
+        description: 'AI video generation using Runway Gen-3',
+        category: 'video',
+        features: ['Text-to-Video', 'Image-to-Video', 'Gen-3 Alpha', 'Multiple Durations'],
+        async: true,
+        tools: ['text_to_video', 'image_to_video', 'check_status', 'poll_until_complete'],
+        testInput: {
+          prompt: 'A drone flying over mountain peaks',
+          model: 'gen3',
+          duration: '4',
+          aspectRatio: '16:9'
+        }
+      },
+      {
+        id: '03-face-swap-video',
+        number: '03',
+        name: 'Face Swap Video',
+        description: 'Video face swapping with consent validation',
+        category: 'biometric',
+        features: ['Consent Required', 'Face Detection', 'Video Processing', 'Watermarking'],
+        requiresConsent: true,
+        async: true,
+        tools: ['validate_consent', 'detect_faces', 'swap_face_video', 'apply_watermark'],
+        testInput: {
+          sourceVideoUrl: 'https://example.com/source.mp4',
+          targetFaceUrl: 'https://example.com/face.jpg',
+          consent: {
+            subjectId: 'test-subject',
+            subjectName: 'Test User',
+            consentToken: 'test-token',
+            purpose: 'Testing'
+          }
+        }
+      },
+      {
+        id: '04-lip-sync',
+        number: '04',
+        name: 'Lip Sync',
+        description: 'AI-powered lip synchronization for videos',
+        category: 'video',
+        features: ['Audio Sync', 'Multiple Models', 'Quality Control', 'Emotion Transfer'],
+        async: true,
+        tools: ['sync_lips', 'analyze_audio', 'enhance_sync', 'wait_for_job'],
+        testInput: {
+          videoUrl: 'https://example.com/video.mp4',
+          audioUrl: 'https://example.com/audio.mp3',
+          model: 'wav2lip'
+        }
+      },
+      {
+        id: '05-talking-avatar',
+        number: '05',
+        name: 'Talking Avatar',
+        description: 'Generate talking head videos from images',
+        category: 'video',
+        features: ['Image to Video', 'Text-to-Speech', 'Expression Control', 'Multiple Styles'],
+        async: true,
+        tools: ['create_avatar', 'generate_speech', 'animate_avatar', 'combine_av'],
+        testInput: {
+          imageUrl: 'https://example.com/portrait.jpg',
+          text: 'Hello! Welcome to our platform.',
+          voice: 'professional',
+          emotion: 'happy'
+        }
+      },
+      {
+        id: '06-headshot-generator',
+        number: '06',
+        name: 'Headshot Generator',
+        description: 'Professional AI headshots from photos',
+        category: 'image',
+        features: ['Professional Styles', 'Background Removal', 'Lighting Enhancement', 'Multiple Outputs'],
+        async: true,
+        tools: ['generate_headshot', 'enhance_photo', 'change_background', 'batch_generate'],
+        testInput: {
+          photoUrl: 'https://example.com/selfie.jpg',
+          style: 'corporate',
+          background: 'office',
+          outputCount: 4
+        }
+      },
+      {
+        id: '07-character-creator',
+        number: '07',
+        name: 'Character Creator',
+        description: 'Consistent AI character generation',
+        category: 'image',
+        features: ['Character Consistency', 'Multiple Poses', 'Style Transfer', 'Persistence'],
+        tools: ['createCharacter', 'generatePose', 'transferStyle', 'getCharacter'],
+        testInput: {
+          name: 'Hero Character',
+          description: 'A brave warrior with golden armor',
+          style: 'fantasy',
+          baseImage: 'https://example.com/reference.jpg'
+        }
+      },
+      {
+        id: '08-image-upscaler',
+        number: '08',
+        name: 'Image Upscaler',
+        description: 'AI image upscaling and enhancement',
+        category: 'image',
+        features: ['4x Upscale', 'Noise Reduction', 'Face Enhancement', 'Detail Restoration'],
+        tools: ['upscale_image', 'enhance_faces', 'reduce_noise', 'sharpen'],
+        testInput: {
+          imageUrl: 'https://example.com/low-res.jpg',
+          scale: 4,
+          enhanceFaces: true,
+          model: 'real-esrgan'
+        }
+      },
+      {
+        id: '09-object-remover',
+        number: '09',
+        name: 'Object Remover',
+        description: 'Remove unwanted objects from images',
+        category: 'image',
+        features: ['Smart Inpainting', 'Mask Detection', 'Background Fill', 'Batch Processing'],
+        tools: ['detect_objects', 'create_mask', 'remove_object', 'fill_background'],
+        testInput: {
+          imageUrl: 'https://example.com/photo.jpg',
+          objectDescription: 'person in red shirt',
+          fillMethod: 'inpaint'
+        }
+      },
+      {
+        id: '10-style-transfer',
+        number: '10',
+        name: 'Style Transfer',
+        description: 'Apply artistic styles to images',
+        category: 'image',
+        features: ['Art Styles', 'Custom Styles', 'Intensity Control', 'Preset Library'],
+        tools: ['apply_style', 'create_style', 'blend_styles', 'list_presets'],
+        testInput: {
+          imageUrl: 'https://example.com/photo.jpg',
+          style: 'van_gogh',
+          intensity: 0.8
+        }
+      },
+      {
+        id: '11-background-replacer',
+        number: '11',
+        name: 'Background Replacer',
+        description: 'Replace and generate image backgrounds',
+        category: 'image',
+        features: ['AI Background', 'Custom Backgrounds', 'Edge Refinement', 'Lighting Match'],
+        tools: ['remove_background', 'replace_background', 'generate_background', 'match_lighting'],
+        testInput: {
+          imageUrl: 'https://example.com/portrait.jpg',
+          newBackground: 'modern office with city view',
+          matchLighting: true
+        }
+      },
+      {
+        id: '12-image-animator',
+        number: '12',
+        name: 'Image Animator',
+        description: 'Animate still images with AI',
+        category: 'video',
+        features: ['Motion Synthesis', 'Loop Creation', 'Depth Estimation', 'Parallax Effect'],
+        async: true,
+        tools: ['animate_image', 'create_loop', 'add_parallax', 'estimate_depth'],
+        testInput: {
+          imageUrl: 'https://example.com/landscape.jpg',
+          motionType: 'zoom',
+          duration: 3,
+          loop: true
+        }
+      },
+      {
+        id: '13-video-upscaler',
+        number: '13',
+        name: 'Video Upscaler',
+        description: 'Upscale and enhance video quality',
+        category: 'video',
+        features: ['4K Upscale', 'Frame Interpolation', 'Stabilization', 'Denoising'],
+        async: true,
+        tools: ['upscale_video', 'interpolate_frames', 'stabilize', 'denoise'],
+        testInput: {
+          videoUrl: 'https://example.com/video.mp4',
+          targetResolution: '4k',
+          interpolate: true,
+          stabilize: true
+        }
+      },
+      {
+        id: '14-scene-generator',
+        number: '14',
+        name: 'Scene Generator',
+        description: 'Generate complete scenes with multiple elements',
+        category: 'image',
+        features: ['Multi-Element', 'Composition AI', 'Lighting Control', 'Style Consistency'],
+        async: true,
+        tools: ['generate_scene', 'add_element', 'adjust_lighting', 'composite'],
+        testInput: {
+          sceneDescription: 'A cozy coffee shop interior with warm lighting',
+          elements: ['coffee cup', 'book', 'plant'],
+          style: 'photorealistic',
+          lighting: 'warm'
+        }
+      },
+      {
+        id: '15-product-photographer',
+        number: '15',
+        name: 'Product Photographer',
+        description: 'AI product photography and staging',
+        category: 'image',
+        features: ['Product Staging', 'Lifestyle Shots', 'Shadow Generation', 'Multi-Angle'],
+        tools: ['stage_product', 'generate_lifestyle', 'add_shadows', 'create_angles'],
+        testInput: {
+          productImageUrl: 'https://example.com/product.png',
+          style: 'lifestyle',
+          background: 'kitchen counter',
+          angles: ['front', 'side', 'detail']
+        }
+      },
+      {
+        id: '16-portrait-enhancer',
+        number: '16',
+        name: 'Portrait Enhancer',
+        description: 'Professional portrait enhancement and retouching',
+        category: 'biometric',
+        features: ['Consent Aware', 'Skin Smoothing', 'Eye Enhancement', 'Lighting Fix'],
+        tools: ['enhance_portrait', 'smooth_skin', 'enhance_eyes', 'fix_lighting'],
+        testInput: {
+          imageUrl: 'https://example.com/portrait.jpg',
+          enhancements: ['skin', 'eyes', 'lighting'],
+          intensity: 'natural'
+        }
+      },
+      {
+        id: '17-sketch-to-image',
+        number: '17',
+        name: 'Sketch to Image',
+        description: 'Convert sketches to realistic images',
+        category: 'image',
+        features: ['ControlNet', 'Multiple Styles', 'Line Art Coloring', 'Fidelity Control'],
+        tools: ['convert_sketch', 'color_lineart', 'generate_variations', 'analyze_sketch'],
+        testInput: {
+          sketchUrl: 'https://example.com/sketch.png',
+          prompt: 'A beautiful forest scene',
+          style: 'realistic',
+          fidelity: 0.7
+        }
+      },
+      {
+        id: '18-music-generator',
+        number: '18',
+        name: 'Music Generator',
+        description: 'AI music and sound effect generation',
+        category: 'audio',
+        features: ['MusicGen', 'Sound Effects', 'Ambient', 'Style Control'],
+        async: true,
+        tools: ['generate_music', 'generate_sfx', 'generate_ambient', 'continue_music'],
+        testInput: {
+          type: 'music',
+          prompt: 'Upbeat corporate background music',
+          genre: 'corporate',
+          mood: 'uplifting',
+          duration: 30
+        }
+      },
+      {
+        id: '19-voice-cloner',
+        number: '19',
+        name: 'Voice Cloner',
+        description: 'AI voice cloning with consent validation',
+        category: 'biometric',
+        features: ['Consent Required', 'Voice Synthesis', 'Style Transfer', 'Multi-Language'],
+        requiresConsent: true,
+        tools: ['validate_consent', 'clone_voice', 'synthesize_speech', 'transfer_style'],
+        testInput: {
+          operation: 'synthesize',
+          text: 'Hello, this is a test of voice synthesis.',
+          voiceId: 'preset-voice-1',
+          targetStyle: 'professional'
+        }
+      },
+      {
+        id: '20-ai-assistant',
+        number: '20',
+        name: 'AI Assistant',
+        description: 'Multi-agent orchestration and task management',
+        category: 'ai',
+        features: ['Multi-Agent', 'Task Planning', 'Workflow Automation', 'Context Management'],
+        tools: ['plan_task', 'execute_agent', 'manage_workflow', 'synthesize_results'],
+        testInput: {
+          task: 'Create a marketing campaign with images and copy',
+          context: 'Product launch for a tech startup',
+          agents: ['image-generator', 'blog-writer']
+        }
+      }
+    ];
+
+    const categoryMap = {
+      all: () => true,
+      image: (a) => a.category === 'image',
+      video: (a) => a.category === 'video',
+      audio: (a) => a.category === 'audio',
+      biometric: (a) => a.requiresConsent || a.category === 'biometric',
+      ai: (a) => a.category === 'ai'
+    };
+
+    let activeJobs = new Map();
+    let currentCategory = 'all';
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAgents();
+      checkHealth();
+      loadAgentCatalog();
+      setupTabs();
+    });
+
+    function setupTabs() {
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentCategory = tab.dataset.category;
+          renderAgents();
+        });
+      });
+    }
+
+    function renderAgents() {
+      const grid = document.getElementById('agentGrid');
+      const filteredAgents = agents.filter(categoryMap[currentCategory]);
+
+      grid.innerHTML = filteredAgents.map(agent => `
+        <div class="agent-card" data-id="${agent.id}">
+          <div class="agent-header">
+            <div class="agent-number">Agent ${agent.number}</div>
+            <div class="agent-name">${agent.name}</div>
+            <div class="agent-desc">${agent.description}</div>
+          </div>
+          <div class="agent-body">
+            <div class="feature-tags">
+              ${agent.requiresConsent ? '<span class="tag consent">Requires Consent</span>' : ''}
+              ${agent.async ? '<span class="tag async">Async</span>' : ''}
+              ${agent.features.slice(0, 3).map(f => `<span class="tag">${f}</span>`).join('')}
+            </div>
+            <div class="tool-list">
+              <strong style="font-size: 0.75rem; color: var(--text-secondary);">Tools:</strong>
+              ${agent.tools.map(t => `<div class="tool-item"><span class="tool-name">${t}</span></div>`).join('')}
+            </div>
+            <div class="test-form">
+              <button class="btn btn-primary" onclick="testAgent('${agent.id}')">
+                Test Agent
+              </button>
+              <button class="btn btn-secondary" onclick="showDetails('${agent.id}')">
+                Details
+              </button>
+            </div>
+            <div class="result-area" id="result-${agent.id}">
+              <div class="result-status" id="status-${agent.id}"></div>
+              <div class="result-content" id="content-${agent.id}"></div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function checkHealth() {
+      const dot = document.getElementById('healthDot');
+      const status = document.getElementById('healthStatus');
+      dot.className = 'health-dot checking';
+      status.textContent = 'Checking...';
+
+      try {
+        const res = await fetch(`${API_BASE}/health`);
+        const data = await res.json();
+
+        dot.className = 'health-dot';
+        status.textContent = `API ${data.status} - v${data.version}`;
+      } catch (error) {
+        dot.className = 'health-dot offline';
+        status.textContent = 'API Offline';
+      }
+    }
+
+    async function loadAgentCatalog() {
+      try {
+        const res = await fetch(`${API_BASE}/mulerun/agents`);
+        const data = await res.json();
+
+        document.getElementById('availableAgents').textContent = data.agents?.length || 0;
+      } catch (error) {
+        document.getElementById('availableAgents').textContent = 'N/A';
+      }
+    }
+
+    async function testAgent(agentId) {
+      const agent = agents.find(a => a.id === agentId);
+      if (!agent) return;
+
+      const resultArea = document.getElementById(`result-${agentId}`);
+      const statusEl = document.getElementById(`status-${agentId}`);
+      const contentEl = document.getElementById(`content-${agentId}`);
+
+      resultArea.classList.add('show');
+      statusEl.className = 'result-status pending';
+      statusEl.innerHTML = '<div class="spinner"></div> Testing...';
+      contentEl.textContent = '';
+
+      try {
+        // Get the API agent ID (without the number prefix)
+        const apiAgentId = agent.id.replace(/^\d+-/, '');
+
+        // First, try to get agent info
+        const infoRes = await fetch(`${API_BASE}/mulerun/agents/${apiAgentId}`);
+
+        if (!infoRes.ok && infoRes.status !== 404) {
+          throw new Error(`API returned ${infoRes.status}`);
+        }
+
+        // Then try to run the agent
+        const runRes = await fetch(`${API_BASE}/mulerun/agents/${apiAgentId}/run`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ input: agent.testInput })
+        });
+
+        const runData = await runRes.json();
+
+        if (runRes.ok) {
+          statusEl.className = 'result-status success';
+          statusEl.textContent = runData.jobId ? 'Job Created' : 'Completed';
+          contentEl.textContent = JSON.stringify(runData, null, 2);
+
+          if (runData.jobId) {
+            activeJobs.set(runData.jobId, agentId);
+            updateActiveJobsCount();
+            pollJob(runData.jobId, agentId);
+          }
+        } else {
+          statusEl.className = 'result-status error';
+          statusEl.textContent = 'Error';
+          contentEl.textContent = JSON.stringify(runData, null, 2);
+        }
+      } catch (error) {
+        statusEl.className = 'result-status error';
+        statusEl.textContent = 'Request Failed';
+        contentEl.textContent = error.message;
+      }
+    }
+
+    async function pollJob(jobId, agentId) {
+      try {
+        const res = await fetch(`${API_BASE}/jobs/${jobId}`);
+        const data = await res.json();
+
+        const statusEl = document.getElementById(`status-${agentId}`);
+        const contentEl = document.getElementById(`content-${agentId}`);
+
+        if (data.status === 'completed') {
+          statusEl.className = 'result-status success';
+          statusEl.textContent = 'Completed';
+          contentEl.textContent = JSON.stringify(data, null, 2);
+          activeJobs.delete(jobId);
+          updateActiveJobsCount();
+        } else if (data.status === 'failed') {
+          statusEl.className = 'result-status error';
+          statusEl.textContent = 'Failed';
+          contentEl.textContent = JSON.stringify(data, null, 2);
+          activeJobs.delete(jobId);
+          updateActiveJobsCount();
+        } else {
+          statusEl.innerHTML = `<div class="spinner"></div> ${data.status} (${data.progress || 0}%)`;
+          contentEl.textContent = JSON.stringify(data, null, 2);
+          setTimeout(() => pollJob(jobId, agentId), 2000);
+        }
+      } catch (error) {
+        console.error('Poll error:', error);
+      }
+    }
+
+    function updateActiveJobsCount() {
+      document.getElementById('activeJobs').textContent = activeJobs.size;
+    }
+
+    function showDetails(agentId) {
+      const agent = agents.find(a => a.id === agentId);
+      if (!agent) return;
+
+      document.getElementById('modalTitle').textContent = `${agent.name} - Details`;
+      document.getElementById('modalBody').innerHTML = `
+        <div style="margin-bottom: 1.5rem;">
+          <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Description</h4>
+          <p style="color: var(--text-secondary);">${agent.description}</p>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Features</h4>
+          <div class="feature-tags">
+            ${agent.features.map(f => `<span class="tag">${f}</span>`).join('')}
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Available Tools</h4>
+          ${agent.tools.map(t => `<div class="tool-item"><span class="tool-name">${t}</span></div>`).join('')}
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <h4 style="color: var(--accent); margin-bottom: 0.5rem;">Test Input Schema</h4>
+          <div class="json-viewer">${syntaxHighlight(agent.testInput)}</div>
+        </div>
+
+        <div style="display: flex; gap: 1rem;">
+          <button class="btn btn-primary" onclick="testAgent('${agent.id}'); closeModal();">
+            Run Test
+          </button>
+          <button class="btn btn-secondary" onclick="copyTestInput('${agent.id}')">
+            Copy Test Input
+          </button>
+        </div>
+      `;
+
+      document.getElementById('detailModal').classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('detailModal').classList.remove('show');
+    }
+
+    function openConsole() {
+      document.getElementById('consoleModal').classList.add('show');
+    }
+
+    function closeConsole() {
+      document.getElementById('consoleModal').classList.remove('show');
+    }
+
+    async function sendConsoleRequest() {
+      const method = document.getElementById('consoleMethod').value;
+      const endpoint = document.getElementById('consoleEndpoint').value;
+      const bodyText = document.getElementById('consoleBody').value;
+      const responseEl = document.getElementById('consoleResponse');
+
+      try {
+        const options = {
+          method,
+          headers: { 'Content-Type': 'application/json' }
+        };
+
+        if (method !== 'GET' && bodyText) {
+          options.body = bodyText;
+        }
+
+        const res = await fetch(`${API_BASE}${endpoint}`, options);
+        const data = await res.json();
+
+        responseEl.innerHTML = syntaxHighlight(data);
+      } catch (error) {
+        responseEl.textContent = `Error: ${error.message}`;
+      }
+    }
+
+    async function runAllTests() {
+      for (const agent of agents.slice(0, 5)) { // Test first 5 for demo
+        await testAgent(agent.id);
+        await new Promise(r => setTimeout(r, 500));
+      }
+    }
+
+    function clearAllResults() {
+      document.querySelectorAll('.result-area').forEach(el => {
+        el.classList.remove('show');
+      });
+    }
+
+    function copyTestInput(agentId) {
+      const agent = agents.find(a => a.id === agentId);
+      if (agent) {
+        navigator.clipboard.writeText(JSON.stringify(agent.testInput, null, 2));
+        alert('Test input copied to clipboard!');
+      }
+    }
+
+    function syntaxHighlight(obj) {
+      const json = JSON.stringify(obj, null, 2);
+      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, match => {
+        let cls = 'json-number';
+        if (/^"/.test(match)) {
+          cls = /:$/.test(match) ? 'json-key' : 'json-string';
+        } else if (/true|false/.test(match)) {
+          cls = 'json-boolean';
+        }
+        return `<span class="${cls}">${match}</span>`;
+      });
+    }
+
+    // Close modals on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+        closeConsole();
+      }
+    });
+
+    // Close modals on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
